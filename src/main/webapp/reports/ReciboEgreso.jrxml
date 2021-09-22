@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReciboEgreso" pageWidth="800" pageHeight="600" orientation="Landscape" whenNoDataType="NoDataSection" columnWidth="760" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="dfb2766f-ad8d-4ce2-aedd-40ac1651d002">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="241"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="753"/>
+	<parameter name="pWebPath" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["//C:/desarrollo/Git/estarossa/src/main/webapp"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="psCompraId" class="java.lang.String">
+		<defaultValueExpression><![CDATA["29"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select 'MACHU PICCHU FOODS S.A.C' as RECIBI_DE
+		, o.nombre 
+		, c.fecha_compra 
+		, o.direccion 
+		, c.monto_total
+		, c.recibo_egreso
+		, '...' as monto_letras
+		, upper('por la compra de ' || string_agg(p.nombre, ', ')) as concepto
+from compra c
+	inner join atencion a
+		on a.compraid = c.id
+	inner join producto p
+		on p.id = a.producto_id 
+	inner join oficina o
+		on o.id = c.oficina_id 
+where	c.id = cast($P{psCompraId} as integer)
+group	by 
+		o.nombre
+		, c.fecha_compra 
+		, o.direccion 
+		, c.monto_total		
+		, c.recibo_egreso
+		, '...']]>
+	</queryString>
+	<field name="RECIBI_DE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="RECIBI_DE"/>
+		<property name="com.jaspersoft.studio.field.label" value="RECIBI_DE"/>
+	</field>
+	<field name="NOMBRE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NOMBRE"/>
+		<property name="com.jaspersoft.studio.field.label" value="NOMBRE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="OFICINA"/>
+	</field>
+	<field name="FECHA_COMPRA" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="FECHA_COMPRA"/>
+		<property name="com.jaspersoft.studio.field.label" value="FECHA_COMPRA"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="COMPRA"/>
+	</field>
+	<field name="DIRECCION" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="DIRECCION"/>
+		<property name="com.jaspersoft.studio.field.label" value="DIRECCION"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="OFICINA"/>
+	</field>
+	<field name="MONTO_TOTAL" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="MONTO_TOTAL"/>
+		<property name="com.jaspersoft.studio.field.label" value="MONTO_TOTAL"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="COMPRA"/>
+	</field>
+	<field name="RECIBO_EGRESO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="RECIBO_EGRESO"/>
+		<property name="com.jaspersoft.studio.field.label" value="RECIBO_EGRESO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="COMPRA"/>
+	</field>
+	<field name="MONTO_LETRAS" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="MONTO_LETRAS"/>
+		<property name="com.jaspersoft.studio.field.label" value="MONTO_LETRAS"/>
+	</field>
+	<field name="CONCEPTO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="CONCEPTO"/>
+		<property name="com.jaspersoft.studio.field.label" value="CONCEPTO"/>
+	</field>
+	<detail>
+		<band height="560" splitType="Stretch">
+			<rectangle>
+				<reportElement x="10" y="17" width="740" height="533" uuid="b09f0847-7136-4594-bcc4-cba60a5549b7"/>
+			</rectangle>
+			<textField>
+				<reportElement x="110" y="120" width="210" height="30" uuid="eeb73b35-4f04-4d54-b3dc-624285afa078"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RECIBI_DE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="40" y="120" width="70" height="30" uuid="489958c3-0149-456e-afe0-d1fb2970df72"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Recibí de:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="370" y="120" width="180" height="30" uuid="4588e5d1-4c0f-4517-b485-6cc6d99942d9"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOMBRE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="320" y="120" width="50" height="30" uuid="c63f9bda-2442-44cd-8157-e211069e4dca"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Oficina:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="590" y="120" width="130" height="30" uuid="c4e2411b-7926-41a2-9f63-a7fd684067ca"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("  MM / dd / yyyy ").format($F{FECHA_COMPRA})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="550" y="120" width="40" height="30" uuid="ade98242-a6b1-4a99-a594-6866f17add87"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[el dia:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="590" y="70" width="130" height="39" uuid="11151963-0765-426e-9650-ec058b4e51c4"/>
+				<box>
+					<pen lineWidth="2.0"/>
+					<topPen lineWidth="2.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="2.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="2.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="2.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.text.DecimalFormat("S/ #,##0.00").format($F{MONTO_TOTAL})]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="40" y="30" width="140" height="79" uuid="8c732b6e-40a6-4f83-ad3c-3577e0907805"/>
+				<imageExpression><![CDATA[$P{pWebPath}+"/images/logo.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="180" y="50" width="410" height="40" uuid="cd4e35be-9208-4a9a-bc38-677b41090e07"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="25" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RECIBO DE EGRESO DE CAJA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="110" y="158" width="610" height="30" uuid="eea2e5c1-5877-451c-a785-9c1c3ec7dbd1"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DIRECCION}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="40" y="158" width="70" height="30" uuid="9b71bc49-0bdd-4504-ae2b-46481d9e2622"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Dirección:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="140" y="195" width="580" height="30" uuid="ef0089b3-5f42-4da6-aef2-0302afb16dcf"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MONTO_LETRAS}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="40" y="195" width="100" height="30" uuid="8429543a-7ea8-439b-a377-4836cf1017cc"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[La cantidad de:]]></text>
+			</staticText>
+			<textField textAdjust="ScaleFont">
+				<reportElement x="150" y="240" width="570" height="80" uuid="e998b93b-ab5b-4d6e-bc7e-c3e39bab2e3b"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CONCEPTO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="40" y="240" width="110" height="30" uuid="41c30e47-d59c-449f-9148-bc1dcf435e92"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Por concepto de:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="350" width="130" height="30" uuid="96cd9286-c428-4469-a47f-14f62979aea3"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Entregué conforme:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="350" width="130" height="30" uuid="60327a6e-5638-408c-a366-2c161e2a639c"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Recibí conforme:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="470" width="270" height="20" uuid="53a8405c-61f3-4267-9bc0-fd344bf70d6c"/>
+				<box>
+					<pen lineWidth="2.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[NOMBRE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="500" width="130" height="20" uuid="a8360d4b-3049-4d9c-bc6d-55d70e72b421"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[DNI:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="500" width="130" height="20" uuid="3943baca-95fa-435b-9d41-ee77d848ddf2"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[DNI:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="470" width="270" height="20" uuid="ff4bfdb7-bd2f-4906-9406-4cee29213f66"/>
+				<box>
+					<pen lineWidth="2.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[NOMBRE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="660" y="510" width="70" height="30" uuid="7994135b-b765-40cb-83a2-6cf1539be62c"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ORIGINAL]]></text>
+			</staticText>
+			<line direction="BottomUp">
+				<reportElement x="40" y="150" width="680" height="1" uuid="45114c82-d18d-4d7b-be7c-5a24d9bf7e93">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line direction="BottomUp">
+				<reportElement x="40" y="188" width="680" height="1" uuid="897cbfd0-eaa3-4de0-abcb-5934b4fd076e">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line direction="BottomUp">
+				<reportElement x="39" y="225" width="680" height="1" uuid="f3239e26-016b-4f5f-b1dd-e728648beb20">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line direction="BottomUp">
+				<reportElement x="40" y="320" width="680" height="1" uuid="df3f35a5-d714-4fbd-a5ed-e4ca32857c83">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line direction="BottomUp">
+				<reportElement x="40" y="470" width="270" height="1" uuid="62af991a-7fcd-483d-b269-ef017287b3df">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line direction="BottomUp">
+				<reportElement x="370" y="470" width="270" height="1" uuid="8625a772-e85d-4b68-ba4c-76511f1dbbd6">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<textField>
+				<reportElement x="590" y="40" width="130" height="30" uuid="a6c4be22-61e4-4b99-a6d9-190098a76eba"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RECIBO_EGRESO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<noData>
+		<band height="104">
+			<staticText>
+				<reportElement x="160" y="30" width="590" height="30" uuid="e65bb07e-d1d1-4000-94ef-6a7a35deb45e"/>
+				<textElement textAlignment="Center">
+					<font size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sin registros a mostrar en el reporte actual]]></text>
+			</staticText>
+			<image>
+				<reportElement x="10" y="9" width="140" height="79" uuid="d444b64b-4ed4-4b0f-a278-dbc674f29572"/>
+				<imageExpression><![CDATA[$P{pWebPath}+"/images/logo.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</noData>
+</jasperReport>

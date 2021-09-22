@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.12.0.final using JasperReports Library version 6.12.1-ac0eebdb29e4c0985457bab279a6db744d661530  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="credito_cobranza" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f66b2629-e936-4043-a810-3505b91ed053">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="344"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="645"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="conexion a server hpsap"/>
+	<queryString language="SQL">
+		<![CDATA[select p.id, p.dni,
+p.primer_nombre,
+p.segundo_nombre, p.primer_apellido, 
+p.segundo_apellido,p.nombre_comercial, 
+c.id as idcompra, 
+c.fecha_compra, c.no_documento_compra, 
+c.oficina_id , 
+coalesce(c.monto_credito ,0) as monto_credito , 
+COALESCE(c.monto_anticipo,0) as monto_anticipo
+from proveedor p
+inner join compra c on p.id = c.proveedor_id 
+where 
+c.activa = true 
+and c.estado > 1
+and (c.monto_anticipo  > 0 or c.monto_credito >0)
+order by p.id, c.id asc]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="proveedor"/>
+	</field>
+	<field name="dni" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="dni"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="proveedor"/>
+	</field>
+	<field name="primer_nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="primer_nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="proveedor"/>
+	</field>
+	<field name="segundo_nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="segundo_nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="proveedor"/>
+	</field>
+	<field name="primer_apellido" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="primer_apellido"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="proveedor"/>
+	</field>
+	<field name="segundo_apellido" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="segundo_apellido"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="proveedor"/>
+	</field>
+	<field name="nombre_comercial" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nombre_comercial"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="proveedor"/>
+	</field>
+	<field name="idcompra" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="idcompra"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="compra"/>
+	</field>
+	<field name="fecha_compra" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="fecha_compra"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="compra"/>
+	</field>
+	<field name="no_documento_compra" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="no_documento_compra"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="compra"/>
+	</field>
+	<field name="oficina_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="oficina_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="compra"/>
+	</field>
+	<field name="monto_credito" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="monto_credito"/>
+	</field>
+	<field name="monto_anticipo" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="monto_anticipo"/>
+	</field>
+	<group name="id">
+		<groupExpression><![CDATA[$F{id}]]></groupExpression>
+		<groupHeader>
+			<band height="50">
+				<textField>
+					<reportElement x="90" y="0" width="400" height="21" uuid="0dd18d24-6856-4071-8e30-d01b5742fbd4"/>
+					<textFieldExpression><![CDATA[$F{primer_nombre} + " " + $F{segundo_nombre} + " " + $F{primer_apellido} + " " + $F{segundo_apellido}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="80" y="28" width="60" height="20" uuid="d91919f9-6db6-45f5-8035-86e2e52609c1">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f8b46ae0-908f-4dc0-aa77-ba767a70a7ed"/>
+					</reportElement>
+					<text><![CDATA[ID Compra]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="150" y="29" width="73" height="20" uuid="5349d212-da64-43e7-bb89-573e855c2208">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bc6930d8-7bb0-4ea6-8b14-c314048719ba"/>
+					</reportElement>
+					<text><![CDATA[Fecha Compra]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="233" y="29" width="95" height="20" uuid="1cbc1237-9465-49f8-abeb-4f7da2702da8">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bf28fb8b-babf-4553-846d-28c3f2409e94"/>
+					</reportElement>
+					<text><![CDATA[No Doc]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="340" y="29" width="95" height="20" uuid="143ce0d2-41a1-494b-bcf7-af0d8cdef7dc">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7a5fc192-e632-4835-ac69-a0ffd8688a56"/>
+					</reportElement>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Crédito]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="445" y="29" width="90" height="20" uuid="f556a902-3ee6-4aa5-b636-412e0ee070f9">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7e2a90f5-7f36-4b74-9e1a-0a8ed62f3562"/>
+					</reportElement>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Anticipo]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="40" y="0" width="50" height="20" uuid="6be4d18f-9e5b-44ab-9ad1-82e34f5fc71f"/>
+					<textFieldExpression><![CDATA[$F{dni}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="2" width="30" height="17" uuid="53b749c6-1a5f-4b85-a4ea-6c575d31d191"/>
+					<text><![CDATA[DNI]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="30" y="20" width="500" height="30" uuid="0e4c3014-30b2-4723-b8ed-9a9515529c84"/>
+				<textElement textAlignment="Center">
+					<font size="25" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reporte de Creditos y Cobranza]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="51" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement x="80" y="-1" width="60" height="20" uuid="f0ed4dca-ac02-4b9d-8c58-d04d97862c36">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f8b46ae0-908f-4dc0-aa77-ba767a70a7ed"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{idcompra}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="-1" width="73" height="20" uuid="f8dcb5de-7967-424d-888e-ae1d4d559286">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bc6930d8-7bb0-4ea6-8b14-c314048719ba"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{fecha_compra}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="233" y="0" width="95" height="20" uuid="d61d3326-dd5f-40ad-aa02-e5de739feb44">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bf28fb8b-babf-4553-846d-28c3f2409e94"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{no_documento_compra}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="340" y="0" width="95" height="20" uuid="b6b896df-6978-4231-ad19-b74b1009562f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7a5fc192-e632-4835-ac69-a0ffd8688a56"/>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{monto_credito}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="445" y="0" width="90" height="20" uuid="58f89811-d0bc-4758-88b1-f88b626905da">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7e2a90f5-7f36-4b74-9e1a-0a8ed62f3562"/>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{monto_anticipo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement x="60" y="0" width="475" height="3" uuid="18f511d9-21de-402e-871a-d7c5f8544f0a"/>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

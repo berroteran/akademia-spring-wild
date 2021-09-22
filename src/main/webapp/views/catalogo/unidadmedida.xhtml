@@ -1,0 +1,139 @@
+<ui:composition template="../../templates/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="head">
+        <style type="text/css">
+            .cars-datalist .text-column p:last-child {
+                color: #757575;
+            }
+
+            .cars-datalist .car-item {
+                padding: 8px 14px;
+            }
+
+            .cars-datalist .car-item img, .cars-datalist .car-item .car-details {
+                display: inline-block;
+                vertical-align: middle;
+                margin-right: 14px;
+            }
+
+            .cars-datalist .car-item button {
+                float: right;
+            }
+
+            .cars-datalist .ui-datalist-item:not(:last-child) {
+                border-bottom: 1px solid #dee4e9;
+            }
+
+            .cars-datalist ul {
+                margin: 0;
+                padding: 0;
+            }
+
+            .ui-car-display td:last-child {
+                font-weight: 700;
+            }
+
+            @media (max-width: 640px) {
+                .cars-datalist .text-column {
+                    text-align: center;
+                }
+
+                .ui-tree {
+                    width: 100%;
+                }
+            }
+        </style>
+    </ui:define>
+
+    <ui:define name="title">Unidades de Medida</ui:define>
+
+    <ui:define name="content">
+        <h:form id="form-oficinas-list">
+
+            <p:dataTable id="unidades-list"
+                         widgetVar="unidades-list"
+                         selectionMode="single" reflow="true"
+                         emptyMessage="No se encontraron registros"
+                         value="#{unidadMedidaBackBean.unidadMedidas}"
+                         var="unidadmedida"
+                         rowKey="#{unidadmedida.id}"
+                         paginator="true" rows="10">
+
+                <f:facet name="header">
+
+                    <p:commandButton value="Nueva Unidad de Medida" id="btnAgregarNuevo"
+                                     icon="fa fa-plus-circle"
+                                     oncomplete="PF('modalProveedor').show()" update=":modalProveedor"
+                                     process=":formModalProveedor"
+                                     rendered="false"
+                                     actionListener="#{unidadMedidaBackBean.crear}"/>
+
+                    <p:commandButton value="Limpiar filtros"
+                                     onclick="PF('unidades-list').clearFilters();"
+                                     rendered="false"
+                                     styleClass="secondary-button">
+                        <p:resetInput target="envases-list"/>
+                    </p:commandButton>
+                </f:facet>
+
+                <p:column headerText="ID" filterBy="#{unidadmedida.nombre}"
+                          filterable="true" filterMatchMode="contains">
+                    <h:outputText value="#{unidadmedida.nombre}"/>
+                </p:column>
+
+                <p:column headerText="Nombre" filterBy="#{unidadmedida.nombre}"
+                          filterable="true" filterMatchMode="contains">
+                    <h:outputText value="#{unidadmedida.nombre}"/>
+                </p:column>
+
+
+            </p:dataTable>
+        </h:form>
+
+        <p:dialog id="modalProveedor" height="650" showHeader="false" width="650"
+                  hideEffect=""
+                  widgetVar="modalProveedor" modal="true">
+            <h:form id="formModalProveedor" style="height: 100%; width: 100%">
+                <p:panel id="panel-nuevo-unidadmedida" style="width: 100%; height: 100%">
+                    <f:facet name="header">
+                        <div class="ui-g">
+                            <div class="ui-g-6" style="margin: auto">
+                                <h:outputText value="Nuevo Envase"/>
+                            </div>
+
+                            <div class="ui-g-6 content-align-right">
+                                <p:commandButton value="Guardar"
+                                                 process="@this, :formModalProveedor" icon="fa fa-save"
+                                                 actionListener="#{unidadmedidaBackBean.save}"
+                                                 update=":form-oficinas-list"
+                                                 style="margin: 0.1em"/>
+
+                                <p:commandButton value="Cancelar" style="margin: 0.1em"
+                                                 styleClass="secondary-button"
+                                                 icon="fa fa-close"
+                                                 resetValues="true"
+                                                 update="@form"
+                                                 oncomplete="PF('modalProveedor').hide()"
+                                />
+                            </div>
+                        </div>
+                    </f:facet>
+
+                    <p:panelGrid columns="4" layout="grid" style="width: 100%;"
+                                 columnClasses="ui-g-2 ui-md-6 ui-lg-2, ui-g-4 ui-md-6 ui-lg-4, ui-g-2 ui-md-6 ui-lg-2, ui-g-4 ui-md-6 ui-lg-4">
+
+
+                    </p:panelGrid>
+                </p:panel>
+
+            </h:form>
+        </p:dialog>
+
+    </ui:define>
+
+</ui:composition>

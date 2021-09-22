@@ -1,0 +1,128 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+>
+
+    <div class="layout-topbar">
+        <div class="layout-topbar-wrapper">
+            <div class="layout-topbar-left">
+                <div class="menu-button">
+                    <i class="fa fa-bars"></i>
+                </div>
+                <h:link id="logolink" class="layout-topbar-logo">
+                    <p:graphicImage name="tema-empresa/logos/logo_en_blanco_300x204.png" library="static"/>
+                </h:link>
+            </div>
+
+            <div>
+                <div class="layout-topbar-right">
+                    <ul class="layout-topbar-actions">
+                        <li class="topbar-item ">
+                            <a href="/views/atencion/atencion.xhtml" style="color: white;">
+                                <i class="topbar-icon fa fa-fw fa-square-o"></i> Atenciones..x
+                            </a>
+                        </li>
+
+                        <li class="topbar-item ">
+                            <a href="/views/compras/compras.xhtml" style="color: white;">
+                                <i class="topbar-icon fa-fw fa-table"></i> Compras
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <ui:include src="./menu.xhtml"/>
+
+            <div class="layout-topbar-right">
+                <ul class="layout-topbar-actions">
+                    <li class="topbar-item search-item">
+                        <a href="#">
+                            <i class="topbar-icon fa fa-search"></i>
+                        </a>
+                        <ul>
+                            <li class="layout-submenu-item search-item">
+                                <h:form onsubmit="return false;">
+                                    <h:panelGroup styleClass="md-inputfield search-input-wrapper">
+                                        <p:inputText placeholder="Search..." />
+                                        <i class="fa fa-search"></i>
+                                    </h:panelGroup>
+                                </h:form>
+                            </li>
+                        </ul>
+                    </li>
+
+
+                    <li class="topbar-item notifications">
+                        <a href="#">
+                            <i class="topbar-icon fa fa-bell"></i>
+                        </a>
+                        <ul>
+                            <li class="layout-submenu-header">
+                                <h1>Notifications </h1>
+                                <span> Mark All as Read</span>
+                            </li>
+                            <li class="layout-submenu-item">
+                                <div class="menu-text">
+                                    <div>
+                                        <p:graphicImage name="siberia-layout/images/topbar/topbar-carmen.png" library="static"/>
+                                        <p><strong>Carmen Beltrán </strong>mentioned you in a comment in PrimeFaces </p>
+                                    </div>
+                                  
+                                    <span class="time"> <i class="fa fa-clock-o"></i> 3h</span>
+                                </div>
+                            </li>
+                            <li class="layout-submenu-item">
+                                <div class="menu-text">
+                                    <div>
+                                        <p:graphicImage name="siberia-layout/images/topbar/topbar-chun.png" library="static"/>
+                                        <p><strong>Yi Chun-Hwa</strong> marked himself safe during <strong>The Getty
+                                                Fire</strong></p>
+                                    </div>
+                                   
+                                    <span class="time"> <i class="fa fa-clock-o"></i> 2d</span>
+                                </div>
+                            </li>
+                            <li class="layout-submenu-item">
+                                <div class="menu-text">
+                                    <div>
+                                        <p:graphicImage name="siberia-layout/images/topbar/topbar-primefaces.png" library="static"/>
+                                        <p><strong>PrimeFaces</strong> has a new post from <strong>Chineze Uchechey</strong></p>
+                                    </div>
+                                    <span class="time"> <i class="fa fa-clock-o"></i> 4w</span>
+                                </div>
+                            </li>
+                            <li class="layout-submenu-item">
+                                <div class="menu-text">
+                                    <div>
+                                        <p:graphicImage name="siberia-layout/images/topbar/topbar-cermodern.png" library="static"/>
+                                        <p><strong>CerModern</strong> 2 nuevos eventos cearca de ti </p>
+                                    </div>
+
+                                    <span class="time"> <i class="fa fa-clock-o"></i> 5S</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="topbar-item profile-item">
+                        <a href="#">
+                            <span class="profile-image-wrapper">
+                                <p:graphicImage name="siberia-layout/images/topbar/avatar-profile-2.png"
+                                                library="static"/>
+                            </span>
+                            <span class="profile-info-wrapper" style="width: 200px;">
+                                <h3><h:outputText value="#{sessionBackBean.getUserName()}"/></h3>
+                                <span><h:outputText
+                                        value="#{sessionBackBean.getLogin()}/#{sessionBackBean.oficina.nombre} "/></span>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</ui:composition>

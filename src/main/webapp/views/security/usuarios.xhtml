@@ -1,0 +1,205 @@
+<ui:composition template="../../templates/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="head">
+        <style type="text/css">
+            body .ui-fieldset .ui-fieldset-legend {
+                border: none;
+            }
+            body .ui-datatable thead th .ui-column-title {
+                font-weight: 800;
+            }
+        </style>
+    </ui:define>
+
+    <ui:define name="title">Catalogo de Usuarios</ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="formUsuarios">
+
+            <p:dataTable id="dtUsuarios"
+                         widgetVar="dtUsuarios"
+                         selectionMode="single"
+                         reflow="true"
+                         emptyMessage="No se encontraron registros"
+                         value="#{usuariosBackBean.usuarios}"
+                         selection="#{usuariosBackBean.usuario}"
+                         var="usuario"
+                         rowKey="#{usuario.id}"
+                         paginator="true"
+                         rows="10"
+                         paginatorPosition="bottom">
+
+                <p:ajax event="rowDblselect" update=":modalUsuario" oncomplete="PF('modalUsuario').show()"/>
+
+                <f:facet name="header">
+
+                    <p:commandButton value="Agregar" id="btnAgregarNuevo"
+                                     icon="fa fa-plus-circle"
+                                     oncomplete="PF('modalUsuario').show()"
+                                     update=":modalUsuario"
+                                     process="@this"
+                                     actionListener="#{usuariosBackBean.crear}"/>
+
+                </f:facet>
+
+                <p:column headerText="id" sortable="true" sortBy="#{usuario.id}" filterBy="#{usuario.id}" width="55">
+                    <h:outputText value="#{usuario.id}"/>
+                </p:column>
+                <p:column headerText="Login (usuario)" sortable="true" sortBy="#{usuario.login}" filterBy="#{usuario.login}">
+                    <h:outputText value="#{usuario.login}"/>
+                </p:column>
+                <p:column headerText="Nombres del usuario" sortBy="#{usuario.firstName}" filterBy="#{usuario.firstName}" >
+                    <h:outputText value="#{usuario.firstName.concat(' ').concat(usuario.lastName)}"/>
+                </p:column>
+                <p:column headerText="Correo" sortBy="#{usuario.email}">
+                    <h:outputText value="#{usuario.email}"/>
+                </p:column>
+                <p:column headerText="Activo" >
+                    <p:selectBooleanCheckbox value="#{usuario.activo}"/>
+                </p:column>
+
+            </p:dataTable>
+        </h:form>
+
+
+
+
+        <p:dialog id="modalUsuario"
+                  height="auto"
+                  showHeader="truse"
+                  width="800"
+                  hideEffect=""
+                  widgetVar="modalUsuario"
+                  modal="true"
+                  draggable="true"
+                  closeOnEscape="true">
+
+            <h:form id="formModalUsuario" style="height: 100%; width: 100%">
+
+                <p:panel id="panel-nuevo-producto">
+
+
+                    <f:facet name="header">
+                        <div class="ui-g">
+                            <div class="ui-g-4" style="margin: auto">
+                                <h:outputText  value="#{usuariosBackBean.usuario.id eq null ? 'Nuevo Usuario' : 'Actualizar Datos Usuario'}"  style="font-size: 16px;font-weight: bold" />
+                            </div>
+                            <div class="ui-g-8 content-align-right">
+                                <p:commandButton value="Restablecer Contraseña" style="margin: 0.1em"
+                                                 styleClass="info-btn"
+                                                 icon="fa fa-close" resetValues="true"
+                                                 update=":formModalUsuario" oncomplete=""/>
+
+                                <p:commandButton
+                                        value="#{usuariosBackBean.usuario.id eq null ? 'Guardar' : 'Aplicar Cambios'}"
+                                        process="@form" icon="fa fa-save"
+                                        actionListener="#{usuariosBackBean.save}"
+                                        update=":formUsuarios" style="margin: 0.1em"/>
+
+                                <p:commandButton value="Cerrar" style="margin: 0.1em" styleClass="secondary-button"
+                                                 icon="fa fa-close" resetValues="true"
+                                                 update=":formModalUsuario" oncomplete="PF('modalUsuario').hide()"/>
+                            </div>
+                        </div>
+                    </f:facet>
+
+                    <p:panelGrid columns="4" layout="flex" columnClasses="p-col-2, p-col-4, p-col-2, p-col-4"
+                                 contentStyleClass="p-align-baseline ui-fluid">
+                        <p:outputLabel for="txtUsername" value="Username"/>
+                        <p:inputText id="txtUsername" value="#{usuariosBackBean.usuario.login}"/>
+                        <p:outputLabel for="txtCorreo" value="Correo"/>
+                        <p:inputText id="txtCorreo" value="#{usuariosBackBean.usuario.email}"/>
+                    </p:panelGrid>
+
+                    <p:panelGrid columns="4" layout="flex" columnClasses="p-col-2, p-col-4, p-col-2, p-col-4"
+                                 contentStyleClass="p-align-baseline ui-fluid">
+                        <p:outputLabel for="txtNombre" value="Nombre"/>
+                        <p:inputText id="txtNombre" value="#{usuariosBackBean.usuario.firstName}"/>
+                        <p:outputLabel for="txtApellidos" value="Apellidos"/>
+                        <p:inputText id="txtApellidos" value="#{usuariosBackBean.usuario.lastName}"/>
+                    </p:panelGrid>
+                    <p:panel>
+                        <p:outputLabel for="sbolActivo" value="Activo: "/>
+                        <p:selectBooleanButton id="sbolActivo"
+                                               value="#{usuariosBackBean.usuario.activo }"
+                                               onLabel="Si"
+                                               offLabel="No"/>
+                    </p:panel>
+
+                    <p:fieldset id="fldCambiarPassword" legend="Contraseña">
+                        <p:panelGrid columns="2" layout="flex"
+                                     columnClasses="p-col-3, p-col-8"
+                                     contentStyleClass="p-align-baseline ui-fluid">
+                            <p:password id="password" name="password"
+                                        value="#{usuariosBackBean.password}"
+                                        placeholder="Escribe una contraseña"/>
+                            <p:password id="password2" name="password2"
+                                        value="#{usuariosBackBean.password}"
+                                        placeholder="Confirma contraseña"/>
+                        </p:panelGrid>
+                    </p:fieldset>
+
+                    <p:panelGrid columns="1">
+                        <p:tabView id="content-detail" styleClass="ui-g-12">
+                            <p:tab title="Roles">
+                                <p:dataTable id="dtRoles"
+                                             widgetVar="dtRoles"
+                                             selectionMode="single" reflow="true"
+                                             emptyMessage="No se encontraron registros"
+                                             value="#{rolesBackBean.roles}"
+                                             selection="#{rolesBackBean.rol}"
+                                             var="rol"
+                                             rowKey="#{rol.id}"
+                                             paginator="true" rows="10" paginatorPosition="bottom">
+
+                                    <p:ajax event="rowDblselect" update=":modalUsuario"
+                                            oncomplete="PF('modalUsuario').show()"/>
+                                    <p:ajax event="rowSelect" update="@this"/>
+                                    <f:facet name="header">
+
+                                        <p:commandButton value="Agregar Rol" id="btnAgregarNuevoRol"
+                                                         icon="fa fa-plus-circle"
+                                                         oncomplete="PF('modalUsuario').show()" update=":modalUsuario"
+                                                         process="@this"
+                                                         actionListener="#{rolesBackBean.crear}"/>
+                                    </f:facet>
+
+                                    <p:column headerText="ROL NOmbre">
+                                        <h:outputText value="#{rol.nombre}"/>
+                                    </p:column>
+                                    <p:column headerText="descripcion">
+                                        <h:outputText value=""/>
+                                    </p:column>
+                                    <p:column headerText="">
+                                        <h:outputText value=""/>
+                                    </p:column>
+                                    <p:column headerText="Activo">
+                                        <p:selectBooleanCheckbox value="#{rol.activo}"/>
+                                    </p:column>
+
+                                </p:dataTable>
+
+                            </p:tab>
+                        </p:tabView>
+                    </p:panelGrid>
+
+                    <f:facet name="footer">
+                        <div class="ui-g">
+                            <div class="ui-g-12 content-align-right">
+                            </div>
+                        </div>
+                    </f:facet>
+                </p:panel>
+
+            </h:form>
+        </p:dialog>
+
+    </ui:define>
+
+</ui:composition>

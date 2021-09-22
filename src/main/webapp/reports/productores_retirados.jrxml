@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.12.0.final using JasperReports Library version 6.12.1-ac0eebdb29e4c0985457bab279a6db744d661530  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="productores_retirados" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="960d846a-1211-4b43-b00f-5f7e3a215a61">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="conexion a server hpsap"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="277"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="717"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<queryString>
+		<![CDATA[select p.id, 
+p.primer_nombre || ' ' || p.segundo_nombre || ' ' || p.primer_apellido || ' '  || p.segundo_apellido as nombre,
+p.fecha_modificacion as fecha_baja, 
+case when p.estado_organico = 1 then 'Retirado Positivo'
+     when p.estado_organico = 2 then 'Retirado Voluntario'
+end estado_organico, 
+p.razon_baja 
+from proveedor p
+where p.estado_organico > 1
+]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="proveedor"/>
+	</field>
+	<field name="nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
+	</field>
+	<field name="fecha_baja" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="fecha_baja"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="proveedor"/>
+	</field>
+	<field name="estado_organico" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="estado_organico"/>
+	</field>
+	<field name="razon_baja" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="razon_baja"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="proveedor"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="65" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="10" width="561" height="30" uuid="05f1f33f-05ba-4067-856a-b4916336e99b"/>
+				<textElement textAlignment="Center">
+					<font size="22"/>
+				</textElement>
+				<text><![CDATA[Reporte de Productores Retirados]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="144" splitType="Stretch">
+			<rectangle>
+				<reportElement x="10" y="30" width="520" height="80" uuid="254ae209-3e39-44f5-823f-2a56c87eb69d"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="10" y="10" width="210" height="20" uuid="c75dd235-5ad5-4229-a497-3e00dc74f090"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Estadisticas de retirados]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="120" width="96" height="24" uuid="8ac75a4f-8abb-4a10-a6e4-4f73c8758747">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="95ef6c1e-e7d0-468d-8795-08fed8b8c6c8"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[id]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="122" y="120" width="114" height="24" uuid="6ee26387-7da5-46e0-bc57-43a415df0087">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="11a56f07-1521-4528-b87f-87822ae096b6"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="236" y="120" width="114" height="24" uuid="03bcbe9f-d3c1-4bef-a99d-c16bb52267dc">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c0549155-2dc2-4482-8920-2e9c6967a0b9"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[fecha_baja]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="120" width="114" height="24" uuid="38c94cbf-e7cf-498d-8aaa-f5fbd54d1615">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f7ae1240-853d-43b1-843a-bcc67d0d7e5e"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[estado_organico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="464" y="120" width="114" height="24" uuid="7b31f228-caa2-4f5e-804a-ace8bb70eee8">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="463c98ab-60d1-43cf-9d46-3debee557564"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[razon_baja]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="53" splitType="Stretch">
+			<textField>
+				<reportElement x="24" y="0" width="92" height="30" uuid="725d383f-2f21-4a94-a398-3d3525a2c1c3">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="95ef6c1e-e7d0-468d-8795-08fed8b8c6c8"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="116" y="0" width="114" height="30" uuid="361f6716-9a02-4169-91e2-22a97ced93a3">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="11a56f07-1521-4528-b87f-87822ae096b6"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="230" y="0" width="114" height="30" uuid="7fcf8f50-ceee-4954-af30-0536a26f0c52">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c0549155-2dc2-4482-8920-2e9c6967a0b9"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{fecha_baja}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="344" y="0" width="114" height="30" uuid="44c4f31c-f7ef-4e15-a313-2d6f65d6ec53">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f7ae1240-853d-43b1-843a-bcc67d0d7e5e"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{estado_organico}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="458" y="0" width="114" height="30" uuid="0e439d86-b2aa-4422-a35e-3c270a961b67">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="463c98ab-60d1-43cf-9d46-3debee557564"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{razon_baja}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
