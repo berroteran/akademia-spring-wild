@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <f:facet name="first">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+        <meta name="apple-mobile-web-app-capable" content="yes"/>
+    </f:facet>
+    <title>Machu Picchu Zonas</title>
+</h:head>
+
+<h:body styleClass="login-body notfound">
+    <h:form id="loginForm" prependId="false">
+
+        <p:growl id="message" life="1000" showDetail="true" sticky="true" />
+
+        <div class="login-wrapper" style="background: antiquewhite">
+            <div class="login-wrapper">
+                <div class="login-content">
+                    <div class="content-text">
+                        <h1>Machu Picchu Zonas</h1>
+                        <span>Inicio de Sesión</span>
+                        <div class="login-input">
+                            <p:inputText id="username" name="username" value="#{sessionBackBean.username}" placeholder="Digite su usuario" autocomplete="off"/>
+                            <i class="fa fa-envelope"></i>
+                        </div>
+                        <div class="login-input">
+                            <p:password id="password" name="password" value="#{sessionBackBean.password}" placeholder="Digita su contraseña" />
+                            <i class="fa fa-lock lock"></i>
+                        </div>
+
+                        <p:commandButton type="submit" value="Ingresar" action="#{sessionBackBean.loginAction}" ajax="false" />
+
+                        <h4>Versión: 0.97.50</h4>
+                        <h5><i>Build Septiembre, 01 20201. 1600.</i></h5>
+                    </div>
+                     <img src="images/logo.jpg" style="width: 200px;" />
+                </div>
+            </div>
+
+        </div>
+        <h:outputStylesheet name="siberia-layout/css/layout-arctic.css" library="static"/>
+
+
+    </h:form>
+</h:body>
+</html>

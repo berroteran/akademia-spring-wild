@@ -1,0 +1,101 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:sec="http://www.springframework.org/security/tags"
+                xmlns:sb="http://primefaces.org/siberia">
+
+
+    <sb:menu widgetVar="SiberiaMenuWidget">
+
+        <p:submenu id="sb_homepage" label="HomePage" icon="fa fa-fw fa-home">
+            <p:menuitem id="sb_dashboard" value="Dashboard" icon="fa fa-fw fa-dashboard"
+                        outcome="/templates/dashboard.xhtml"/>
+        </p:submenu>
+
+        <p:submenu id="sb_default" label="Operaciones" icon="fa fa-fw fa-cube">
+            <p:menuitem id="frm_atencion" value="1. Atención" icon="fa fa-fw fa-square-o"
+                        outcome="/views/atencion/atencion.xhtml"/>
+            <p:menuitem id="frm_compras" value="2. Compras" icon="fa fa-fw fa-square-o"
+                        outcome="/views/compras/compras.xhtml"/>
+
+            <p:menuitem id="frm_baba" value="3.1 Transformacion BABA" icon="fa fa-fw fa-square-o" outcome="/views/producto/transformacion.xhtml"/>
+
+            <p:menuitem id="pg_secadoLimpiado" value="3.2 Secado y limpiado." icon="fa fa-fw fa-square-o" outcome="/views/producto/secadoylimpiado.xhtml"/>
+
+            <p:menuitem id="pg_trasegado" value="4. Trasegado" icon="fa fa-fw fa-square-o"
+                        outcome="/views/producto/trasegado.xhtml"/>
+            <p:menuitem id="pg_packing" value="5. Packing List" icon="fa fa-fw fa-square-o"
+                        outcome="/views/producto/packingList.xhtml"/>
+            <p:menuitem id="pg_Remesa" value="6. Remesas" icon="fa fa-fw fa-square-o"
+                        outcome="/views/producto/remesa.xhtml"/>
+            <p:menuitem id="pg_remesarecepcion" value="7. Remesas Recepción" icon="fa fa-fw fa-square-o"
+                        outcome="/views/producto/remesaRecepcion.xhtml"/>
+
+            <p:menuitem id="pg_remesaCalidad" value=":: Transformar Organico a Conv." icon="fa fa-fw fa-square-o"
+                        outcome="/views/producto/transformarOrganic2conv.xhtml"/>
+
+            <p:menuitem id="pg_merma" value=":: Mermas" icon="fa fa-fw fa-square-o" outcome="/views/producto/merma.xhtml"/>
+
+        </p:submenu>
+
+
+        <p:submenu id="sm_admin" label="Administración" icon="fa fa-fw fa-cube">
+
+            <sec:authorize access="hasAuthority('gerenteFOB')">
+                <p:menuitem id="smenu_FOB" value="FOB"
+                            icon="fa fa-fw fa-square-o"
+                            outcome="/views/gerencia/fob.xhtml"/>
+            </sec:authorize>
+
+            <p:menuitem id="pg_proyectado" value="Proyectado Agricultor" icon="fa fa-fw fa-square-o"
+                        outcome="/views/proveedores/proyectadoAgricultor.xhtml"/>
+            <p:menuitem id="pg_liqCompraReintegro" value="Liquidación de Reintegros" icon="fa fa-fw fa-square-o"
+                        outcome="/views/proveedores/liquidacionReintegro.xhtml"/>
+
+            <p:menuitem id="frm_prov_reintegro" value="Reintegro a Proveedores" icon="fa fa-fw fa-square-o"
+                        outcome="/views/proveedores/reintegro.xhtml" rendered="false" />
+
+            <p:menuitem id="smenu_UIT" value="UIT" icon="fa fa-fw fa-square-o"
+                        outcome="/views/configuracion/uit.xhtml"/>
+            <p:menuitem id="smenu_flete" value="Flete" icon="fa fa-fw fa-square-o"
+                        outcome="/views/configuracion/flete.xhtml"/>
+        </p:submenu>
+
+        <p:submenu id="sb_components" label="Catalogos" icon="fa fa-fw fa-star">
+            <p:menuitem id="cat_prov" value="Proveedor" outcome="/views/catalogo/proveedor.xhtml"
+                        icon="fa fa-fw fa-columns"/>
+            <p:menuitem id="cat_prod" value="Productos" outcome="/views/catalogo/producto.xhtml"
+                        icon="fa fa-fw fa-columns"/>
+            <p:menuitem id="cat_ofic" value="Envases" outcome="/views/catalogo/envases.xhtml"
+                        icon="fa fa-fw fa-columns"/>
+            <p:menuitem id="cat_maquinas" value="Maquinas" outcome="/views/catalogo/maquinas.xhtml"
+                        icon="fa fa-fw fa-columns"/>
+            <p:menuitem id="cat_enva" value="Oficinas" outcome="/views/oficina/oficinas.xhtml"
+                        icon="fa fa-fw fa-columns"/>
+            <p:menuitem id="cat_unim" value="UM" outcome="/views/catalogo/unidadmedida.xhtml"
+                        icon="fa fa-fw fa-columns"/>
+
+        </p:submenu>
+
+        <sec:authorize access="hasAuthority('ADMIN')">
+                 <p:submenu id="sb_settings" label="CONFIGURACION" icon="fa fa-fw fa-cube">
+
+                     <p:menuitem id="frm_setting" value="Configuración" icon="fa fa-fw fa-cogs"
+                                 outcome="/views/configuracion/configuracion.xhtml"/>
+
+                     <p:submenu id="sb_security" label="Seguridad" icon="fa fa-fw fa-cube">
+                         <p:menuitem id="sec_usuarios" value="Usuarios" icon="fa fa-fw fa-square-o"
+                                     outcome="/views/security/usuarios.xhtml"/>
+                         <p:menuitem id="sec_roles" value="roles" icon="fa fa-fw fa-square-o"
+                                     outcome="/views/security/roles.xhtml"/>
+                     </p:submenu>
+                     <p:menuitem id="frm_atencion1" value="Preba de Reporte " icon="fa fa-fw fa-square-o"
+                                 outcome="/views/atencion/reporte.xhtml"/>
+                 </p:submenu>
+        </sec:authorize>
+
+        <p:submenu id="sb_actions" label="Acciones" icon="fa fa-fw fa-cube">
+            <p:menuitem id="sb_login" value="Salir" icon="fa fa-fw fa-sign-in" url="${request.contextPath}/logout"/>
+        </p:submenu>
+    </sb:menu>
+</ui:composition>

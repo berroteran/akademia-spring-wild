@@ -1,0 +1,214 @@
+.content-align-right{
+    text-align: right;
+}
+
+.content-align-center{
+    text-align: center;
+}
+
+
+.ui-dialog .ui-dialog-titlebar {
+    padding: 0.5em !important;
+}
+
+
+.ui-datatable-data{
+    font-size: 0.9em;
+
+}
+
+.ui-panel .ui-panel-titlebar{
+    padding: 0px 1em !important;
+}
+
+.ui-dialog .ui-dialog-content{
+    padding: 0.5em !important;
+}
+
+.ui-panel .ui-panel-titlebar h4{
+    margin: 0px;
+}
+
+.ui-datatable .ui-datatable-header h4{
+    margin: 0px;
+}
+
+.ui-datatable .ui-datatable-header{
+    padding: 0.1em 1em !important;
+}
+
+.ui-column-title{
+    font-size: 0.95em !important;
+}
+
+.ui-datatable thead th{
+    font-size: 0.9em !important;
+}
+
+.ui-datatable thead th .ui-column-title{
+    font-weight: bold !important;
+}
+
+.ui-datatable thead th{
+    text-align: center !important;
+}
+
+.layout-content {
+    padding: 20px 1% !important;
+}
+
+.layout-topbar{
+    background-color: #523636 !important;
+    background-image: none !important;
+}
+
+.ui-fieldset .ui-fieldset-legend{
+    padding: 0.1em 1em !important;
+}
+
+.ui-fieldset{
+    padding: 0.2em 0.5em !important;
+}
+
+.ui-button{
+    font-size: 1.2em !important;
+}
+
+.p-datepicker input{
+    width: 98% !important;
+}
+
+.p-col-5p {
+    width: 5%;
+}
+
+.p-col-10p {
+    width: 10%;
+}
+
+.p-col-15p {
+    width: 15%;
+}
+
+.p-col-20p {!important
+    width: 20%;
+}
+
+.p-col-25p {
+    width: 25%;
+}
+
+.p-col-30p {
+    width: 30%;
+}
+
+.p-col-35p {
+    width: 35%;
+}
+
+.p-col-40p {
+    width: 40%;
+}
+
+.p-col-45p {
+    width: 45%;
+}
+
+.p-col-50p {
+    width: 50%;
+}
+
+.p-col-55p {
+    width: 55%;
+}
+
+.p-col-60p {
+    width: 60%;
+}
+
+.p-col-65p {
+    width: 65%;
+}
+
+.p-col-70p {
+    width: 70%;
+}
+
+.p-col-75p {
+    width: 75%;
+}
+
+.p-col-80p {
+    width: 80%;
+}
+
+.p-col-85p {
+    width: 85%;
+}
+
+.p-col-90p {
+    width: 90%;
+}
+
+.p-col-95p {
+    width: 95%;
+}
+
+.p-col-100p {
+    width: 100%;
+}
+
+.custom-filter-esta {
+    font-size: 10px;
+}
+
+.ui-g-1, .ui-g-2, .ui-g-3, .ui-g-4, .ui-g-5, .ui-g-6, .ui-g-7, .ui-g-8, .ui-g-9, .ui-g-10, .ui-g-11, .ui-g-12{
+    padding: .2em !important;
+}
+.ui-panelgrid .ui-panelgrid-cell{
+    padding: .2em .3em !important;
+}
+.p-grid{
+    margin-left: 0!important;
+    margin-bottom: .5% !important;
+}
+.ui-datatable thead > tr{
+    border-left: 1px solid #d8d8dc !important;
+    border-right: 1px solid #d8d8dc !important;
+    border-bottom: 0 !important;
+}
+
+.ui-datatable .ui-datatable-data > tr > td{
+    padding: .3em !important;
+}
+.ui-datatable tfoot td{
+    padding: .3em !important;
+}
+
+.ui-datatable thead th{
+    padding: .3em!important;
+}
+.ui-inputfield{
+    padding: .4em!important;
+}
+
+.ui-button {
+    margin: 0.1em 0.1em !important;
+}
+
+td .ui-button{
+    margin: 0;
+    font-size: 1em !important;
+}
+.ui-fluid .ui-trigger-calendar .ui-datepicker-trigger.ui-button .ui-button-text{
+    padding: .3em!important;
+}
+.ui-datatable-scrollable-theadclone th.ui-state-default{
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+body .ui-selectonemenu-panel .ui-selectonemenu-filter-container .ui-selectonemenu-filter.ui-inputfield {
+    padding-left: 30px!important;
+    width: 100%;
+}

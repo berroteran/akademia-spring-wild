@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="etiqueta" pageWidth="289" pageHeight="107" orientation="Landscape" columnWidth="285" leftMargin="2" rightMargin="2" topMargin="2" bottomMargin="2" isIgnorePagination="true" uuid="84ba3a57-c9b2-4b15-9a6c-fb69e69c60aa">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Zonas"/>
+	<property name="com.jaspersoft.studio.unit." value="cm"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="cm"/>
+	<parameter name="pAtencionId" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[2]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[with query as (
+SELECT 
+	a.id
+	, a.no_atencion as atencion
+	,  case 
+		when p.persona_natural is true then
+			regexp_replace(trim(p.primer_nombre), '[^\w]+',' ') 
+			|| case when p.segundo_nombre is not null then regexp_replace(trim(p.segundo_nombre), '[^\w]+',' ') || ' ' else '' end
+			|| case when p.primer_apellido is not null then regexp_replace(trim(p.primer_apellido), '[^\w]+',' ') || ' ' else '' end
+			|| case when p.segundo_apellido is not null then regexp_replace(trim(p.segundo_apellido), '[^\w]+',' ') || ' ' else '' end
+		else 
+			p.nombre_comercial 
+		end as nombre
+	, ofi.codigo codigo_oficina
+	, ofi.nombre nombre_oficina
+	, pr.codigo codigo_producto
+	, pr.nombre nombre_producto
+	, coalesce(ap.peso,0) as peso
+	, a.humedad_impureza impureza
+	, a.humedad_porcentaje humedad
+	, EXTRACT(YEAR FROM a.fecha_compra) anio
+	, coalesce(ofi.codigo,'0') 
+		|| coalesce(pr.codigo,'0') 
+		|| EXTRACT(YEAR FROM a.fecha_creacion) 
+		|| cast(coalesce(a.humedad_porcentaje,0)*100 as int) 
+		|| cast(coalesce(a.humedad_impureza,0)*100 as int) 
+		|| coalesce(a.no_atencion,'0') as codigo_barra
+	, cast(0.0 as numeric(18,2)) as merma
+	, to_char(a.fecha_creacion, 'DD/MM/YYYY') fecha
+	, a.etiqueta_impresiones  impresiones
+	, a.peso_total 
+	, 'T10' califica_label
+	, cast(100 as int) califica_valor
+FROM atencion a
+	inner join proveedor p 
+		on p.id = a.proveedor_id
+	inner join producto pr
+		on pr.id = a.producto_id
+	inner join oficina ofi
+		on ofi.id = a.oficina_id
+	inner join atencion_peso ap
+		on ap.atencion_id = a.id
+where	a.id = $P{pAtencionId}   
+)
+select	atencion
+		, nombre 
+		, codigo_oficina 
+		, nombre_oficina
+		, nombre_producto
+		, codigo_producto
+		, impureza 
+		, humedad
+		, anio
+		, codigo_barra
+		, merma
+		, fecha
+		, impresiones
+		, califica_label
+		, califica_valor
+		, peso_total
+		, cast(sum(peso) as numeric(18,2)) as peso_neto
+from	query
+group  	by 
+		atencion
+		, nombre
+		, codigo_oficina 
+		, nombre_oficina		
+		, nombre_producto
+		, codigo_producto
+		, impureza 
+		, humedad	
+		, anio
+		, codigo_barra
+		, merma
+		, fecha
+		, impresiones
+		, califica_label
+		, califica_valor		
+		, peso_total]]>
+	</queryString>
+	<field name="atencion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="atencion"/>
+		<property name="com.jaspersoft.studio.field.label" value="atencion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="atencion"/>
+	</field>
+	<field name="nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
+	</field>
+	<field name="codigo_oficina" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="codigo_oficina"/>
+		<property name="com.jaspersoft.studio.field.label" value="codigo_oficina"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="oficina"/>
+	</field>
+	<field name="nombre_oficina" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombre_oficina"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombre_oficina"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="oficina"/>
+	</field>
+	<field name="nombre_producto" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombre_producto"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombre_producto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="producto"/>
+	</field>
+	<field name="codigo_producto" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="codigo_producto"/>
+		<property name="com.jaspersoft.studio.field.label" value="codigo_producto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="producto"/>
+	</field>
+	<field name="impureza" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="impureza"/>
+		<property name="com.jaspersoft.studio.field.label" value="impureza"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="atencion"/>
+	</field>
+	<field name="humedad" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="humedad"/>
+		<property name="com.jaspersoft.studio.field.label" value="humedad"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="atencion"/>
+	</field>
+	<field name="anio" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="anio"/>
+		<property name="com.jaspersoft.studio.field.label" value="anio"/>
+	</field>
+	<field name="codigo_barra" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="codigo_barra"/>
+		<property name="com.jaspersoft.studio.field.label" value="codigo_barra"/>
+	</field>
+	<field name="merma" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="merma"/>
+		<property name="com.jaspersoft.studio.field.label" value="merma"/>
+	</field>
+	<field name="fecha" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="fecha"/>
+		<property name="com.jaspersoft.studio.field.label" value="fecha"/>
+	</field>
+	<field name="impresiones" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="impresiones"/>
+		<property name="com.jaspersoft.studio.field.label" value="impresiones"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="atencion"/>
+	</field>
+	<field name="califica_label" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="califica_label"/>
+		<property name="com.jaspersoft.studio.field.label" value="califica_label"/>
+	</field>
+	<field name="califica_valor" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="califica_valor"/>
+		<property name="com.jaspersoft.studio.field.label" value="califica_valor"/>
+	</field>
+	<field name="peso_total" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="peso_total"/>
+		<property name="com.jaspersoft.studio.field.label" value="peso_total"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="atencion"/>
+	</field>
+	<field name="peso_neto" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="peso_neto"/>
+		<property name="com.jaspersoft.studio.field.label" value="peso_neto"/>
+	</field>
+	<detail>
+		<band height="103" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+			<staticText>
+				<reportElement x="3" y="0" width="165" height="17" uuid="f954fc33-b5af-478e-a1aa-9b5ed866ad87">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial Narrow" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MACHU  PICCHU FOODS SAC]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="3" y="15" width="100" height="13" uuid="bda9d7bb-763d-4cdf-b7c3-8ff3be904e8d">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial Narrow" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_oficina}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="-2" y="28" width="162" height="44" isPrintWhenDetailOverflows="true" uuid="f6f419a9-bc97-417f-9fff-a3fbe6bee00e"/>
+				<jr:Code128 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<jr:codeExpression><![CDATA[$F{codigo_barra}]]></jr:codeExpression>
+				</jr:Code128>
+			</componentElement>
+			<textField>
+				<reportElement x="-2" y="65" width="162" height="7" uuid="0e64f41f-e191-493e-9ce8-f2b748884164"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Narrow" size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Copia Controlada (" + String.valueOf($F{impresiones}+1) + ")"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="27" y="76" width="43" height="11" uuid="b4d91418-50a7-480b-b291-e26c38b09eb3"/>
+				<textElement>
+					<font fontName="Arial Narrow" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[String.valueOf($F{merma}) + " Kg."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="3" y="76" width="24" height="11" isRemoveLineWhenBlank="true" uuid="5dfe985b-a16e-4b83-9973-150249740c8c"/>
+				<textElement>
+					<font fontName="Arial Narrow" size="8"/>
+				</textElement>
+				<text><![CDATA[Merma: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="3" y="85" width="67" height="14" uuid="a8bd60e9-f93d-4c41-8bd1-3ece8ec09b87"/>
+				<textElement>
+					<font fontName="Arial Narrow" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="70" y="76" width="205" height="23" uuid="bc683146-ba36-408f-b262-8a6e0b222481"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codigo_producto} + " - " + $F{nombre_producto}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="170" y="0" width="96" height="21" uuid="cb5becce-cb50-48c0-be86-ced40913a297"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial Narrow" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{peso_total}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="268" y="0" width="17" height="8" uuid="ec672f7a-af8b-4f27-b2ce-fd6e00e4bf0a"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial Narrow" size="4" isBold="true"/>
+				</textElement>
+				<text><![CDATA[P. Bruto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="268" y="8" width="17" height="13" uuid="9d35bff2-feda-4332-a0ad-18d5d1638f04">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial Narrow" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Kg.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="166" y="13" width="94" height="52" uuid="80e3fcc1-7254-4f85-9589-916bea9a8256"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial Narrow" size="45" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{peso_neto}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="260" y="18" width="25" height="9" uuid="6dc28217-9471-402f-89eb-7578845cea65"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial Narrow" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[P. Neto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="260" y="27" width="25" height="22" uuid="1e15e2bc-b84e-444a-9e22-f7a40fae0b54">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="19" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Kg.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="166" y="64" width="119" height="12" uuid="2ef7f4d9-4c14-491b-850d-05ba6438648e"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Narrow" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Califica " + $F{califica_label} + ":" + $F{califica_valor}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

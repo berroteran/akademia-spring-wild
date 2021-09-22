@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_Letter" printOrder="Horizontal" pageWidth="289" pageHeight="107" orientation="Landscape" columnWidth="279" columnSpacing="5" leftMargin="5" rightMargin="5" topMargin="5" bottomMargin="5" uuid="10eb69ef-113b-4a2d-921e-212766ee32cf">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Zonas"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="384"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="609"/>
+	<parameter name="pAtencionId" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[with query as (
+SELECT 
+	a.id
+	, a.no_atencion as atencion
+	, cast((ROW_NUMBER() OVER (ORDER BY (select null)))+100 as varchar) as fix_atencion
+	,  case 
+		when p.persona_natural is true then
+			regexp_replace(trim(p.primer_nombre), '[^\w]+',' ') 
+			|| case when p.segundo_nombre is not null then regexp_replace(trim(p.segundo_nombre), '[^\w]+',' ') || ' ' else '' end
+			|| case when p.primer_apellido is not null then regexp_replace(trim(p.primer_apellido), '[^\w]+',' ') || ' ' else '' end
+			|| case when p.segundo_apellido is not null then regexp_replace(trim(p.segundo_apellido), '[^\w]+',' ') || ' ' else '' end
+		else 
+			p.nombre_comercial 
+		end as nombre
+	, pr.codigo
+	, coalesce(ap.peso,0) as peso
+	, ap.atencion_id
+	, coalesce(a.humedad_porcentaje ,0) humedad
+	, coalesce(a.humedad_impureza,0) impureza
+FROM atencion a
+	inner join proveedor p 
+		on p.id = a.proveedor_id
+	inner join producto pr
+		on pr.id = a.producto_id
+	left join atencion_peso ap
+		on ap.atencion_id = a.id
+where	a.id =  $P{pAtencionId} 		
+)
+select	coalesce(atencion,'A0000' || fix_atencion) atencion
+		, nombre 
+		, codigo
+		, peso
+		, humedad
+		, impureza
+		, row_number() over (order by atencion_id desc) as num
+from	query
+order by atencion_id desc]]>
+	</queryString>
+	<field name="atencion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="atencion"/>
+		<property name="com.jaspersoft.studio.field.label" value="atencion"/>
+	</field>
+	<field name="nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
+	</field>
+	<field name="codigo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="codigo"/>
+		<property name="com.jaspersoft.studio.field.label" value="codigo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="producto"/>
+	</field>
+	<field name="peso" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="peso"/>
+		<property name="com.jaspersoft.studio.field.label" value="peso"/>
+	</field>
+	<field name="humedad" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="humedad"/>
+		<property name="com.jaspersoft.studio.field.label" value="humedad"/>
+	</field>
+	<field name="impureza" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="impureza"/>
+		<property name="com.jaspersoft.studio.field.label" value="impureza"/>
+	</field>
+	<field name="num" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="num"/>
+		<property name="com.jaspersoft.studio.field.label" value="num"/>
+	</field>
+	<variable name="total_peso" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{peso}]]></variableExpression>
+	</variable>
+	<variable name="n_rows" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{num}]]></variableExpression>
+	</variable>
+	<detail>
+		<band height="97" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="31" width="184" height="11" uuid="800f0100-bdde-4317-b7dd-b5da0b453615">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e5e5ce3a-1ae8-4e2f-9417-160441535720"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial Narrow" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;(###0.00)">
+				<reportElement x="194" y="58" width="95" height="34" uuid="45dec6ba-d880-4a48-96c4-4cbbae02d001">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4f3de4ab-a0d9-426d-b452-73b4e9bcf5cd"/>
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial Narrow" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new DecimalFormat("0.00").format($F{peso}) + "  Kg."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="194" y="78" width="94" height="12" uuid="9cca6f5c-174e-4724-ba94-a31bcb3d7eb7">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3ace5c11-13bf-4be8-98fa-5ae924a356bb"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont">
+				<reportElement x="0" y="4" width="184" height="31" uuid="7e6c1190-e04f-4dd2-873a-cd505f5fd1f2">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="29451460-67c5-49ac-83d3-a5128776dc96"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Top" markup="none">
+					<font fontName="Oswald SemiBold" size="18" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{atencion}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="###0.00;(###0.00)">
+				<reportElement x="70" y="36" width="150" height="38" uuid="4e5d9052-4ad6-4483-a3a7-813d2d588913">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Oswald SemiBold" size="22" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new DecimalFormat("0.00").format($V{total_peso}) + " Kg."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="1" width="274" height="9" uuid="b845b774-8729-48f8-a79e-a28adb4e35a0">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial Narrow" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRE - ETIQUETA]]></text>
+			</staticText>
+			<textField evaluationTime="Auto">
+				<reportElement x="194" y="1" width="95" height="68" uuid="58fe4bbb-1bc4-4e5b-b922-f6cbf25d29c8"/>
+				<textElement textAlignment="Center">
+					<font fontName="Oswald SemiBold" size="40" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{num}+ "/" + $V{n_rows}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="47" y="42" width="38" height="11" uuid="eb847779-3c5a-493f-b21e-a9a195e0c355"/>
+				<textElement>
+					<font fontName="Arial Narrow" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{humedad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="47" y="54" width="38" height="11" uuid="76716afd-076c-4b49-8dd9-ef7f85ad290d"/>
+				<textElement>
+					<font fontName="Arial Narrow" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{impureza}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement stretchType="ElementGroupHeight" mode="Transparent" x="0" y="66" width="200" height="31" uuid="1a9588b6-d4b2-4391-9415-386e4c604bb4"/>
+				<jr:Code128 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" moduleWidth="2.0" quietZone="1.0">
+					<jr:codeExpression><![CDATA[$F{atencion}]]></jr:codeExpression>
+				</jr:Code128>
+			</componentElement>
+			<staticText>
+				<reportElement key="" x="0" y="42" width="52" height="11" uuid="89034c79-1623-4de4-8ea5-32af25046ddb">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial Narrow" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[(%) Humedad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="54" width="52" height="11" uuid="23cad65d-b9f7-4057-ac29-a8b95ae3ff14">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial Narrow" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[(%) Impurezas]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

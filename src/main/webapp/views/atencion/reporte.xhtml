@@ -1,0 +1,44 @@
+<ui:composition template="../../templates/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="title">Proveedor</ui:define>
+    <ui:define name="content">
+        <h:panelGrid columns="3">
+            <form method="post" action="/jasper/exportPDF">
+                <button type="submit" class="btn btn-info">Export</button>
+            </form>
+
+            <h:form>
+
+                <p:commandButton
+                        update="@form"
+                        oncomplete="if (args &amp;&amp; !args.validationFailed) window.open('/jasper/export/PDF/pesos/1')">
+                    <f:param name="pAtencionId" value="2"/>
+                </p:commandButton>
+
+                <p:commandButton value="Print" icon="fa fa-print"
+                                 actionListener="#{rptBackBean.printReport()}"
+                                 process="@this" ajax="false"
+                                 onclick="this.form.target = '_blank'">
+                    <f:param name="rptName" value="pre-etiqueta"/>
+                    <f:param name="expType" value="PDF"/>
+                    <f:param name="pAtencionId" value="3"/>
+                </p:commandButton>
+
+                <p:commandButton value="Print2" icon="fa fa-print"
+                                 actionListener="#{rptBackBean.printReport2()}"
+                                 process="@this" ajax="false">
+                    <f:param name="rptName" value="pre-etiqueta"/>
+                    <f:param name="expType" value="PDF"/>
+                    <f:param name="pAtencionId" value="3"/>
+                </p:commandButton>
+
+            </h:form>
+
+        </h:panelGrid>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,673 @@
+<ui:composition template="../../templates/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="head">
+
+    </ui:define>
+
+    <ui:define name="title">Oficinas</ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="form-envases-list">
+            <p:toolbar>
+                <f:facet name="left">
+                    <p:commandButton value="Agregar oficina" id="btnAgregarNuevo"
+                                     icon="fa fa-plus-circle"
+                                     oncomplete="PF('modalOficina').show()"
+                                     update=":formModalOficina"
+                                     process="@this"
+                                     rendered="false"
+                                     actionListener="#{oficinaBackBean.crear}"/>
+
+                    <p:commandButton value="Obtener de SAP"
+                                     process="@this"
+                                     alt="Obtener la informacion mas reciente desde SAP"
+                                     title="Obtener la informacion mas reciente desde SAP."
+                                     disabled="true"
+                                     onclick="PF('oficinas-list').clearFilters();"
+                                     styleClass="secondary-button"/>
+
+                    <p:commandButton value="Refrescar"
+                                     process="@this"
+                                     disabled="true"
+                                     onclick="PF('oficinas-list').clearFilters();"
+                                     styleClass="secondary-button"/>
+
+                    <p:commandButton value="Limpiar Filtros"
+                                     process="@this"
+                                     onclick="PF('oficinas-list').clearFilters();"
+                                     styleClass="secondary-button">
+                    </p:commandButton>
+                </f:facet>
+            </p:toolbar>
+
+            <p:dataTable id="oficinas-list"
+                         widgetVar="oficinas-list"
+                         selectionMode="single"
+                         reflow="true"
+                         emptyMessage="No se encontraron registros"
+                         value="#{oficinaBackBean.oficinas}"
+                         selection="#{oficinaBackBean.oficina}"
+                         var="oficina"
+                         rowKey="#{oficina.id}"
+                         sortBy="#{oficina.id}"
+                         sortField="#{oficina.id}"
+                         paginator="true"
+                         rows="15"
+                         paginatorPosition="bottom">
+
+                <p:ajax event="rowDblselect"
+                        process="@this"
+                        update="formModalOficina :formModalOficina:panel-nuevo-oficina"
+                        listener="#{oficinaBackBean.onOficinaSelected}"
+                        oncomplete="PF('modalOficina').show()"/>
+
+                <p:column headerText="ID" style="text-align: right" width="50px;" sortBy="#{oficina.id}">
+                    <h:outputText value="#{oficina.id}"/>
+                </p:column>
+
+                <p:column headerText="CENTRO SAP"
+                          width="100"
+                          sortBy="#{oficina.centroSap}"
+                          style="text-align: right"
+                          filterBy="#{oficina.centroSap}" filterMatchMode="contains">
+                    <h:outputText value="#{oficina.centroSap}"/>
+                </p:column>
+
+                <p:column headerText="Nombre"
+                          width="300"
+                          filterable="true"
+                          sortBy="#{oficina.nombre}"
+                          filterBy="#{oficina.nombre}" filterMatchMode="contains">
+                    <h:outputText value="#{oficina.nombre}"/>
+                </p:column>
+                <p:column headerText="ZONA" filterable="true" sortBy="#{oficina.zona}"
+                          filterBy="#{oficina.zona}" filterMatchMode="contains">
+                    <h:outputText value="#{oficina.zona}"/>
+                </p:column>
+                <p:column headerText="SEDE" filterable="true" sortBy="#{oficina.sede}"
+                          filterBy="#{oficina.sede}" filterMatchMode="contains">
+                    <h:outputText value="#{oficina.sede}"/>
+                </p:column>
+
+                <p:column headerText="Activa" filterable="true" style="text-align: center"
+                          filterBy="#{oficina.activo}" filterMatchMode="equals">
+                    <f:facet name="filter">
+                        <p:selectOneButton widgetVar="sobOficinaEstado"
+                                           id="sobOficinaEstado"
+                                           onchange="console.log('entro al select'); PF('oficinas-list').filter()"
+                                           styleClass="custom-filter" style="font-size: 10px;">
+                            <f:converter converterId="javax.faces.Boolean"/>
+                            <f:selectItem itemLabel="*" itemValue=""/>
+                            <f:selectItem itemLabel="Si" itemValue="true"/>
+                            <f:selectItem itemLabel="No" itemValue="false"/>
+                        </p:selectOneButton>
+                    </f:facet>
+                    <h:outputText value="#{oficina.activo ? 'Si' : 'No.'}"/>
+                </p:column>
+
+            </p:dataTable>
+        </h:form>
+
+        <!--  MODAL OFICINA -->
+        <p:dialog id="modalOficina"
+                  showHeader="false"
+                  width="1000"
+                  height="auto"
+                  closable="true"
+                  closeOnEscape="true"
+                  widgetVar="modalOficina"
+                  modal="true">
+
+            <p:ajax event="close" process="@this" update="form-envases-list:oficinas-list"
+                    listener="#{oficinaBackBean.cerrarModalOficina()}"/>
+
+            <h:form id="formModalOficina">
+                <p:panel id="panel-nuevo-oficina" style="width: 100%; height: auto">
+                    <f:facet name="header">
+                        <div class="ui-g">
+                            <div class="ui-g-6" style="margin: auto">
+                                <h:outputText value="Información de Oficina" style="font-size: 16px;"/>
+                            </div>
+                            <div class="ui-g-6 content-align-right">
+                                <p:commandButton value="Guardar"
+                                                 process="formModalOficina" icon="fa fa-save"
+                                                 actionListener="#{oficinaBackBean.save}"
+                                                 update=":form-envases-list :global-message"
+                                                 style="margin: 0.1em"/>
+
+                                <p:commandButton id="btnNuevaOficina"
+                                                 value="NUEVO"
+                                                 process="@this"
+                                                 rendered="false"
+                                                 actionListener="#{oficinaBackBean.crear()}"
+                                                 update="formModalOficina"
+                                                 style="margin: 0.1em"/>
+
+                                <p:commandButton value="Cerrar" style="margin: 0.1em"
+                                                 styleClass="secondary-button"
+                                                 process="@this"
+                                                 icon="fa fa-close"
+                                                 resetValues="true"
+                                                 update="@form"
+                                                 oncomplete="PF('modalOficina').hide()"
+                                />
+                            </div>
+                        </div>
+                    </f:facet>
+
+                    <p:panelGrid columns="4"
+                                 layout="grid"
+                                 contentStyleClass="p-align-center ui-fluid"
+                                 columnClasses="p-col-3, p-col-3,p-col-3, p-col-3">
+                        <p:outputLabel for="txtnombre" value="Nombre:"/>
+                        <p:inputText id="txtnombre" maxlength="200" value="#{oficinaBackBean.oficina.nombre}"
+                                     style="width: 100%"/>
+                        <h:outputText value=""/>
+                        <h:outputText value=""/>
+                        <p:outputLabel for="contrasap" value="Centro SAP:"/>
+                        <p:inputText id="contrasap" maxlength="8" value="#{oficinaBackBean.oficina.centroSap}"
+                                     style="width: 100%"/>
+
+                        <p:outputLabel for="zona" value="Zona:"/>
+                        <p:inputText id="zona" maxlength="30" value="#{oficinaBackBean.oficina.zona}"
+                                     style="width: 100%"/>
+                        <p:outputLabel for="sede" value="Sede:"/>
+                        <p:inputText id="sede" value="#{oficinaBackBean.oficina.sede}" style="width: 100%"/>
+                    </p:panelGrid>
+
+                    <p:fieldset legend="Direccion ">
+                        <p:inputTextarea id="txtDireccion"
+                                         maxlength="255"
+                                         style="width: 100%"
+                                         value="#{oficinaBackBean.oficina.direccion}"/>
+                    </p:fieldset>
+
+                    <p:panelGrid columns="2">
+
+                        <p:fieldset legend="Documento series:">
+                            <p:panelGrid layout="grid" columns="4">
+                                <p:outputLabel for="txtDocumentoSerieConvencional" value="Convencional:"/>
+                                <p:inputText id="txtDocumentoSerieConvencional" maxlength="4"
+                                             value="#{oficinaBackBean.oficina.documentoSerieConvencional}"
+                                             style="width: 100%"/>
+                                <p:outputLabel for="txtDocumentoSerieOrganico" value="Orgánico:"/>
+                                <p:inputText id="txtDocumentoSerieOrganico" maxlength="4"
+                                             value="#{oficinaBackBean.oficina.documentoSerieOrganico}"
+                                             style="width: 100%"/>
+
+                            </p:panelGrid>
+                        </p:fieldset>
+
+                        <p:fieldset legend="Recibo egreso de caja:">
+                            <p:panelGrid layout="grid" columns="4">
+                                <p:outputLabel for="txtSerieReciboEgreso" value="Serie:"/>
+                                <p:inputMask id="txtSerieReciboEgreso"
+                                             value="#{oficinaBackBean.oficina.documentoSerieReciboEgreso}"
+                                             mask="9999-9"
+                                             validateMask="true"
+                                             style="width: 100%"/>
+                                <p:outputLabel for="txtNumeracionReciboEgreso" value="Numeración:"/>
+                                <p:inputText id="txtNumeracionReciboEgreso" readonly="true"
+                                             value="#{oficinaBackBean.oficina.formatConsecutivoEgreso}"
+                                             style="width: 100%; text-align: right;"/>
+                            </p:panelGrid>
+                        </p:fieldset>
+
+                    </p:panelGrid>
+
+                    <p:tabView id="tabOficinaDetalles">
+                        <p:tab id="tabEnvases" title="Envases para esta oficina">
+                            <p:dataTable id="dtOficinaEnvases"
+                                         widgetVar="dtOficinaEnvases"
+                                         value="#{oficinaBackBean.oficinaEnvases}"
+                                         var="oficinaEnvase"
+                                         rows="6"
+                                         paginator="true"
+                                         paginatorPosition="bottom"
+                                         scrollable="true"
+                                         scrollHeight="250"
+                                         selectionMode="single"
+                                         reflow="true"
+                                         emptyMessage="No se encontraron registros"
+                                         rowKey="#{oficinaBackBean.oficinaEnvases.indexOf(oficinaEnvase)}">
+                                <f:facet name="header">
+                                    <div class="ui-g">
+                                        <div class="ui-g-6" style="margin: auto">
+                                            <h4>
+                                                <h:outputText value="Envases"/>
+                                            </h4>
+                                        </div>
+                                        <div class="ui-g-6 content-align-right">
+                                            <p:commandButton value="Agregar"
+                                                             icon="fa fa-plus"
+                                                             process="@this"
+                                                             actionListener="#{oficinaBackBean.agregarEnvases}"
+                                                             oncomplete="PF('modalOficinaEnvase').show();"
+                                                             update="formModalOficinaEnvase"
+                                                             style="margin: 0.1em"/>
+                                        </div>
+                                    </div>
+                                </f:facet>
+                                <p:column headerText="Envase">
+                                    <h:outputText value="#{oficinaEnvase.envase.descripcion}"/>
+                                </p:column>
+
+                                <p:column headerText="Peso">
+                                    <h:outputText value="#{oficinaEnvase.envase.peso}"/>
+                                </p:column>
+
+                                <p:column headerText="Activo" filterable="true" style="text-align: center"
+                                          filterBy="#{oficinaEnvase.activo}" filterMatchMode="equals">
+                                    <f:facet name="filter">
+                                        <p:selectOneButton widgetVar="cboEnvaseEstado"
+                                                           id="cboEnvaseEstado"
+                                                           onchange="PF('dtOficinaEnvases').filter()"
+                                                           styleClass="custom-filter" style="font-size: 10px;">
+                                            <f:converter converterId="javax.faces.Boolean"/>
+                                            <f:selectItem itemLabel="*" itemValue=""/>
+                                            <f:selectItem itemLabel="Si" itemValue="true"/>
+                                            <f:selectItem itemLabel="No" itemValue="false"/>
+                                        </p:selectOneButton>
+                                    </f:facet>
+                                    <h:outputText value="#{oficinaEnvase.activo ? 'Si' : 'No.'}"/>
+                                </p:column>
+                                <p:column headerText="-">
+                                    <p:commandButton icon="fa fa-trash-o"
+                                                     styleClass="danger-btn"
+                                                     rendered="#{oficinaEnvase.activo}"
+                                                     process="@this"
+                                                     style="width: 40px;"
+                                                     onmousedown="PF('dtOficinaEnvases').unselectAllRows();PF('dtOficinaEnvases').selectRow(#{oficinaBackBean.oficinaEnvases.indexOf(oficinaEnvase)});"
+                                                     actionListener="#{oficinaBackBean.onDesactivarEvanse(oficinaEnvase)}">
+                                        <p:confirm header="Confirmación"
+                                                   message="¿Seguro que desea borrar esta Atencion?"
+                                                   icon="fa fa-exclamation-triangle"/>
+                                    </p:commandButton>
+                                </p:column>
+                            </p:dataTable>
+                        </p:tab>
+
+
+                        <p:tab id="tabCtasBanco" title="Cuentas Bancarias">
+                            <p:dataTable id="dtCuentasBancarias"
+                                         widgetVar="dtCuentasBancarias"
+                                         value="#{oficinaBackBean.cuentasList}"
+                                         selection="#{oficinaBackBean.cuenta}"
+                                         var="cuenta"
+                                         rowIndexVar="rowIndex"
+                                         rows="6"
+                                         paginator="true"
+                                         paginatorPosition="bottom"
+                                         scrollable="true"
+                                         scrollHeight="250"
+                                         selectionMode="single"
+                                         reflow="true"
+                                         emptyMessage="No se encontraron registros"
+                                         rowKey="#{oficinaBackBean.cuentasList.indexOf(cuenta)}">
+                                <p:ajax event="rowDblselect"
+                                        process="@this"
+                                        update="formCuentaBancaria :formCuentaBancaria:panelCuentaBancaria"
+                                        oncomplete="PF('modalCuentaBancaria').show()"/>
+                                <f:facet name="header">
+                                    <div class="ui-g">
+                                        <div class="ui-g-6" style="margin: auto;">
+                                            <h4>
+                                                <h:outputText value="Cuentas Bancarias"/>
+                                            </h4>
+                                        </div>
+                                        <div class="ui-g-4 content-align-right">
+                                            <p:commandButton value="Agregar"
+                                                             icon="fa fa-plus"
+                                                             process="@this"
+                                                             actionListener="#{oficinaBackBean.agregarCuenta}"
+                                                             oncomplete="PF('modalCuentaBancaria').show();"
+                                                             update="formCuentaBancaria"
+                                                             style="margin: 0.1em"/>
+                                        </div>
+                                    </div>
+                                </f:facet>
+                                <p:column headerText="#" style="text-align: center;" width="20px;">
+                                    <h:outputText value="#{rowIndex + 1}"/>
+                                </p:column>
+                                <p:column headerText="No Cuenta" style="text-align: center;" width="90px;">
+                                    <h:outputText value="#{cuenta.noCuenta}"
+                                                  onblur="value=value.toUpperCase()"/>
+                                </p:column>
+                                <p:column headerText="Activo" filterable="true" style="text-align: center"
+                                          filterBy="#{cuenta.activo}" filterMatchMode="equals">
+                                    <f:facet name="filter">
+                                        <p:selectOneButton widgetVar="cboCuentaActivoFiltro"
+                                                           id="cboCuentaActivoFiltro"
+                                                           onchange="PF('dtCuentasBancarias').filter()"
+                                                           styleClass="custom-filter" style="font-size: 10px;">
+                                            <f:converter converterId="javax.faces.Boolean"/>
+                                            <f:selectItem itemLabel="*" itemValue=""/>
+                                            <f:selectItem itemLabel="Si" itemValue="true"/>
+                                            <f:selectItem itemLabel="No" itemValue="false"/>
+                                        </p:selectOneButton>
+                                    </f:facet>
+                                    <h:outputText value="#{cuenta.activo ? 'Si' : 'No.'}"/>
+                                </p:column>
+                                <p:column headerText="-">
+                                    <p:commandButton icon="fa fa-trash-o"
+                                                     styleClass="danger-btn"
+                                                     rendered="#{cuenta.activo}"
+                                                     process="@this"
+                                                     style="width: 40px;"
+                                                     actionListener="#{oficinaBackBean.onDesactivarCuenta(cuenta)}">
+                                        <p:confirm header="Confirmación"
+                                                   message="¿Seguro que desea borrar la cuenta seleccionada?"
+                                                   icon="fa fa-exclamation-triangle"/>
+                                    </p:commandButton>
+                                </p:column>
+                            </p:dataTable>
+                        </p:tab>
+                        <p:tab id="tabCajas" title="Cajas Fermentadoras">
+
+                            <p:dataTable id="dtCajasFermentadoras"
+                                         widgetVar="dtCajasFermentadoras"
+                                         value="#{oficinaBackBean.cajasList}"
+                                         selection="#{oficinaBackBean.caja}"
+                                         var="caja"
+                                         rowIndexVar="rowIndex"
+                                         rows="6"
+                                         paginator="true"
+                                         paginatorPosition="bottom"
+                                         scrollable="true"
+                                         scrollHeight="250"
+                                         selectionMode="single"
+                                         reflow="true"
+                                         emptyMessage="No se encontraron registros"
+                                         rowKey="#{oficinaBackBean.cajasList.indexOf(caja)}">
+
+                                <p:ajax event="rowDblselect"
+                                        process="@this"
+                                        update="formCajaFermentadora :formCajaFermentadora:panelCajaFermentadora"
+                                        oncomplete="PF('modalCajaFermentadora').show()"/>
+
+                                <f:facet name="header">
+                                    <div class="ui-g">
+                                        <div class="ui-g-6" style="margin: auto;">
+                                            <h4>
+                                                <h:outputText value="Caja Fermentadora"/>
+                                            </h4>
+                                        </div>
+                                        <div class="ui-g-4 content-align-right">
+                                            <p:commandButton value="Agregar caja"
+                                                             icon="fa fa-plus"
+                                                             process="@this"
+                                                             actionListener="#{oficinaBackBean.agregarCaja}"
+                                                             oncomplete="PF('modalCajaFermentadora').show();"
+                                                             update="formCajaFermentadora"
+                                                             style="margin: 0.1em"/>
+                                        </div>
+                                    </div>
+                                </f:facet>
+
+                                <p:column headerText="#" style="text-align: center;" width="40px;" >
+                                    <h:outputText value="#{rowIndex + 1}"/>
+                                </p:column>
+
+                                <p:column headerText="Caja Código" style="text-align: left;" width="450px;" sortBy="#{caja.codigo}">
+                                    <h:outputText value="#{caja.codigo}"
+                                                  onblur="value=value.toUpperCase()"/>
+                                </p:column>
+
+                                <p:column headerText="Descripción" style="text-align: left;" width="450px;">
+                                    <h:outputText value="#{caja.descripcion}"
+                                                  onblur="value=value.toUpperCase()"/>
+                                </p:column>
+
+                                <p:column headerText="Activo" filterable="true" style="text-align: center;width: 120px;"
+                                          filterBy="#{caja.activo}" filterMatchMode="equals" >
+                                    <f:facet name="filter">
+                                        <p:selectOneButton widgetVar="cboCajaActivoFiltro"
+                                                           id="cboCajaActivoFiltro"
+                                                           onchange="PF('dtCajasFermentadoras').filter()"
+                                                           styleClass="custom-filter" style="font-size: 10px;">
+                                            <f:converter converterId="javax.faces.Boolean"/>
+                                            <f:selectItem itemLabel="*" itemValue=""/>
+                                            <f:selectItem itemLabel="Si" itemValue="true"/>
+                                            <f:selectItem itemLabel="No" itemValue="false"/>
+                                        </p:selectOneButton>
+                                    </f:facet>
+                                    <h:outputText value="#{caja.activo ? 'Si' : 'No.'}"/>
+                                </p:column>
+
+                                <p:column headerText="-">
+                                    <p:commandButton icon="fa fa-trash-o"
+                                                     styleClass="danger-btn"
+                                                     rendered="#{caja.activo}"
+                                                     process="@this"
+                                                     style="width: 40px;"
+                                                     actionListener="#{oficinaBackBean.onDesactivarCaja(caja)}">
+                                        <p:confirm header="Confirmación"
+                                                   message="¿Seguro que desea borrar la caja fermentadora seleccionada?"
+                                                   icon="fa fa-exclamation-triangle"/>
+                                    </p:commandButton>
+                                </p:column>
+                            </p:dataTable>
+
+                        </p:tab>
+
+                        <p:tab id="tabMaquinas" title="Máquinas" titleStyle="font-weight: bolder" titletip="Administrador de maquinas" rendered="false" >
+                            <p:dataTable id="dtMaquinas"
+                                         widgetVar="dtMaquinas"
+                                         value="#{oficinaBackBean.listaMaquinas}"
+                                         var="cuenta"
+                                         rowIndexVar="rowIndex"
+                                         selection="#{oficinaBackBean.cuenta}"
+                                         rows="6"
+                                         paginator="true"
+                                         paginatorPosition="bottom"
+                                         scrollable="true"
+                                         scrollHeight="250"
+                                         reflow="true"
+                                         emptyMessage="No se encontraron registros"
+                                         rowKey="#{oficinaBackBean.cuentasList.indexOf(cuenta)}">
+                            </p:dataTable>
+                        </p:tab>
+                    </p:tabView>
+                </p:panel>
+
+            </h:form>
+        </p:dialog>
+
+        <!-- MODAL OFICINA END-->
+        <p:dialog modal="true" height="auto" width="750" closeOnEscape="true"
+                  id="modalOficinaEnvase"
+                  closable="false" showHeader="false"
+                  widgetVar="modalOficinaEnvase">
+            <h:form id="formModalOficinaEnvase">
+                <p:panel id="panel-nuevo-Oficina-Envase" style="width: 100%; height: auto">
+                    <f:facet name="header">
+                        <div class="ui-g">
+                            <div class="ui-g-6" style="margin: auto">
+                                <h4>
+                                    <h:outputText value="Envases"/>
+                                </h4>
+                            </div>
+                            <div class="ui-g-6 content-align-right">
+                                <p:commandButton value="Agregar"
+                                                 icon="fa fa-save"
+                                                 process="@form"
+                                                 actionListener="#{oficinaBackBean.guardarOficinaEnvase}"
+                                                 update=":formModalOficina:tabOficinaDetalles:dtOficinaEnvases"
+                                                 style="margin: 0.1em"/>
+                                <p:commandButton value="Cancelar" style="margin: 0.1em"
+                                                 process="@this"
+                                                 styleClass="secondary-button"
+                                                 resetValues="true"
+                                                 icon="fa fa-close"
+                                                 oncomplete="PF('modalOficinaEnvase').hide()"/>
+                            </div>
+                        </div>
+                    </f:facet>
+                    <p:dataTable emptyMessage="No se encontraron registros"
+                                 value="#{oficinaBackBean.envases}"
+                                 selection="#{oficinaBackBean.listaEnvasesSeleted}"
+                                 var="envase"
+                                 id="dtEnvases"
+                                 widgetVar="dtEnvases"
+                                 rows="8"
+                                 paginator="true" paginatorPosition="bottom"
+                                 scrollable="true"
+                                 scrollHeight="250" reflow="true"
+                                 rowKey="#{envase.id}">
+
+                        <p:column headerText="Envase">
+                            <h:outputText value="#{envase.descripcion}"/>
+                        </p:column>
+
+                        <p:column headerText="Peso">
+                            <h:outputText value="#{envase.peso}"/>
+                        </p:column>
+                        <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+        </p:dialog>
+
+
+        <!-- modal cuentas -->
+        <h:form id="formCuentaBancaria">
+            <p:dialog id="modalCuentaBancaria"
+                      modal="true"
+                      height="auto" width="600"
+                      closeOnEscape="true"
+                      closable="false"
+                      showHeader="false"
+                      widgetVar="modalCuentaBancaria">
+
+                <p:panel id="panelCuentaBancaria" style="width: 100%; height: auto">
+                    <f:facet name="header">
+                        <div class="ui-g">
+                            <div class="ui-g-6" style="margin: auto">
+                                <h4>
+                                    <h:outputText value="Cuentas Bancarias"/>
+                                </h4>
+                            </div>
+                            <div class="ui-g-6 content-align-right">
+                                <p:commandButton value="Guardar"
+                                                 widgetVar="btnAgregarCuenta"
+                                                 oncomplete="PF('modalCuentaBancaria').hide()"
+                                                 icon="fa fa-save"
+                                                 action="#{oficinaBackBean.guardarCuenta()}"
+                                                 update=":formModalOficina:tabOficinaDetalles:dtCuentasBancarias :global-message"
+                                                 process="formCuentaBancaria:panelCuentaBancaria"
+                                                 style="margin: 0.1em">
+                                </p:commandButton>
+                                <p:commandButton value="Cerrar" style="margin: 0.1em"
+                                                 styleClass="secondary-button"
+                                                 resetValues="true"
+                                                 icon="fa fa-close"
+                                                 process="@this"
+                                                 action="#{oficinaBackBean.onHideModal()}"
+                                                 update=":formModalOficina:tabOficinaDetalles:dtCuentasBancarias"
+                                                 oncomplete="PF('modalCuentaBancaria').hide()"/>
+                            </div>
+                        </div>
+                    </f:facet>
+                    <p:panelGrid columns="2"
+                                 layout="flex"
+                                 contentStyleClass="p-align-center ui-fluid"
+                                 columnClasses="p-col-2,p-col-4, p-col-1,p-col-2, p-col-1,p-col-2">
+                        <p:outputLabel value="No Cuenta:" for="txtNumeroCuenta"/>
+                        <p:inputText id="txtNumeroCuenta"
+                                     value="#{oficinaBackBean.cuenta.noCuenta}"
+                                     style="width: 100%; margin-right: 10px;"/>
+                        <p:outputLabel value="Estado:" for="cboEstadoCuenta"/>
+                        <p:selectOneMenu id="cboEstadoCuenta"
+                                         widgetVar="cboEstadoCuenta"
+                                         value="#{oficinaBackBean.cuenta.activo}"
+                                         styleClass="custom-filter">
+                            <f:converter converterId="javax.faces.Boolean"/>
+                            <f:selectItem itemLabel="Si" itemValue="true"/>
+                            <f:selectItem itemLabel="No" itemValue="false"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                </p:panel>
+            </p:dialog>
+        </h:form>
+
+
+        <!-- cajas fermentadoras -->
+        <h:form id="formCajaFermentadora">
+            <p:dialog id="modalCajaFermentadora"
+                      modal="true"
+                      height="auto" width="600"
+                      closeOnEscape="true"
+                      closable="false"
+                      showHeader="false"
+                      widgetVar="modalCajaFermentadora">
+
+                <p:panel id="panelCajaFermentadora" style="width: 100%; height: auto">
+                    <f:facet name="header">
+                        <div class="ui-g">
+                            <div class="ui-g-6" style="margin: auto">
+                                <h4>
+                                    <h:outputText value="Cajas Fermentadoras"/>
+                                </h4>
+                            </div>
+                            <div class="ui-g-6 content-align-right">
+                                <p:commandButton value="Guardar Caja"
+                                                 widgetVar="btnAgregarCaja"
+                                                 icon="fa fa-save"
+                                                 action="#{oficinaBackBean.guardarCaja()}"
+                                                 update=" :formModalOficina:tabOficinaDetalles:dtCajasFermentadoras :global-message"
+                                                 process="@this formCajaFermentadora"
+                                                 style="margin: 0.1em">
+                                </p:commandButton>
+                                <p:commandButton value="Cerrar" style="margin: 0.1em"
+                                                 styleClass="secondary-button"
+                                                 resetValues="true"
+                                                 icon="fa fa-close"
+                                                 process="@this "
+                                                 action="#{oficinaBackBean.onHideModal()}"
+                                                 update=":formModalOficina:tabOficinaDetalles:dtCajasFermentadoras"
+                                                 oncomplete="PF('modalCajaFermentadora').hide()"/>
+                            </div>
+                        </div>
+                    </f:facet>
+                    <p:panelGrid columns="2"
+                                 layout="flex"
+                                 contentStyleClass="p-align-center ui-fluid"
+                                 columnClasses="p-col-2,p-col-4, p-col-1,p-col-2, p-col-1,p-col-2">
+
+                        <p:outputLabel value="Codigo Caja:" for="txtNumeroCaja"/>
+                        <p:inputText id="txtNumeroCaja"
+                                     required="true"
+                                     requiredMessage="El codigo de la caja es requerido."
+                                     value="#{oficinaBackBean.caja.codigo}"
+                                     style="width: 100%; margin-right: 10px;"/>
+                        <p:outputLabel value="Acivada ?:" for="cboEstadoCaja"/>
+                        <p:selectOneMenu id="cboEstadoCaja"
+                                         widgetVar="cboEstadoCaja"
+                                         value="#{oficinaBackBean.caja.activo}"
+                                         styleClass="custom-filter">
+                            <f:converter converterId="javax.faces.Boolean"/>
+                            <f:selectItem itemLabel="Si" itemValue="true"/>
+                            <f:selectItem itemLabel="No" itemValue="false"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:outputLabel value="Descripcion (opcional):" for="txtCajaDescripcion"/>
+                    <p:inputText id="txtCajaDescripcion"
+                                 value="#{oficinaBackBean.caja.descripcion}"
+                                 style="width: 100%; margin-right: 10px;"/>
+                    <p:panelGrid>
+
+                    </p:panelGrid>
+                </p:panel>
+            </p:dialog>
+        </h:form>
+
+
+    </ui:define>
+
+</ui:composition>

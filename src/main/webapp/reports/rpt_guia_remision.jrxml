@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.15.0.final using JasperReports Library version 6.15.0-dd49bfb94918336b8321d5507193f0169ead4e95  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="liquidacion_de_compra" pageWidth="612" pageHeight="600" orientation="Landscape" whenNoDataType="NoDataSection" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="7f54fff2-48f9-42ad-bce6-b88ded547ce5">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="postgresql"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="net.sf.jasperreports.print.create.bookmarks" value="true"/>
+	<parameter name="pWebPath" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["//C:/desarrollo/Git/estarossa/src/main/webapp"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pIdGuia" class="java.lang.String">
+		<defaultValueExpression><![CDATA["5351"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select	rem.fecha_emision 
+		, rem.fecha_traslado 
+		, serie_guia_remision || '-' || guia.numero_guia_remision  as numero_guia_remision
+		, guia.peso_bruto
+		, guia.tara 
+		, guia.peso_neto 
+		, origen.direccion as dir_origen
+		, destino.direccion as dir_destino		
+		, tp2.razon_social 
+		, tp2.ruc 
+		, tp2.tipo_transporte
+		, tc.no_licencia_conducir
+		, tc.nombre_completo
+		, tu.numero_cert_inscripcion
+		, tu.marca
+		, tu.placa
+		, aux.*
+		, tmp.*
+from	remesa_guia_remision guia
+		inner join remesa rem 
+			on rem.id = guia.remesa_id 
+		left join oficina origen
+			on origen.id = rem.oficina_origen_id 
+		left join oficina destino
+			on destino.id = rem.oficina_destino_id 
+		left join transporte_proveedor tp2 
+			on tp2.id = rem.transporte_proveedor_id 
+		left join transporte_chofer tc 
+			on tc.id = rem.transporte_chofer_id 
+		left join transporte_unidad tu 
+			on tu.id  = rem.transporte_unidad_id 
+		left join lateral (
+			
+				select	string_agg(t.codigosap,'/') as codigosap
+						, string_agg(t.nombre,'/') as nombre
+						, string_agg(t.norma,'/') as norma
+						, t.descripcion
+						, sum(t.sacos) as sacos
+				from	(
+		
+							select	pr.codigosap as codigosap 
+									, pr.nombre 
+									, pr.norma
+									, e.descripcion 
+									, count(pld.id) as sacos
+							from	remesa_guia_remision_detalle det
+									inner join packing_list pl  
+										on pl.id = det.packing_list_id 
+									left join packing_list_detalle pld 
+										on pld.packing_id = pl.id 
+									left join producto pr
+										on pr.id = pl.producto_id 
+									left join envase e 
+										on e.id = pl.envase_id 	
+							where 	det.remesa_guia_remision_id = guia.id
+							group	by 
+									pr.codigosap 
+									, pr.nombre 
+									, pr.norma
+									, e.descripcion 
+						) t
+				group	by
+						t.descripcion
+					
+		) aux on 1=1
+		left join lateral (
+		
+			select	string_agg(tp.numero, '-') precintos
+			from	transporte_precinto tp 
+			where	tp.remesa_id = guia.remesa_id
+					and tp.transporte_unidad_id = rem.transporte_unidad_id
+		
+		) tmp on 1=1
+where	guia.id = cast($P{pIdGuia}  as Integer)]]>
+	</queryString>
+	<field name="fecha_emision" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="fecha_emision"/>
+		<property name="com.jaspersoft.studio.field.label" value="fecha_emision"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="remesa"/>
+	</field>
+	<field name="fecha_traslado" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="fecha_traslado"/>
+		<property name="com.jaspersoft.studio.field.label" value="fecha_traslado"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="remesa"/>
+	</field>
+	<field name="numero_guia_remision" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="numero_guia_remision"/>
+		<property name="com.jaspersoft.studio.field.label" value="numero_guia_remision"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="remesa_guia_remision"/>
+	</field>
+	<field name="peso_bruto" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="peso_bruto"/>
+		<property name="com.jaspersoft.studio.field.label" value="peso_bruto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="remesa_guia_remision"/>
+	</field>
+	<field name="tara" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="tara"/>
+		<property name="com.jaspersoft.studio.field.label" value="tara"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="remesa_guia_remision"/>
+	</field>
+	<field name="peso_neto" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="peso_neto"/>
+		<property name="com.jaspersoft.studio.field.label" value="peso_neto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="remesa_guia_remision"/>
+	</field>
+	<field name="dir_origen" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="dir_origen"/>
+		<property name="com.jaspersoft.studio.field.label" value="dir_origen"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="oficina"/>
+	</field>
+	<field name="dir_destino" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="dir_destino"/>
+		<property name="com.jaspersoft.studio.field.label" value="dir_destino"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="oficina"/>
+	</field>
+	<field name="razon_social" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="razon_social"/>
+		<property name="com.jaspersoft.studio.field.label" value="razon_social"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="transporte_proveedor"/>
+	</field>
+	<field name="ruc" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ruc"/>
+		<property name="com.jaspersoft.studio.field.label" value="ruc"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="transporte_proveedor"/>
+	</field>
+	<field name="tipo_transporte" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="tipo_transporte"/>
+		<property name="com.jaspersoft.studio.field.label" value="tipo_transporte"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="transporte_proveedor"/>
+	</field>
+	<field name="no_licencia_conducir" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="no_licencia_conducir"/>
+		<property name="com.jaspersoft.studio.field.label" value="no_licencia_conducir"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="transporte_chofer"/>
+	</field>
+	<field name="nombre_completo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombre_completo"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombre_completo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="transporte_chofer"/>
+	</field>
+	<field name="numero_cert_inscripcion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="numero_cert_inscripcion"/>
+		<property name="com.jaspersoft.studio.field.label" value="numero_cert_inscripcion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="transporte_unidad"/>
+	</field>
+	<field name="marca" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="marca"/>
+		<property name="com.jaspersoft.studio.field.label" value="marca"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="transporte_unidad"/>
+	</field>
+	<field name="placa" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="placa"/>
+		<property name="com.jaspersoft.studio.field.label" value="placa"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="transporte_unidad"/>
+	</field>
+	<field name="codigosap" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="codigosap"/>
+		<property name="com.jaspersoft.studio.field.label" value="codigosap"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="producto"/>
+	</field>
+	<field name="nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="producto"/>
+	</field>
+	<field name="norma" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="norma"/>
+		<property name="com.jaspersoft.studio.field.label" value="norma"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="producto"/>
+	</field>
+	<field name="descripcion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="descripcion"/>
+		<property name="com.jaspersoft.studio.field.label" value="descripcion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="envase"/>
+	</field>
+	<field name="sacos" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="sacos"/>
+		<property name="com.jaspersoft.studio.field.label" value="sacos"/>
+	</field>
+	<field name="precintos" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="precintos"/>
+		<property name="com.jaspersoft.studio.field.label" value="precintos"/>
+	</field>
+	<detail>
+		<band height="465" splitType="Stretch">
+			<textField>
+				<reportElement x="30" y="50" width="100" height="30" uuid="6f855116-08e0-4dfd-bf3f-a3c4e1b77b25"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_emision}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="140" y="50" width="100" height="30" uuid="e892ea1a-f108-4939-9a33-a1abf0740b13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_traslado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="430" y="50" width="128" height="30" uuid="8d80fb0c-4408-4b80-bdb0-eb39bb5cf5a6"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numero_guia_remision}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="350" y="113" width="118" height="16" uuid="1413e2ae-36b9-47f2-8774-7bfd91ddfb9d"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{no_licencia_conducir}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="348" y="130" width="130" height="16" uuid="c05c2ed4-ac6a-4ea5-ad16-a122696f5bc8"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numero_cert_inscripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="348" y="146" width="230" height="14" uuid="14717695-c082-480f-9653-7496506d3787"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_completo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="348" y="160" width="100" height="20" uuid="12bdd68a-5005-4226-b9e9-158410361ee8"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{placa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="448" y="161" width="130" height="18" uuid="4ce10d52-e1da-43fb-8952-359d395e7e7a"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{marca}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="70" y="224" width="60" height="30" uuid="46d01f00-4b57-400f-a928-e4fd53ee6bf0"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codigosap}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="140" y="224" width="100" height="30" uuid="3483d484-faf0-4b0e-b8e4-77ddbf89f9e0"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="260" width="90" height="20" uuid="f2c3ad1e-799f-495a-a406-c6d5b11976ef"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{peso_bruto}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="130" y="260" width="60" height="20" uuid="3c73e3b2-3383-4231-a67a-3c065741c796"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Peso Bruto: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="200" y="280" width="90" height="20" uuid="11cc19ab-9abe-4a6d-8408-26389f508dda"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tara}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="130" y="280" width="60" height="20" uuid="e2f3b273-4eda-4fa5-aea1-553dcf8bd60f"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Tara:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="200" y="300" width="90" height="20" uuid="b9a0ebc2-43eb-47ea-a518-1eb0fa9a7857"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{peso_neto}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="130" y="300" width="60" height="20" uuid="64079cf5-4583-49b3-9143-80e1b81c5105"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Peso neto:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="440" y="224" width="90" height="20" uuid="af809ce6-b05a-44d9-8821-4328a82b6716"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{peso_bruto}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="320" y="224" width="38" height="20" uuid="61733267-4a79-4dd9-80ca-45dd5a5abee8"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Kg.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="380" y="224" width="42" height="20" uuid="3765d71d-aeaf-4d35-81b6-bcaa9a2570b0"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sacos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="358" y="237" width="72" height="30" uuid="62022d78-89dd-4ab9-8b4f-2ab59154be78"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="350" width="210" height="30" uuid="f418ef45-38ce-4452-9a8d-46d8e92b9316"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{precintos}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="120" y="330" width="170" height="20" uuid="d36a0d91-992b-4b92-bbb4-0bde8d1c91d9"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Precintos de seguridad]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="40" y="420" width="190" height="24" uuid="d8c0d9f8-e2d3-4213-9aa7-1f5c4825c694"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{razon_social}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="30" y="83" width="240" height="30" uuid="3ad95683-9d58-4208-a473-d02cd13ef0d9"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dir_origen}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="340" y="83" width="238" height="30" uuid="95ac1c3f-4e08-4bca-a095-e2cc001e7c69"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dir_destino}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<noData>
+		<band height="103">
+			<staticText>
+				<reportElement x="170" y="44" width="389" height="30" uuid="7b206a62-b535-4363-ba14-4e0c90fd428f"/>
+				<textElement textAlignment="Center">
+					<font size="19" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sin registros a mostrar en el reporte actual]]></text>
+			</staticText>
+			<image>
+				<reportElement x="10" y="20" width="140" height="79" uuid="8bbe942a-2800-49a4-a706-f3fbc0fcc807"/>
+				<imageExpression><![CDATA[$P{pWebPath}+"/images/logo.jpg"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="40" y="-20" width="190" height="14" uuid="e0030348-351d-4b91-a6b2-d6554eec22db"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ruc}]]></textFieldExpression>
+			</textField>
+		</band>
+	</noData>
+</jasperReport>
