@@ -31,23 +31,34 @@
                             <i class="fa fa-envelope"></i>
                         </div>
                         <div class="login-input">
-                            <p:password id="password" name="password" value="#{sessionBackBean.password}" placeholder="Digita su contraseña" />
+                            <p:password id="password" name="password" value="#{sessionBackBean.password}"
+                                        placeholder="Digita su contraseña"/>
                             <i class="fa fa-lock lock"></i>
                         </div>
 
-                        <p:commandButton type="submit" value="Ingresar" action="#{sessionBackBean.loginAction}" ajax="false" />
+                        <p:commandButton type="submit" value="Ingresar" action="#{sessionBackBean.loginAction}"
+                                         ajax="false"/>
 
                         <h4>Versión: 0.97.50</h4>
                         <h5><i>Build Septiembre, 01 20201. 1600.</i></h5>
+
+                        <h1>
+                            ...
+                            <h:outputText value="#{guestPreferences.menuMode}"/>
+                            <h:outputText value="#{guestPreferences.theme}"/>
+                            ..
+                        </h1>
+
                     </div>
                      <img src="images/logo.jpg" style="width: 200px;" />
                 </div>
             </div>
 
         </div>
-        <h:outputStylesheet name="siberia-layout/css/layout-arctic.css" library="static"/>
 
+        <h:outputStylesheet name="css/layout-arctic.css" library="siberia-layout"/>
 
     </h:form>
 </h:body>
+
 </html>

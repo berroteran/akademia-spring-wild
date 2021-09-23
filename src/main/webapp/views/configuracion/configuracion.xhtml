@@ -99,61 +99,8 @@
                         </p:fieldset>
 
                         <p:panel style="width: 100%;height: 100%">
-                            <p:dataTable id="table-razones"
-                                         widgetVar="table-razones"
-                                         emptyMessage="No se encontraron registros .."
-                                         value="#{configuracionBackBean.listaBajaRazon}"
-                                         selection="#{configuracionBackBean.razon}"
-                                         var="razon"
-                                         rowKey="#{configuracionBackBean.listaBajaRazon.indexOf(razon)}"
-                                         rowIndexVar="rowIndex"
-                                         scrollable="true"
-                                         scrollHeight="200"
-                                         selectionMode="single">
-
-                                <f:facet name="header">
-                                    <div class="ui-g" style="background: #7F8D93">
-                                        <div class="ui-g-6" style="margin: auto;">
-                                            <h4>
-                                                <h:outputText value="Razones de Baja"/>
-                                            </h4>
-                                        </div>
-                                        <div class="ui-g-6 content-align-right">
-                                            <p:commandButton value="Agregar razon"
-                                                             icon="fa fa-plus"
-                                                             process="@this"
-                                                             actionListener="#{configuracionBackBean.crearRazon()}"
-                                                             update="table-razones dModalRazon"
-                                                             oncomplete="PF('dModalRazon').show()"
-                                                             style="margin: 0.1em"/>
-                                        </div>
-                                    </div>
-                                </f:facet>
-
-                                <p:ajax event="rowDblselect"
-                                        listener="#{configuracionBackBean.onRazoneSelect}"
-                                        update=":frmFormRazon"
-                                        oncomplete="PF('dModalRazon').show()"/>
 
 
-                                <p:column headerText="#" width="50" style="text-align: right;">
-                                    <h:outputText value="#{rowIndex+1}"/>
-                                </p:column>
-                                <p:column headerText="Razon" width="300" style="text-align: left;">
-                                    <h:outputText value="#{razon.razon}"/>
-                                </p:column>
-                                <p:column headerText="P. Positivo" width="70" style="text-align: left;">
-                                    <h:outputText value="#{razon.positivo}"/>
-                                </p:column>
-
-                                <p:column headerText="Estado" width="70" style="text-align: left;">
-                                    <h:outputText value="#{razon.activo}"/>
-                                </p:column>
-                                <p:column headerText="-" width="50">
-                                </p:column>
-                                <p:column headerText="-" width="50">
-                                </p:column>
-                            </p:dataTable>
                         </p:panel>
 
                         <p:fieldset legend="Estimados y proyectados">
@@ -576,23 +523,9 @@
                         </div>
                     </f:facet>
 
-                    <p:panelGrid columns="2" style="width: 100%;height: 100%;margin-top: 0px;border: 0px;">
-                        <p:outputLabel value="Razon"/>
-                        <p:inputText id="txtRazon" value="#{configuracionBackBean.razon.razon}"
-                                     style="width: 100%;"></p:inputText>
-
-                        <p:outputLabel value="Producto Positivo*"/>
-                        <p:toggleSwitch id="tgPositivo" value="#{configuracionBackBean.razon.positivo}"/>
-
-                        <p:outputLabel value="Estado"/>
-                        <p:toggleSwitch id="tgEstado" value="#{configuracionBackBean.razon.activo}"/>
-
-                    </p:panelGrid>
-
                 </p:panel>
             </h:form>
         </p:dialog>
-
 
     </ui:define>
 </ui:composition>

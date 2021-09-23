@@ -1,125 +1,59 @@
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      lang="es">
-<h:head>
+      lang="en">
 
+<h:head>
     <f:facet name="first">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
         <meta name="apple-mobile-web-app-capable" content="yes"/>
-        <link rel="shortcut icon" type="image/x-icon"
-              href="#{request.contextPath}/siberia-layout/images/favicon.ico"/>
+        <link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/siberia-layout/images/favicon.ico"/>
     </f:facet>
 
-    <title><ui:insert name="title"></ui:insert></title>
-        <h:outputScript name="siberia-layout/js/layout.js" library="static"/>
-        <ui:insert name="head"/>
-    </h:head>
+    <title><ui:insert name="title">PrimeFaces Siberia</ui:insert></title>
+    <h:outputScript name="js/layout.js" library="siberia-layout"/>
+    <h:outputScript name="sections.js" library="demo"/>
+    <ui:insert name="head"/>
+</h:head>
 
-    <h:body>
+<h:body>
+    <h1>#{guestPreferences.menuMode}</h1>
+    <div class="layout-wrapper #{guestPreferences.menuMode} layout-#{guestPreferences.layout} ">
 
-        <script type="text/javascript">
-            PrimeFaces.locales['es'] = {
-                closeText: 'Cerrar',
-                prevText: 'Anterior',
-                nextText: 'Siguiente',
-                monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-                monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-                dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-                dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
-                dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
-                weekHeader: 'Semana',
-                firstDay: 1,
-                isRTL: false,
-                showMonthAfterYear: false,
-                yearSuffix: '',
-                timeOnlyTitle: 'Sólo hora',
-                timeText: 'Tiempo',
-                hourText: 'Hora',
-                minuteText: 'Minuto',
-                secondText: 'Segundo',
-                currentText: 'Fecha actual',
-                ampm: false,
-                month: 'Mes',
-                week: 'Semana',
-                day: 'Día',
-                allDayText: 'Todo el día',
-                today: 'Hoy',
-                clear: 'Claro'
-            };
-        </script>
+        <ui:include src="./topbar.xhtml"></ui:include>
+        <ui:include src="./rightpanel.xhtml"></ui:include>
 
-        <script>
-            function rptParam(clave, valor){
-                var input = document.getElementById(clave);
-                if(input === null){
-                    input = document.createElement("input");
-                    input.setAttribute("type", "hidden");
-                    input.setAttribute("id", clave);
-                    input.setAttribute("name", clave);
-                    input.setAttribute("value", valor);
-                    document.getElementById("rpt").appendChild(input);
-                } else{
-                    input.value = valor;
-                }
-            };
-
-            function rptSubmit(){
-                document.rpt.submit();
-            }
-        </script>
-
-        <form id="rpt" name="rpt" method="post" action="${pageContext.request.contextPath}/jasper/export" target="_blank">
-            <input type="hidden" id="pWebPath" name="pWebPath" value="#{request.requestURL.substring(0, request.requestURL.length() - request.requestURI.length())}#{request.contextPath}" />
-        </form>
-
-        <div class="layout-wrapper layout-static layout-yanna" >
-            <ui:include src="topbar.xhtml"></ui:include>
-
-            <div class="layout-main">
-                <div class="layout-content">
-                    <p:panel>
-                        <f:facet name="header">
-                            <h3>
-                                <ui:insert name="title">title</ui:insert>
-                            </h3>
-                        </f:facet>
-                        <ui:insert name="content"></ui:insert>
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
-                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
-                        </p:confirmDialog>
-                    </p:panel>
-                </div>
-
-                <div class="layout-mask"></div>
+        <div class="layout-main">
+            <div class="layout-content">
+                <ui:insert name="content"></ui:insert>
             </div>
 
-            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+            <ui:include src="./config.xhtml"/>
+            <ui:include src="./footer.xhtml"></ui:include>
 
-            <p:dialog widgetVar="statusDialog" appendTo="@(body)" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
-                <i class="fa fa-circle-o-notch fa-spin ajax-loader fa-5x" aria-hidden="true"></i>
-            </p:dialog>
-
-            <h:form id="global-message">
-                <p:growl id="message" showDetail="true" life="7000"
-                         showSummary="true" severity="info">
-                    <p:autoUpdate/>
-                </p:growl>
-                <p:growl id="messageError" showDetail="true" life="7000" severity="error"
-                         showSummary="true" >
-                    <p:autoUpdate/>
-                </p:growl>
-            </h:form>
+            <div class="layout-mask"></div>
         </div>
-       
-        <h:outputStylesheet name="siberia-layout/css/primeflex.css" library="static" />
-        <h:outputStylesheet name="siberia-layout/css/layout-magadan.css" library="static" />
-        <h:outputStylesheet name="style.css" library="estarossa" />
-    </h:body>
 
+        <p:ajaxStatus style="width:32px;height:32px;position:fixed;right:7px;bottom:7px">
+            <f:facet name="start">
+                <i class="fa fa-circle-o-notch fa-spin ajax-loader" aria-hidden="true"></i>
+            </f:facet>
 
+            <f:facet name="complete">
+                <h:outputText value=""/>
+            </f:facet>
+        </p:ajaxStatus>
+    </div>
+
+    <h:outputStylesheet name="css/primeflex.css" library="siberia-layout"/>
+    <h:outputStylesheet name="css/layout-yana.css" library="siberia-layout"/>
+    <h:outputStylesheet name="css/layout-#{guestPreferences.layout}.css" library="siberia-layout"/>
+
+</h:body>
 
 </html>

@@ -3,12 +3,13 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                template="template.xhtml">
+                template="./template.xhtml">
 
-    <ui:define name="title">Centro de Control</ui:define>
+    <ui:define name="title">Dashboard xx</ui:define>
 
     <ui:define name="head">
-        <h:outputScript name="demo/chartjs/chart.js" library="static"/>
+        <h:outputScript name="chartjs/chart.js" library="demo"/>
+
         <script type="text/javascript">
             $(function () {
                 new Chart(document.getElementById("dashboard-chart"), {
@@ -373,14 +374,13 @@
         </script>
     </ui:define>
 
-
     <ui:define name="content">
         <div class="p-grid layout-dashboard">
             <div class="p-col-12">
                 <div class="card status">
                     <div class="status-header">
                         <div class="title">
-                            Progreso de metas
+                            Current Status of All Systems
                         </div>
                         <div class="icons">
                             <div class="icon">
@@ -394,7 +394,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="status-content">
                         <div class="status-item-wrapper not-active-status">
                             <div class="status-item"></div>
@@ -439,25 +438,22 @@
                             <div class="status-item"></div>
                         </div>
                     </div>
-
                 </div>
             </div>
-
             <div class="p-col-12 p-md-6 p-lg-3">
                 <div class="card overview-box checkins">
                     <div class="box-header">
                         <div class="title">
-                            <h1>Registros pendientes</h1>
+                            <h1>Check-ins</h1>
                             <span>2522-new</span>
                         </div>
                         <i class="fa fa-signal"></i>
                     </div>
                     <div class="box-content">
-                        <p:graphicImage name="siberia-layout/images/dashboard/asset-bars.png" library="static"/>
+                        <p:graphicImage name="images/dashboard/asset-bars.png" library="siberia-layout"/>
                     </div>
                 </div>
             </div>
-
             <div class="p-col-12 p-md-6 p-lg-3">
                 <div class="card overview-box users">
                     <div class="box-header">
@@ -468,7 +464,7 @@
                         <i class="fa fa-area-chart"></i>
                     </div>
                     <div class="box-content">
-                        <p:graphicImage name="siberia-layout/images/dashboard/asset-graph.png" library="static"/>
+                        <p:graphicImage name="images/dashboard/asset-graph.png" library="siberia-layout"/>
                     </div>
                 </div>
             </div>
@@ -476,21 +472,21 @@
                 <div class="card overview-box views">
                     <div class="box-header">
                         <div class="title">
-                            <h1>Vistas/Visitas</h1>
+                            <h1>Views</h1>
                             <span>55.123</span>
                         </div>
                         <i class="fa fa-signal"></i>
                     </div>
                     <div class="box-content">
                         <div class="progress-bar-wrapper">
-                            <p:graphicImage name="demo/images/car/BMW.png" library="static"/>
+                            <p:graphicImage name="demo/images/car/BMW.png"/>
                             <div class="progress-bar">
                                 <span class="progress"></span>
                                 <span class="progress-bar-background"></span>
                             </div>
                         </div>
                         <div class="progress-bar-wrapper">
-                            <p:graphicImage name="demo/images/car/Volkswagen.png" library="static"/>
+                            <p:graphicImage name="demo/images/car/Volkswagen.png"/>
                             <div class="progress-bar">
                                 <span class="progress" style="width: 40%;"></span>
                                 <span class="progress-bar-background"></span>
@@ -517,7 +513,7 @@
             <div class="p-col-12 p-lg-6">
                 <div class="card news">
                     <div class="news-image">
-                        <p:graphicImage name="siberia-layout/images/dashboard/asset-blog.jpg" library="static"/>
+                        <p:graphicImage name="images/dashboard/asset-blog.jpg" library="siberia-layout"/>
                     </div>
                     <div class="news-content">
                         <span class="date">21 OCT 2019 - 3 MIN READ</span>
@@ -535,8 +531,8 @@
                         <div class="p-col-6 map-info">
                             <div class="map-info-header">
                                 <h1>10.953</h1>
-                                <p:graphicImage name="siberia-layout/images/dashboard/1-f-1-fa-1-f-1-f-2.png"
-                                                library="static"/>
+                                <p:graphicImage name="images/dashboard/1-f-1-fa-1-f-1-f-2.png"
+                                                library="siberia-layout"/>
                             </div>
                             <span>Most customers in US </span>
                             <ul class="info-list">
@@ -559,7 +555,7 @@
                             </ul>
                         </div>
                         <div class="p-col-6 sales-map">
-                            <p:graphicImage name="siberia-layout/images/dashboard/world-low.png" library="static"/>
+                            <p:graphicImage name="images/dashboard/world-low.png" library="siberia-layout"/>
                         </div>
                     </div>
                 </div>
@@ -567,7 +563,7 @@
             <div class="p-col-12 p-lg-4 p-md-6">
                 <div class="card tasks">
                     <div class="tasks-header">
-                        <h1>Tareas de hoy</h1>
+                        <h1>Today’s Tasks</h1>
                         <div class="progress-bar-wrapper">
                             <span>%50</span>
                             <div class="progress-bar">
@@ -582,12 +578,12 @@
                                 <div class="p-grid">
                                     <div class="p-col-6 checkbox">
                                         <p:selectBooleanCheckbox value="true"/>
-                                        <p>Reporte de Ventas.</p>
+                                        <p>Sales Report</p>
                                     </div>
                                     <div class="p-col-6 checkbox-row-info">
                                         <span class="time"><i class="fa fa-calendar-o"></i>Today</span>
-                                        <p:graphicImage name="siberia-layout/images/dashboard/avatar-sofia.png"
-                                                        library="static"/>
+                                        <p:graphicImage name="images/dashboard/avatar-sofia.png"
+                                                        library="siberia-layout"/>
                                         <span class="name">Sofia</span>
                                     </div>
                                 </div>
@@ -597,12 +593,12 @@
                                 <div class="p-grid">
                                     <div class="p-col-6 checkbox">
                                         <p:selectBooleanCheckbox value="true"/>
-                                        <p>Pago de Facturas</p>
+                                        <p>Pay Invoices</p>
                                     </div>
                                     <div class="p-col-6 checkbox-row-info">
                                         <span class="time"><i class="fa fa-calendar-o"></i> Today</span>
-                                        <p:graphicImage name="siberia-layout/images/dashboard/avatar-foroogh.png"
-                                                        library="static"/>
+                                        <p:graphicImage name="images/dashboard/avatar-foroogh.png"
+                                                        library="siberia-layout"/>
                                         <span class="name">Foroogh</span>
                                     </div>
                                 </div>
@@ -616,8 +612,8 @@
                                     </div>
                                     <div class="p-col-6 checkbox-row-info">
                                         <span class="time later"><i class="fa fa-calendar-o"></i> Today</span>
-                                        <p:graphicImage name="siberia-layout/images/dashboard/avatar-jube.png"
-                                                        library="static"/>
+                                        <p:graphicImage name="images/dashboard/avatar-jube.png"
+                                                        library="siberia-layout"/>
                                         <span class="name">Jube</span>
                                     </div>
                                 </div>
@@ -631,8 +627,8 @@
                                     </div>
                                     <div class="p-col-6 checkbox-row-info">
                                         <span class="time later"><i class="fa fa-calendar-o"></i> Today</span>
-                                        <p:graphicImage name="siberia-layout/images/dashboard/avatar-winny.png"
-                                                        library="static"/>
+                                        <p:graphicImage name="images/dashboard/avatar-winny.png"
+                                                        library="siberia-layout"/>
                                         <span class="name">Winny</span>
                                     </div>
                                 </div>
@@ -646,8 +642,8 @@
                                     </div>
                                     <div class="p-col-6 checkbox-row-info">
                                         <span class="time later"><i class="fa fa-calendar-o"></i> Tomorrow</span>
-                                        <p:graphicImage name="siberia-layout/images/dashboard/avatar-quin.png"
-                                                        library="static"/>
+                                        <p:graphicImage name="images/dashboard/avatar-quin.png"
+                                                        library="siberia-layout"/>
                                         <span class="name">Qin</span>
                                     </div>
                                 </div>
@@ -661,8 +657,8 @@
                                     </div>
                                     <div class="p-col-6 checkbox-row-info">
                                         <span class="time later"><i class="fa fa-calendar-o"></i> Tomorrow</span>
-                                        <p:graphicImage name="siberia-layout/images/dashboard/avatar-sofia.png"
-                                                        library="static"/>
+                                        <p:graphicImage name="images/dashboard/avatar-sofia.png"
+                                                        library="siberia-layout"/>
                                         <span class="name">Sofia</span>
                                     </div>
                                 </div>
@@ -674,18 +670,18 @@
             <div class="p-col-12 p-lg-4 p-md-6">
                 <div class="card support">
                     <div class="support-header">
-                        <h1>Hola! 👋</h1>
-                        <span>Necesitas algo?.</span>
+                        <h1>Hi there! 👋</h1>
+                        <span>Just let us know if you need anything.</span>
 
                         <div class="support-request-wrapper">
                             <div class="support-team-status">
                                 <h2>Start a conversation</h2>
                                 <span><i class="fa fa-clock-o"></i> Back Tomorrow</span>
                                 <div class="profiles">
-                                    <p:graphicImage name="siberia-layout/images/dashboard/avatar-support2.png"
-                                                    library="static"/>
-                                    <p:graphicImage name="siberia-layout/images/dashboard/avatar-support1.png"
-                                                    library="static"/>
+                                    <p:graphicImage name="images/dashboard/avatar-support2.png"
+                                                    library="siberia-layout"/>
+                                    <p:graphicImage name="images/dashboard/avatar-support1.png"
+                                                    library="siberia-layout"/>
                                 </div>
                             </div>
 
@@ -724,8 +720,8 @@
                                 <div class="p-grid member">
                                     <div class="p-col-7 team-box">
                                         <div class="profile-image">
-                                            <p:graphicImage name="siberia-layout/images/dashboard/avatar-lara.png"
-                                                            library="static"/>
+                                            <p:graphicImage name="images/dashboard/avatar-lara.png"
+                                                            library="siberia-layout"/>
                                             <div class="circle"></div>
                                         </div>
                                         <div>
@@ -748,8 +744,8 @@
                                 <div class="p-grid member">
                                     <div class="p-col-7 team-box">
                                         <div class="profile-image">
-                                            <p:graphicImage name="siberia-layout/images/dashboard/avatar-sergio.png"
-                                                            library="static"/>
+                                            <p:graphicImage name="images/dashboard/avatar-sergio.png"
+                                                            library="siberia-layout"/>
                                             <div class="circle"></div>
                                         </div>
                                         <div>
@@ -772,8 +768,8 @@
                                 <div class="p-grid member">
                                     <div class="p-col-7 team-box">
                                         <div class="profile-image">
-                                            <p:graphicImage name="siberia-layout/images/dashboard/avatar-chineze.png"
-                                                            library="static"/>
+                                            <p:graphicImage name="images/dashboard/avatar-chineze.png"
+                                                            library="siberia-layout"/>
                                             <div class="circle"></div>
                                         </div>
                                         <div>
@@ -796,8 +792,8 @@
                                 <div class="p-grid member">
                                     <div class="p-col-7 team-box">
                                         <div class="profile-image">
-                                            <p:graphicImage name="siberia-layout/images/dashboard/avatar-charles.png"
-                                                            library="static"/>
+                                            <p:graphicImage name="images/dashboard/avatar-charles.png"
+                                                            library="siberia-layout"/>
                                             <div class="circle offline"></div>
                                         </div>
                                         <div>
@@ -820,8 +816,8 @@
                                 <div class="p-grid member">
                                     <div class="p-col-7 team-box">
                                         <div class="profile-image">
-                                            <p:graphicImage name="siberia-layout/images/dashboard/avatar-aneta.png"
-                                                            library="static"/>
+                                            <p:graphicImage name="images/dashboard/avatar-aneta.png"
+                                                            library="siberia-layout"/>
                                             <div class="circle offline"></div>
                                         </div>
                                         <div>
@@ -855,7 +851,7 @@
                                      filteredValue="#{dtSelectionView.filteredCars}">
 
                             <f:facet name="header">
-                                <h1>Inventario</h1>
+                                <h1>Inventory</h1>
                                 <p:outputPanel>
                                     <h:outputText value="Search all fields:"/>
                                     <p:inputText id="globalFilter" onkeyup="PF('dashboardCarTable').filter()"
@@ -927,7 +923,7 @@
             <div class="p-col-12 p-lg-4">
                 <div class="card profile">
                     <div class="profile-header">
-                        <p:graphicImage name="siberia-layout/images/dashboard/avatar-profile.png" library="static"/>
+                        <p:graphicImage name="images/dashboard/avatar-profile.png" library="siberia-layout"/>
                     </div>
                     <div class="profile-content">
                         <div class="content-header">
@@ -966,7 +962,7 @@
             <div class="p-col-12 p-xl-3 p-md-6">
                 <div class="p-grid p-nogutter status-box status-box-1">
                     <div class="p-col-4 status-box-image">
-                        <p:graphicImage name="siberia-layout/images/dashboard/icon-message.png" library="static"/>
+                        <p:graphicImage name="images/dashboard/icon-message.png" library="siberia-layout"/>
                     </div>
                     <div class="p-col-6 status-box-text">
                         <h1>Messages</h1>
@@ -980,7 +976,7 @@
             <div class="p-col-12 p-xl-3 p-md-6">
                 <div class="p-grid p-nogutter status-box status-box-2">
                     <div class="p-col-4 status-box-image">
-                        <p:graphicImage name="siberia-layout/images/dashboard/icon-checkins.png" library="static"/>
+                        <p:graphicImage name="images/dashboard/icon-checkins.png" library="siberia-layout"/>
                     </div>
                     <div class="p-col-6 status-box-text">
                         <h1>Checkins</h1>
@@ -994,7 +990,7 @@
             <div class="p-col-12 p-xl-3 p-md-6">
                 <div class="p-grid p-nogutter status-box status-box-3">
                     <div class="p-col-4 status-box-image">
-                        <p:graphicImage name="siberia-layout/images/dashboard/icon-filessynced.png" library="static"/>
+                        <p:graphicImage name="images/dashboard/icon-filessynced.png" library="siberia-layout"/>
                     </div>
                     <div class="p-col-6 status-box-text">
                         <h1>Files Synced</h1>
@@ -1008,7 +1004,7 @@
             <div class="p-col-12 p-xl-3 p-md-6">
                 <div class="p-grid p-nogutter status-box status-box-4">
                     <div class="p-col-4 status-box-image">
-                        <p:graphicImage name="siberia-layout/images/dashboard/icon-useronline.png" library="static"/>
+                        <p:graphicImage name="images/dashboard/icon-useronline.png" library="siberia-layout"/>
                     </div>
                     <div class="p-col-6 status-box-text">
                         <h1>Users Online</h1>
@@ -1022,57 +1018,52 @@
             <div class="p-col-12 p-lg-6">
                 <div class="card map">
                     <div class="map-image">
-                        <p:graphicImage name="siberia-layout/images/dashboard/asset-map.jpg" library="static"/>
+                        <p:graphicImage name="images/dashboard/asset-map.jpg" library="siberia-layout"/>
                         <hr/>
                     </div>
                     <div class="map-locations">
                         <div class="location-card">
                             <div class="location-icon">
-                                <p:graphicImage name="siberia-layout/images/dashboard/location-coffee.png"
-                                                library="static"/>
+                                <p:graphicImage name="images/dashboard/location-coffee.png" library="siberia-layout"/>
                             </div>
-                            <p:graphicImage name="siberia-layout/images/dashboard/asset-espresso.jpg" library="static"/>
+                            <p:graphicImage name="images/dashboard/asset-espresso.jpg" library="siberia-layout"/>
                             <h4>Espresso</h4>
                             <span>WF BISTRO</span>
                             <p:rating/>
                         </div>
                         <div class="location-card">
                             <div class="location-icon">
-                                <p:graphicImage name="siberia-layout/images/dashboard/location-warehouse.png"
-                                                library="static"/>
+                                <p:graphicImage name="images/dashboard/location-warehouse.png"
+                                                library="siberia-layout"/>
                             </div>
-                            <p:graphicImage name="siberia-layout/images/dashboard/asset-besiktas.jpg" library="static"/>
+                            <p:graphicImage name="images/dashboard/asset-besiktas.jpg" library="siberia-layout"/>
                             <h4>Warehouse</h4>
                             <span>BESIKTAS LOGISTICS</span>
                             <p:rating/>
                         </div>
                         <div class="location-card">
                             <div class="location-icon">
-                                <p:graphicImage name="siberia-layout/images/dashboard/location-game.png"
-                                                library="static"/>
+                                <p:graphicImage name="images/dashboard/location-game.png" library="siberia-layout"/>
                             </div>
-                            <p:graphicImage name="siberia-layout/images/dashboard/asset-play.jpg" library="static"/>
+                            <p:graphicImage name="images/dashboard/asset-play.jpg" library="siberia-layout"/>
                             <h4>Playstation 5</h4>
                             <span>CHILL.PLAY</span>
                             <p:rating/>
                         </div>
                         <div class="location-card">
                             <div class="location-icon">
-                                <p:graphicImage name="siberia-layout/images/dashboard/location-coffee.png"
-                                                library="static"/>
+                                <p:graphicImage name="images/dashboard/location-coffee.png" library="siberia-layout"/>
                             </div>
-                            <p:graphicImage name="siberia-layout/images/dashboard/asset-americano.jpg"
-                                            library="static"/>
+                            <p:graphicImage name="images/dashboard/asset-americano.jpg" library="siberia-layout"/>
                             <h4>Americano</h4>
                             <span>PRIME</span>
                             <p:rating/>
                         </div>
                         <div class="location-card">
                             <div class="location-icon">
-                                <p:graphicImage name="siberia-layout/images/dashboard/location-coffee.png"
-                                                library="static"/>
+                                <p:graphicImage name="images/dashboard/location-coffee.png" library="siberia-layout"/>
                             </div>
-                            <p:graphicImage name="siberia-layout/images/dashboard/asset-tkwy.jpg" library="static"/>
+                            <p:graphicImage name="images/dashboard/asset-tkwy.jpg" library="siberia-layout"/>
                             <h4>Cappuccino</h4>
                             <span>TKWY</span>
                             <p:rating/>
@@ -1087,7 +1078,7 @@
                         <li>
                             <div class="activity-link"></div>
                             <div class="timeline-icon">
-                                <p:graphicImage name="siberia-layout/images/dashboard/icon-image.png" library="static"/>
+                                <p:graphicImage name="images/dashboard/icon-image.png" library="siberia-layout"/>
                             </div>
                             <div class="timeline-content">
                                 <div class="timeline-content-header">
@@ -1099,20 +1090,20 @@
                                 </div>
                                 <div class="p-grid">
                                     <div class="p-col-3">
-                                        <p:graphicImage name="siberia-layout/images/dashboard/asset-view.jpg"
-                                                        library="static"/>
+                                        <p:graphicImage name="images/dashboard/asset-view.jpg"
+                                                        library="siberia-layout"/>
                                     </div>
                                     <div class="p-col-3">
-                                        <p:graphicImage name="siberia-layout/images/dashboard/asset-statues.jpg"
-                                                        library="static"/>
+                                        <p:graphicImage name="images/dashboard/asset-statues.jpg"
+                                                        library="siberia-layout"/>
                                     </div>
                                     <div class="p-col-3">
-                                        <p:graphicImage name="siberia-layout/images/dashboard/asset-plant.jpg"
-                                                        library="static"/>
+                                        <p:graphicImage name="images/dashboard/asset-plant.jpg"
+                                                        library="siberia-layout"/>
                                     </div>
                                     <div class="p-col-3">
-                                        <p:graphicImage name="siberia-layout/images/dashboard/asset-sound.jpg"
-                                                        library="static"/>
+                                        <p:graphicImage name="images/dashboard/asset-sound.jpg"
+                                                        library="siberia-layout"/>
                                     </div>
                                 </div>
                             </div>
@@ -1120,8 +1111,7 @@
                         <li>
                             <div class="activity-link"></div>
                             <div class="timeline-icon">
-                                <p:graphicImage name="siberia-layout/images/dashboard/icon-energy.png"
-                                                library="static"/>
+                                <p:graphicImage name="images/dashboard/icon-energy.png" library="siberia-layout"/>
                             </div>
                             <div class="timeline-content">
                                 <div class="timeline-content-header">
@@ -1136,8 +1126,7 @@
                         <li>
                             <div class="activity-link"></div>
                             <div class="timeline-icon">
-                                <p:graphicImage name="siberia-layout/images/dashboard/icon-dropbox.png"
-                                                library="static"/>
+                                <p:graphicImage name="images/dashboard/icon-dropbox.png" library="siberia-layout"/>
                             </div>
                             <div class="timeline-content">
                                 <div class="timeline-content-header">
@@ -1152,8 +1141,7 @@
                         <li>
                             <div class="activity-link"></div>
                             <div class="timeline-icon">
-                                <p:graphicImage name="siberia-layout/images/dashboard/icon-github.png"
-                                                library="static"/>
+                                <p:graphicImage name="images/dashboard/icon-github.png" library="siberia-layout"/>
                             </div>
                             <div class="timeline-content">
                                 <div class="timeline-content-header">
@@ -1168,8 +1156,7 @@
                         <li>
                             <div class="activity-link"></div>
                             <div class="timeline-icon">
-                                <p:graphicImage name="siberia-layout/images/dashboard/iconlocation.png"
-                                                library="static"/>
+                                <p:graphicImage name="images/dashboard/iconlocation.png" library="siberia-layout"/>
                             </div>
                             <div class="timeline-content">
                                 <div class="timeline-content-header">
@@ -1179,8 +1166,7 @@
                                     </div>
                                     <span>1 hours ago</span>
                                 </div>
-                                <p:graphicImage name="siberia-layout/images/dashboard/asset-stoneheads.jpg"
-                                                library="static"/>
+                                <p:graphicImage name="images/dashboard/asset-stoneheads.jpg" library="siberia-layout"/>
                             </div>
                         </li>
                     </ul>
@@ -1230,8 +1216,7 @@
                                 <p>Hey Charles And Micheal, I heard there is a task about unexpected event occured
                                     near San Mateo recently. Here is the accident report. Can you handle today?</p>
                                 <div class="message-atachment">
-                                    <p:graphicImage name="siberia-layout/images/dashboard/file-excel.png"
-                                                    library="static"/>
+                                    <p:graphicImage name="images/dashboard/file-excel.png" library="siberia-layout"/>
                                     <div class="atachment-info">
                                         <p>San_Mateo_Accident_Report.xls</p>
                                         <span>24mb Spreadsheet file</span>
