@@ -22,7 +22,6 @@
 </h:head>
 
 <h:body>
-    <h1>#{guestPreferences.menuMode}</h1>
     <div class="layout-wrapper #{guestPreferences.menuMode} layout-#{guestPreferences.layout} ">
 
         <ui:include src="./topbar.xhtml"></ui:include>
@@ -51,7 +50,6 @@
     </div>
 
     <h:outputStylesheet name="css/primeflex.css" library="siberia-layout"/>
-    <h:outputStylesheet name="css/layout-yana.css" library="siberia-layout"/>
     <h:outputStylesheet name="css/layout-#{guestPreferences.layout}.css" library="siberia-layout"/>
 
 </h:body>
