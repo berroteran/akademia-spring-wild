@@ -1,60 +1,59 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:sec="http://www.springframework.org/security/tags"
                 xmlns:sb="http://primefaces.org/siberia">
 
-
     <sb:menu widgetVar="SiberiaMenuWidget">
-
         <p:submenu id="sb_homepage" label="HomePage" icon="fa fa-fw fa-home">
-            <p:menuitem id="sb_dashboard" value="Dashboard" icon="fa fa-fw fa-dashboard"
-                        outcome="/templates/dashboard.xhtml"/>
+            <p:menuitem id="sb_dashboard" value="Dashboard" icon="fa fa-fw fa-dashboard" outcome="./dashboard"/>
         </p:submenu>
 
-        <p:submenu id="sb_default" label="Operaciones" icon="fa fa-fw fa-cube">
-
-
+        <p:submenu id="sb_components" label="Components" icon="fa fa-fw fa-star">
+            <p:menuitem id="sb_sample" value="Sample Page" icon="fa fa-fw fa-columns" outcome="/sample"/>
+            <p:menuitem id="sb_forms" value="Forms" icon="fa fa-fw fa-code" outcome="/forms"/>
+            <p:menuitem id="sb_data" value="Data" icon="fa fa-fw fa-table" outcome="/data"/>
+            <p:menuitem id="sb_panels" value="Panels" icon="fa fa-fw fa-list-alt" outcome="/panel"/>
+            <p:menuitem id="sb_overlays" value="Overlays" icon="fa fa-fw fa-square" outcome="/overlay"/>
+            <p:menuitem id="sb_menus" value="Menus" icon="fa fa-fw fa-minus-square-o" outcome="/menu"/>
+            <p:menuitem id="sb_messages" value="Messages" icon="fa fa-fw fa-circle-o-notch" outcome="/messages"/>
+            <p:menuitem id="sb_charts" value="Charts" icon="fa fa-fw fa-area-chart" outcome="/charts"/>
+            <p:menuitem id="sb_file" value="File" icon="fa fa-fw fa-arrow-circle-o-up" outcome="/file"/>
+            <p:menuitem id="sb_others" value="Misc" icon="fa fa-fw fa-user-secret" outcome="/misc"/>
         </p:submenu>
-
-
-        <p:submenu id="sm_admin" label="Administración" icon="fa fa-fw fa-cube">
-
-            <sec:authorize access="hasAuthority('gerenteFOB')">
-                <p:menuitem id="smenu_FOB" value="FOB"
-                            icon="fa fa-fw fa-square-o"
-                            outcome="/views/security/roles.xhtml"/>
-            </sec:authorize>
-
-
+        <p:submenu id="sb_default" label="Pages" icon="fa fa-fw fa-cube">
+            <p:menuitem id="sb_empty" value="Empty" icon="fa fa-fw fa-square-o" outcome="/empty"/>
+            <p:menuitem id="sb_login" value="Login" icon="fa fa-fw fa-sign-in" outcome="/login"/>
+            <p:menuitem id="sb_db_landing" value="Landing" icon="fa fa-fw fa-certificate" outcome="/landing"/>
+            <p:menuitem id="sb_error" value="Error" icon="fa fa-fw fa-exclamation-circle" outcome="/error"/>
+            <p:menuitem id="sb_404" value="404" icon="fa fa-fw fa-times" outcome="/404"/>
+            <p:menuitem id="sb_access" value="Access Denied" icon="fa fa-fw fa-exclamation-triangle" outcome="/access"/>
         </p:submenu>
-
-        <p:submenu id="sb_components" label="Catalogos" icon="fa fa-fw fa-star">
-            <p:menuitem id="cat_unim" value="UM" outcome="/views/catalogo/unidadmedida.xhtml"
-                        icon="fa fa-fw fa-columns"/>
-
-        </p:submenu>
-
-        <sec:authorize access="hasAuthority('ADMIN')">
-            <p:submenu id="sb_settings" label="CONFIGURACION" icon="fa fa-fw fa-cube">
-
-                <p:menuitem id="frm_setting" value="Configuración" icon="fa fa-fw fa-cogs"
-                            outcome="/views/configuracion/configuracion.xhtml"/>
-
-                <p:submenu id="sb_security" label="Seguridad" icon="fa fa-fw fa-cube">
-                    <p:menuitem id="sec_usuarios" value="Usuarios" icon="fa fa-fw fa-square-o"
-                                outcome="/views/security/usuarios.xhtml"/>
-
-                    <p:menuitem id="sec_roles" value="roles" icon="fa fa-fw fa-square-o"
-                                outcome="/views/security/roles.xhtml"/>
+        <p:submenu id="sb_hierarchy" label="Hierarchy" icon="fa fa-fw fa-sitemap">
+            <p:submenu id="sb_sm1" label="Submenu 1" icon="fa fa-fw fa-sign-in">
+                <p:submenu id="sb_sm11" label="Submenu 1.1" icon="fa fa-fw fa-sign-in">
+                    <p:menuitem id="sb_lnk111" value="Link 1.1.1" icon="fa fa-fw fa-sign-in" url="#"/>
+                    <p:menuitem id="sb_lnk112" value="Link 1.1.2" icon="fa fa-fw fa-sign-in" url="#"/>
+                    <p:menuitem id="sb_lnk113" value="Link 1.1.3" icon="fa fa-fw fa-sign-in" url="#"/>
                 </p:submenu>
-                <p:menuitem id="frm_atencion1" value="Preba de Reporte " icon="fa fa-fw fa-square-o"
-                            outcome="/views/atencion/reporte.xhtml"/>
+                <p:submenu id="sb_sm12" label="Submenu 1.2" icon="fa fa-fw fa-sign-in">
+                    <p:menuitem id="sb_lnk121" value="Link 1.2.1" icon="fa fa-fw fa-sign-in" url="#"/>
+                </p:submenu>
             </p:submenu>
-        </sec:authorize>
-
-        <p:submenu id="sb_actions" label="Acciones" icon="fa fa-fw fa-cube">
-            <p:menuitem id="sb_login" value="Salir" icon="fa fa-fw fa-sign-in" url="${request.contextPath}/logout"/>
+            <p:submenu id="sb_sm2" label="Submenu 2" icon="fa fa-fw fa-sign-in">
+                <p:submenu id="sb_sm21" label="Submenu 2.1" icon="fa fa-fw fa-sign-in">
+                    <p:menuitem id="sb_lnk211" value="Link 2.1.1" icon="fa fa-fw fa-sign-in" url="#"/>
+                    <p:menuitem id="sb_lnk212" value="Link 2.1.2" icon="fa fa-fw fa-sign-in" url="#"/>
+                </p:submenu>
+                <p:submenu id="sb_sm22" label="Submenu 2.2" icon="fa fa-fw fa-sign-in">
+                    <p:menuitem id="sb_lnk221" value="Link 2.2.1" icon="fa fa-fw fa-sign-in" url="#"/>
+                </p:submenu>
+            </p:submenu>
+        </p:submenu>
+        <p:submenu id="sb_misc" label="Get Started" icon="fa fa-fw fa-download">
+            <p:menuitem id="sb_doc" value="Docs" icon="fa fa-fw fa-certificate" outcome="/templates/docs"/>
+            <p:menuitem id="sb_buy" value="Buy Now" icon="fa fa-fw fa-credit-card-alt"
+                        url="https://www.primefaces.org/store"/>
         </p:submenu>
     </sb:menu>
+
 </ui:composition>

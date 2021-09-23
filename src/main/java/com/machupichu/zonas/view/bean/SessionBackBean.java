@@ -5,7 +5,6 @@ import com.machupichu.zonas.model.EstadosProcesoEnum;
 import com.machupichu.zonas.model.Oficina;
 import com.machupichu.zonas.model.User;
 import com.machupichu.zonas.model.auditoria.LoginAuditoriaServicio;
-import com.machupichu.zonas.view.utils.Fechas;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -49,9 +48,8 @@ public class SessionBackBean implements Serializable {
 
     @PostConstruct
     public void init() {
+        ///System.out.println("guestPreferences.menuMod : " + guestPreferences.menuMod);
     }
-
-
 
 
 

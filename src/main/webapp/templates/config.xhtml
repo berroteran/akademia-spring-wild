@@ -1,6 +1,7 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:p="http://primefaces.org/ui">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
 
     <div id="layout-config" class="layout-config">
         <div class="layout-config-content">
@@ -17,15 +18,17 @@
                             <h1>Menu Modes</h1>
                             <div class="panel-items">
                                 <div class="panel-item">
+
                                     <p:commandLink actionListener="#{guestPreferences.setMenuMode('layout-static')}"
                                         oncomplete="PrimeFaces.SiberiaConfigurator.changeMenuToStatic()"
                                         update=":config-form:config-form-tabs:menumodes-panel :config-form:config-form-tabs:menutypes-panel menuform" >
                                         <p:graphicImage name="images/configurator/siberia-static.png"
-                                            library="siberia-layout" title="Static" />
+                                                        library="siberia-layout" title="Statico"/>
                                         <ui:fragment rendered="#{guestPreferences.menuMode == 'layout-static'}">
                                             <i class="fa fa-check"></i>
                                         </ui:fragment>
                                     </p:commandLink>
+
                                     <span>Static</span>
                                 </div>
                                 <div class="panel-item">
