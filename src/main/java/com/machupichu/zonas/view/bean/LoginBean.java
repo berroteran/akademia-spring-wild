@@ -5,16 +5,16 @@
  */
 package com.machupichu.zonas.view.bean;
 
-import java.util.logging.Logger;
-
 import javax.faces.application.FacesMessage;
-import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.logging.Logger;
+
+import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
 
 /**
  *
