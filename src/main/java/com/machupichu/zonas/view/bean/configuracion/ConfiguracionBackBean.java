@@ -3,7 +3,6 @@ package com.machupichu.zonas.view.bean.configuracion;
 import com.machupichu.zonas.model.ConfiguracionEmail;
 import com.machupichu.zonas.model.EventosEnum;
 import com.machupichu.zonas.model.Parametro;
-
 import com.machupichu.zonas.service.configuracion.EmailService;
 import com.machupichu.zonas.service.configuracion.ParametroServiceIml;
 import com.machupichu.zonas.utils.BusinessException;
@@ -167,9 +166,7 @@ public class ConfiguracionBackBean extends BaseBackBean implements Serializable 
     }
 
 
-    public void onRazoneSelect(){
 
-    }
 
 
     public void saveAllSettings(){

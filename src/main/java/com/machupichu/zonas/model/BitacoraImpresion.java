@@ -1,7 +1,5 @@
 package com.machupichu.zonas.model;
 
-import com.machupichu.zonas.view.bean.BaseBackBean;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 

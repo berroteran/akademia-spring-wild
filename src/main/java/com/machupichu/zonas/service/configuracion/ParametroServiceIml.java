@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
-public class ParametroServiceIml  implements ParametroService{
+public class ParametroServiceIml implements ParametroService, Serializable {
 
     @Autowired
     private ParametroRepository repository;
@@ -24,7 +25,7 @@ public class ParametroServiceIml  implements ParametroService{
     public List<Parametro> findAll() {
 
         Iterable<Parametro> iterable = repository.findAll();
-        if( iterable != null ){
+        if (iterable != null) {
             return StreamSupport.stream(iterable.spliterator(), false)
                     .collect(Collectors.toList());
         }
