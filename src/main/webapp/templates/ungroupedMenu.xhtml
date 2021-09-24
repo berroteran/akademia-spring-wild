@@ -9,14 +9,16 @@
         <p:submenu id="sbx_homepage" label="Main Menu" icon="fa fa-fw fa-home">
             <p:menuitem id="sbx_dashboard" value="Dashboard" icon="fa fa-fw fa-dashboard"
                         outcome="/templates/dashboard"/>
+
+            <p:menuitem id="frm_atencion" value="Matricula " icon="fa fa-fw fa-square-o"
+                        outcome="/templates/forms.xhtml "/>
+
         </p:submenu>
 
 
         <p:submenu id="sb_default" label="Operaciones" icon="fa fa-fw fa-cube">
-            <p:menuitem id="frm_atencion" value="1. Atención" icon="fa fa-fw fa-square-o"
-                        outcome="/templates/forms.xhtml "/>
 
-            <p:menuitem id="frm_compras" value="2. Matricula" icon="fa fa-fw fa-square-o"
+            <p:menuitem id="frm_compras" value="Matriculas Lista" icon="fa fa-fw fa-square-o"
                         outcome="/views/matricula.xhtml"/>
 
             <p:menuitem id="frm_baba" value="3.1 Transformacion BABA" icon="fa fa-fw fa-square-o"
