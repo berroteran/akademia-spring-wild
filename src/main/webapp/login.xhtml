@@ -12,7 +12,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
         <meta name="apple-mobile-web-app-capable" content="yes"/>
     </f:facet>
-    <title>Machu Picchu Zonas</title>
+    <title>Akademia System Manager</title>
 </h:head>
 
 <h:body styleClass="login-body notfound">
@@ -20,11 +20,12 @@
 
         <p:growl id="message" life="1000" showDetail="true" sticky="true" />
 
-        <div class="login-wrapper" style="background: antiquewhite">
+        <div class="login-wrapper" style="background: #966F99">
             <div class="login-wrapper">
                 <div class="login-content">
+
                     <div class="content-text">
-                        <h1>Machu Picchu Zonas</h1>
+                        <h1>Akademia System Manager</h1>
                         <span>Inicio de Sesión</span>
                         <div class="login-input">
                             <p:inputText id="username" name="username" value="#{sessionBackBean.username}" placeholder="Digite su usuario" autocomplete="off"/>
@@ -39,18 +40,12 @@
                         <p:commandButton type="submit" value="Ingresar" action="#{sessionBackBean.loginAction}"
                                          ajax="false"/>
 
-                        <h4>Versión: 0.97.50</h4>
-                        <h5><i>Build Septiembre, 01 20201. 1600.</i></h5>
+                        <h4>Versión: 0.51.50</h4>
+                        <h5><i>Build Septiembre 24, 2021.</i></h5>
 
-                        <h1>
-                            ...
-                            <h:outputText value="#{guestPreferences.menuMode}"/>
-                            <h:outputText value="#{guestPreferences.theme}"/>
-                            ..
-                        </h1>
 
                     </div>
-                     <img src="images/logo.jpg" style="width: 200px;" />
+                     <img src="images/logo.jpeg" style="width: 200px;" />
                 </div>
             </div>
 
