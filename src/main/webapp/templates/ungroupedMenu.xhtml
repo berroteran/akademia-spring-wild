@@ -11,7 +11,7 @@
                         outcome="/templates/dashboard"/>
 
             <p:menuitem id="frm_atencion" value="Matricula " icon="fa fa-fw fa-square-o"
-                        outcome="/templates/forms.xhtml "/>
+                        outcome="/views/matricula.xhtml "/>
 
         </p:submenu>
 
@@ -20,6 +20,10 @@
 
             <p:menuitem id="frm_compras" value="Matriculas Lista" icon="fa fa-fw fa-square-o"
                         outcome="/views/matricula.xhtml"/>
+
+            <p:menuitem id="frm_sample" value="Formulario Ejemplo " icon="fa fa-fw fa-square-o"
+                        outcome="/templates/forms.xhtml "/>
+
 
             <p:menuitem id="frm_baba" value="3.1 Transformacion BABA" icon="fa fa-fw fa-square-o"
                         outcome="/views/oficina/oficinas.xhtml"/>
@@ -74,19 +78,25 @@
         </p:submenu>
 
         <sec:authorize access="hasAuthority('ADMIN')">
+
             <p:submenu id="sb_settings" label="CONFIGURACION" icon="fa fa-fw fa-cube">
 
                 <p:menuitem id="frm_setting" value="Configuración" icon="fa fa-fw fa-cogs"
                             outcome="/views/oficina/oficinas.xhtml"/>
 
                 <p:submenu id="sb_security" label="Seguridad" icon="fa fa-fw fa-cube">
+
                     <p:menuitem id="sec_usuarios" value="Usuarios" icon="fa fa-fw fa-square-o"
-                                outcome="/views/oficina/oficinas.xhtml"/>
+                                outcome="/views/security/usuarios.xhtml"/>
+
                     <p:menuitem id="sec_roles" value="roles" icon="fa fa-fw fa-square-o"
-                                outcome="/views/oficina/oficinas.xhtml"/>
+                                outcome="/views/security/roles.xhtml"/>
                 </p:submenu>
+
+
                 <p:menuitem id="frm_atencion1" value="Preba de Reporte " icon="fa fa-fw fa-square-o"
                             outcome="/views/oficina/oficinas.xhtml"/>
+
             </p:submenu>
         </sec:authorize>
 
