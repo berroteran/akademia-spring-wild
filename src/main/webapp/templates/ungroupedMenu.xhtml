@@ -21,29 +21,18 @@
             <p:menuitem id="frm_compras" value="Matriculas Lista" icon="fa fa-fw fa-square-o"
                         outcome="/views/matricula.xhtml"/>
 
-            <p:menuitem id="frm_sample" value="Formulario Ejemplo " icon="fa fa-fw fa-square-o"
+            <p:menuitem id="frm_alumnos" value="Alumnos" icon="fa fa-fw fa-square-o"
+                        outcome="/views/matricula.xhtml"/>
+
+
+            <p:menuitem id="frm_sample" value="Cursos " icon="fa fa-fw fa-square-o"
                         outcome="/templates/forms.xhtml "/>
 
 
-            <p:menuitem id="frm_baba" value="3.1 Transformacion BABA" icon="fa fa-fw fa-square-o"
+            <p:menuitem id="frm_baba" value="Promociones" icon="fa fa-fw fa-square-o"
                         outcome="/views/oficina/oficinas.xhtml"/>
 
-            <p:menuitem id="pg_secadoLimpiado" value="3.2 Secado y limpiado." icon="fa fa-fw fa-square-o"
-                        outcome="/views/oficina/oficinas.xhtml"/>
-
-            <p:menuitem id="pg_trasegado" value="4. Trasegado" icon="fa fa-fw fa-square-o"
-                        outcome="/views/oficina/oficinas.xhtml"/>
-            <p:menuitem id="pg_packing" value="5. Packing List" icon="fa fa-fw fa-square-o"
-                        outcome="/views/oficina/oficinas.xhtml"/>
-            <p:menuitem id="pg_Remesa" value="6. Remesas" icon="fa fa-fw fa-square-o"
-                        outcome="/views/oficina/oficinas.xhtml"/>
-            <p:menuitem id="pg_remesarecepcion" value="7. Remesas Recepción" icon="fa fa-fw fa-square-o"
-                        outcome="/views/oficina/oficinas.xhtml"/>
-
-            <p:menuitem id="pg_remesaCalidad" value=":: Transformar Organico a Conv." icon="fa fa-fw fa-square-o"
-                        outcome="/views/oficina/oficinas.xhtml"/>
-
-            <p:menuitem id="pg_merma" value=":: Mermas" icon="fa fa-fw fa-square-o"
+            <p:menuitem id="pg_secadoLimpiado" value="Instructores" icon="fa fa-fw fa-square-o"
                         outcome="/views/oficina/oficinas.xhtml"/>
 
         </p:submenu>
@@ -51,25 +40,11 @@
 
         <p:submenu id="sm_admin" label="Administración" icon="fa fa-fw fa-cube">
 
-            <sec:authorize access="hasAuthority('gerenteFOB')">
-                <p:menuitem id="smenu_FOB" value="FOB"
-                            icon="fa fa-fw fa-square-o"
-                            outcome="/views/configuracion/configuracion.xhtml"/>
-            </sec:authorize>
-
-            <p:menuitem id="pg_proyectado" value="Proyectado Agricultor" icon="fa fa-fw fa-square-o"
-                        outcome="/views/oficina/oficinas.xhtml"/>
-            <p:menuitem id="pg_liqCompraReintegro" value="Liquidación de Reintegros" icon="fa fa-fw fa-square-o"
+            <p:menuitem id="pg_trasegado" value="Sucursales" icon="fa fa-fw fa-square-o"
                         outcome="/views/oficina/oficinas.xhtml"/>
 
-            <p:menuitem id="frm_prov_reintegro" value="Reintegro a Proveedores" icon="fa fa-fw fa-square-o"
-                        outcome="/views/oficina/oficinas.xhtml" rendered="false"/>
-
-            <p:menuitem id="smenu_UIT" value="UIT" icon="fa fa-fw fa-square-o"
-                        outcome="/views/oficina/oficinas.xhtml"/>
-            <p:menuitem id="smenu_flete" value="Flete" icon="fa fa-fw fa-square-o"
-                        outcome="/views/oficina/oficinas.xhtml"/>
         </p:submenu>
+
 
         <p:submenu id="sb_components" label="Catalogos" icon="fa fa-fw fa-star">
             <p:menuitem id="cat_prov" value="Proveedor" outcome="/views/oficina/oficinas.xhtml"
