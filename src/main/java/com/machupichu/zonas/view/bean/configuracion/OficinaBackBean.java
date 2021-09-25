@@ -1,7 +1,10 @@
 package com.machupichu.zonas.view.bean.configuracion;
 
 import com.machupichu.zonas.model.Oficina;
+import com.machupichu.zonas.service.OficinaServicio;
 import com.machupichu.zonas.view.bean.BaseBackBean;
+import com.machupichu.zonas.view.bean.SessionBackBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -14,20 +17,39 @@ import java.util.List;
 @ViewScoped
 public class OficinaBackBean extends BaseBackBean implements Serializable {
 
+    @Autowired
+    private SessionBackBean sessionBackBean;
+
+    @Autowired
+    private OficinaServicio oficinaService;
+
 
     private Oficina oficina;
+    private List<Oficina> oficinas;
+
 
     @PostConstruct
     public void init() {
+        oficinas = (List<Oficina>) oficinaService.findAll();
+    }
+
+    public void onload(){
 
     }
 
-    public ActionListener getCrear() {
+    public ActionListener crear() {
+        try{
+
+            oficina = new Oficina();
+
+        }catch (Exception e){
+            showErrorMessage("Registro de Oficinas", e.getMessage());
+        }
         return null;
     }
 
     public List<Oficina> getOficinas() {
-        return null;
+        return oficinas;
     }
 
     public Oficina getOficina() {
@@ -42,5 +64,21 @@ public class OficinaBackBean extends BaseBackBean implements Serializable {
     }
 
     public void  cerrarModalOficina() {
+    }
+
+    public ActionListener save() {
+        try {
+
+            oficinaService.save(this.getOficina());
+
+            showInfoMessage("OFICINA GUARDADO SATISFACTORIAMENTE", "");
+        }catch(Exception e){
+            showErrorMessage("Registro de Oficinas", e.getMessage());
+        }
+        return null;
+    }
+
+    public void setOficinas(List<Oficina> oficinas) {
+        this.oficinas = oficinas;
     }
 }
