@@ -37,6 +37,10 @@ public class OficinaBackBean extends BaseBackBean implements Serializable {
 
     }
 
+    public void onOficinaSelected(){
+        
+    }
+
     public ActionListener crear() {
         try{
 
