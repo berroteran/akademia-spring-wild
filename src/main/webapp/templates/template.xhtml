@@ -28,8 +28,18 @@
         <ui:include src="./rightpanel.xhtml"></ui:include>
 
         <div class="layout-main">
-            <div class="layout-content">
+            <div class="layout-content" >
+                    <h3>
+                        <ui:insert name="title">title</ui:insert>
+                    </h3>
+
                 <ui:insert name="content"></ui:insert>
+
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+                </p:confirmDialog>
+
             </div>
 
             <ui:include src="./config.xhtml"/>
@@ -37,6 +47,22 @@
 
             <div class="layout-mask"></div>
         </div>
+
+        <p:dialog widgetVar="statusDialog" appendTo="@(body)" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+            <i class="fa fa-circle-o-notch fa-spin ajax-loader fa-5x" aria-hidden="true"></i>
+        </p:dialog>
+
+        <h:form id="global-message">
+            <p:growl id="message" showDetail="true" life="7000"
+                     showSummary="true" severity="info">
+                <p:autoUpdate/>
+            </p:growl>
+            <p:growl id="messageError" showDetail="true" life="7000" severity="error"
+                     showSummary="true" >
+                <p:autoUpdate/>
+            </p:growl>
+        </h:form>
+
 
         <p:ajaxStatus style="width:32px;height:32px;position:fixed;right:7px;bottom:7px">
             <f:facet name="start">

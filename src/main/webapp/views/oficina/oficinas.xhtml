@@ -5,15 +5,15 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
 
-    <ui:define name="head">
+    <ui:define name="head" >
 
     </ui:define>
 
-    <ui:define name="title">Oficinas</ui:define>
+    <ui:define name="title">Gestion de Sucursales</ui:define>
 
     <ui:define name="content">
 
-        <h:form id="form-envases-list">
+        <h:form id="form-envases-list" >
             <p:toolbar>
                 <f:facet name="left">
                     <p:commandButton value="Agregar oficina" id="btnAgregarNuevo"
@@ -21,16 +21,7 @@
                                      oncomplete="PF('modalOficina').show()"
                                      update=":formModalOficina"
                                      process="@this"
-                                     rendered="false"
                                      actionListener="#{oficinaBackBean.crear}"/>
-
-                    <p:commandButton value="Obtener de SAP"
-                                     process="@this"
-                                     alt="Obtener la informacion mas reciente desde SAP"
-                                     title="Obtener la informacion mas reciente desde SAP."
-                                     disabled="true"
-                                     onclick="PF('oficinas-list').clearFilters();"
-                                     styleClass="secondary-button"/>
 
                     <p:commandButton value="Refrescar"
                                      process="@this"
@@ -43,6 +34,7 @@
                                      onclick="PF('oficinas-list').clearFilters();"
                                      styleClass="secondary-button">
                     </p:commandButton>
+
                 </f:facet>
             </p:toolbar>
 
@@ -79,11 +71,13 @@
                           filterBy="#{oficina.nombre}" filterMatchMode="contains">
                     <h:outputText value="#{oficina.nombre}"/>
                 </p:column>
+
                 <p:column headerText="ZONA" filterable="true" sortBy="#{oficina.zona}"
                           filterBy="#{oficina.zona}" filterMatchMode="contains">
                     <h:outputText value="#{oficina.zona}"/>
                 </p:column>
-                <p:column headerText="SEDE" filterable="true" sortBy="#{oficina.sede}"
+
+                <p:column headerText="Responsable" filterable="true" sortBy="#{oficina.sede}"
                           filterBy="#{oficina.sede}" filterMatchMode="contains">
                     <h:outputText value="#{oficina.sede}"/>
                 </p:column>
@@ -107,10 +101,14 @@
             </p:dataTable>
         </h:form>
 
+
+
         <!--  MODAL OFICINA -->
         <p:dialog id="modalOficina"
                   showHeader="false"
-                  width="1000"
+                  draggable="true"
+                  fitViewport="true"
+                  width="99%"
                   height="auto"
                   closable="true"
                   closeOnEscape="true"
@@ -121,35 +119,12 @@
                     listener="#{oficinaBackBean.cerrarModalOficina()}"/>
 
             <h:form id="formModalOficina">
+
                 <p:panel id="panel-nuevo-oficina" style="width: 100%; height: auto">
                     <f:facet name="header">
                         <div class="ui-g">
                             <div class="ui-g-6" style="margin: auto">
                                 <h:outputText value="Información de Oficina" style="font-size: 16px;"/>
-                            </div>
-                            <div class="ui-g-6 content-align-right">
-                                <p:commandButton value="Guardar"
-                                                 process="formModalOficina" icon="fa fa-save"
-                                                 actionListener="#{oficinaBackBean.save}"
-                                                 update=":form-envases-list :global-message"
-                                                 style="margin: 0.1em"/>
-
-                                <p:commandButton id="btnNuevaOficina"
-                                                 value="NUEVO"
-                                                 process="@this"
-                                                 rendered="false"
-                                                 actionListener="#{oficinaBackBean.crear()}"
-                                                 update="formModalOficina"
-                                                 style="margin: 0.1em"/>
-
-                                <p:commandButton value="Cerrar" style="margin: 0.1em"
-                                                 styleClass="secondary-button"
-                                                 process="@this"
-                                                 icon="fa fa-close"
-                                                 resetValues="true"
-                                                 update="@form"
-                                                 oncomplete="PF('modalOficina').hide()"
-                                />
                             </div>
                         </div>
                     </f:facet>
@@ -214,8 +189,26 @@
 
                     </p:panelGrid>
 
-
+                    <f:facet name="footer">
+                        <div class="ui-g-6 content-align-right">
+                            <p:commandButton value="Guardar"
+                                             process="formModalOficina" icon="fa fa-save"
+                                             actionListener="#{oficinaBackBean.save}"
+                                             update=":form-envases-list :global-message"
+                                             style="margin: 0.1em"/>
+                            <p:commandButton value="Cerrar" style="margin: 0.1em"
+                                             styleClass="secondary-button"
+                                             process="@this"
+                                             icon="fa fa-close"
+                                             resetValues="true"
+                                             update="@form"
+                                             oncomplete="PF('modalOficina').hide()"
+                            />
+                        </div>
+                    </f:facet>
                 </p:panel>
+
+
 
             </h:form>
         </p:dialog>

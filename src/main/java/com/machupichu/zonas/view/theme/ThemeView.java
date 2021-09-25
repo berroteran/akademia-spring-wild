@@ -1,4 +1,3 @@
-package com.machupichu.zonas.view.theme;
 
 import javax.inject.Named;
 import java.io.Serializable;
