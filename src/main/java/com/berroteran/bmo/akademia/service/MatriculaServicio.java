@@ -1,6 +1,8 @@
 package com.berroteran.bmo.akademia.service;
 
+import com.berroteran.bmo.akademia.data.repository.MatriculaRepository;
 import com.berroteran.bmo.akademia.data.repository.OficinaRepository;
+import com.berroteran.bmo.akademia.model.Matricula;
 import com.berroteran.bmo.akademia.model.Oficina;
 import com.berroteran.bmo.akademia.utils.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +17,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Service
-public class OficinaServicio {
+public class MatriculaServicio {
 
-    private static final Logger LOGGER = Logger.getLogger(OficinaServicio.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(MatriculaServicio.class.getName());
 
     @Autowired
     private OficinaRepository OficinaRepositorio;
+    @Autowired
+    private MatriculaRepository matriculaRepository;
 
 
     public Iterable<Oficina> findAll() {
@@ -44,14 +48,14 @@ public class OficinaServicio {
     }
 
     @Transactional
-    public void save(Oficina Oficina) throws BusinessException {
-        if (Oficina == null) {
+    public void save(Matricula matricula) throws BusinessException {
+        if (matricula == null) {
 
             LOGGER.log(Level.SEVERE, "La Oficina esta nulo. ¿Está seguro que está bien escrito?");
             throw new BusinessException("La Oficina esta nulo. ¿Está seguro que está bien escrito?");
 
         }
-        OficinaRepositorio.save(Oficina);
+        matriculaRepository.save( matricula );
     }
 
 
