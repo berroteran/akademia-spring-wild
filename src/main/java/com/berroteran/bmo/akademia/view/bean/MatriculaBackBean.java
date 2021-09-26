@@ -2,6 +2,7 @@ package com.berroteran.bmo.akademia.view.bean;
 
 import com.berroteran.bmo.akademia.model.Matricula;
 import com.berroteran.bmo.akademia.model.Oficina;
+import com.berroteran.bmo.akademia.service.MatriculaServicio;
 import com.berroteran.bmo.akademia.service.OficinaServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,6 +23,8 @@ public class MatriculaBackBean extends BaseBackBean implements Serializable {
     @Autowired
     private OficinaServicio oficinaService;
 
+    @Autowired
+    private MatriculaServicio matriculaServicio;
 
     private Oficina oficina;
     private List<Oficina> oficinas;
@@ -72,16 +75,28 @@ public class MatriculaBackBean extends BaseBackBean implements Serializable {
     public ActionListener save() {
         try {
 
-            oficinaService.save(this.getOficina());
+            matriculaServicio.save( getMatricula() );
 
             showInfoMessage("OFICINA GUARDADO SATISFACTORIAMENTE", "");
         }catch(Exception e){
-            showErrorMessage("Registro de Oficinas", e.getMessage());
+            showErrorMessage("Matriculando", e.getMessage());
         }
         return null;
     }
 
     public void setOficinas(List<Oficina> oficinas) {
         this.oficinas = oficinas;
+    }
+
+
+
+    //= ======
+
+    public Matricula getMatricula() {
+        return matricula;
+    }
+
+    public void setMatricula(Matricula matricula) {
+        this.matricula = matricula;
     }
 }

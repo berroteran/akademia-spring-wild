@@ -46,8 +46,10 @@ public class OficinaServicio {
     @Transactional
     public void save(Oficina Oficina) throws BusinessException {
         if (Oficina == null) {
+
             LOGGER.log(Level.SEVERE, "La Oficina esta nulo. ¿Está seguro que está bien escrito?");
             throw new BusinessException("La Oficina esta nulo. ¿Está seguro que está bien escrito?");
+
         }
         OficinaRepositorio.save(Oficina);
     }
