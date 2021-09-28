@@ -15,8 +15,13 @@ public class Curso extends AbstractEntity {
     private Integer nivel =1;
     private String descripcion;
     private String intructor;
+    private String generacion;
     private LocalDate fechaInicio;
+    private Integer cupostotales;
+    private Integer cuposDisponibles;
 
+    @ManyToOne
+    private Oficina sucursal;
 
     public Integer getId() {
         return id;

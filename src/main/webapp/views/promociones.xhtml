@@ -8,56 +8,55 @@
 
     </ui:define>
 
-    <ui:define name="title">Gestion de cursos</ui:define>
+    <ui:define name="title">PRMOCIONES</ui:define>
 
     <ui:define name="content">
 
-        <h:form id="form-envases-list" >
+        <h:form id="form-alumnos-list" >
             <p:toolbar>
                 <f:facet name="left">
-                    <p:commandButton value="Agregar Curso"
-                                     id="btnAgregarNuevo"
+                    <p:commandButton value="Crear Alumno" id="btnAgregarNuevo"
                                      icon="fa fa-plus-circle"
-                                     oncomplete="PF('modalCurso').show()"
-                                     update=":formModalCurso"
+                                     oncomplete="PF('modalAlumno').show()"
+                                     update=":formModalAlumno"
                                      process="@this"
-                                     actionListener="#{cursoBackBean.crear}"/>
+                                     actionListener="#{oficinaBackBean.crear}"/>
 
                     <p:commandButton value="Refrescar"
                                      process="@this"
                                      disabled="true"
-                                     onclick="PF('cursos-list').clearFilters();"
+                                     onclick="PF('alumnos-list').clearFilters();"
                                      styleClass="secondary-button"/>
 
                     <p:commandButton value="Limpiar Filtros"
                                      process="@this"
-                                     onclick="PF('cursos-list').clearFilters();"
+                                     onclick="PF('alumnos-list').clearFilters();"
                                      styleClass="secondary-button">
                     </p:commandButton>
 
                 </f:facet>
             </p:toolbar>
 
-            <p:dataTable id="cursos-list"
-                         widgetVar="cursos-list"
+            <p:dataTable id="alumnos-list"
+                         widgetVar="alumnos-list"
+                         emptyMessage="No se encontraron registros"
+                         value="#{oficinaBackBean.oficinas}"
+                         selection="#{oficinaBackBean.oficina}"
                          selectionMode="single"
                          reflow="true"
-                         emptyMessage="No se encontraron registros"
-                         value="#{cursoBackBean.cursos}"
-                         selection="#{cursoBackBean.curso}"
-                         var="curso"
-                         rowKey="#{curso.id}"
-                         sortBy="#{curso.id}"
-                         sortField="#{curso.id}"
+                         var="alumnos"
+                         rowKey="#{alumnos.id}"
+                         sortBy="#{alumnos.id}"
+                         sortField="#{alumnos.id}"
                          paginator="true"
                          rows="15"
                          paginatorPosition="bottom">
 
                 <p:ajax event="rowDblselect"
                         process="@this"
-                        update="formModalCurso :formModalCurso:panel-nuevo-curso"
-                        listener="#{cursoBackBean.onCursoSelected}"
-                        oncomplete="PF('modalCurso').show()"/>
+                        update="formModalAlumno :formModalAlumno:panel-nuevo-oficina"
+                        listener="#{oficinaBackBean.onOficinaSelected}"
+                        oncomplete="PF('modalAlumno').show()"/>
 
                 <p:column headerText="ID" style="text-align: right" width="50px;" sortBy="#{curso.id}">
                     <h:outputText value="#{curso.id}"/>
@@ -72,22 +71,22 @@
                     <h:outputText value="#{curso.nombre}"/>
                 </p:column>
 
-                <p:column headerText="Nivel" filterable="true" sortBy="#{curso.zona}"
+                <p:column headerText="ZONA" filterable="true" sortBy="#{curso.zona}"
                           filterBy="#{curso.zona}" filterMatchMode="contains">
                     <h:outputText value="#{curso.zona}"/>
                 </p:column>
 
-                <p:column headerText="Instructor" filterable="true" sortBy="#{curso.sede}"
+                <p:column headerText="Responsable" filterable="true" sortBy="#{curso.sede}"
                           filterBy="#{curso.sede}" filterMatchMode="contains">
                     <h:outputText value="#{curso.sede}"/>
                 </p:column>
 
-                <p:column headerText="Activo" filterable="true" style="text-align: center"
+                <p:column headerText="Activa" filterable="true" style="text-align: center"
                           filterBy="#{curso.activo}" filterMatchMode="equals">
                     <f:facet name="filter">
-                        <p:selectOneButton widgetVar="sobCursoEstado"
-                                           id="sobCursoEstado"
-                                           onchange="console.log('entro al select'); PF('cursos-list').filter()"
+                        <p:selectOneButton widgetVar="sobOficinaEstado"
+                                           id="sobOficinaEstado"
+                                           onchange="console.log('entro al select'); PF('alumnos-list').filter()"
                                            styleClass="custom-filter" style="font-size: 10px;">
                             <f:converter converterId="javax.faces.Boolean"/>
                             <f:selectItem itemLabel="*" itemValue=""/>
@@ -104,7 +103,7 @@
 
 
         <!--  MODAL OFICINA -->
-        <p:dialog id="modalCurso"
+        <p:dialog id="modalAlumno"
                   showHeader="false"
                   draggable="true"
                   fitViewport="true"
@@ -112,20 +111,19 @@
                   height="auto"
                   closable="true"
                   closeOnEscape="true"
-                  responsive="true"
-                  widgetVar="modalCurso"
+                  widgetVar="modalAlumno"
                   modal="true">
 
-            <p:ajax event="close" process="@this" update="form-envases-list:cursos-list"
-                    listener="#{cursoBackBean.cerrarmodalCurso()}"/>
+            <p:ajax event="close" process="@this" update="form-alumnos-list:alumnos-list"
+                    listener="#{oficinaBackBean.cerrarModalOficina()}"/>
 
-            <h:form id="formModalCurso">
+            <h:form id="formModalAlumno">
 
-                <p:panel id="panel-nuevo-curso" style="width: 100%; height: auto">
+                <p:panel id="panel-nuevo-oficina" style="width: 100%; height: auto">
                     <f:facet name="header">
                         <div class="ui-g">
                             <div class="ui-g-12" style="margin: auto">
-                                <h:outputText value="Información de Curso" style="font-size: 16px;"/>
+                                <h:outputText value="PROMOCIONES" style="font-size: 16px;"/>
                             </div>
                         </div>
                     </f:facet>
@@ -134,29 +132,62 @@
                                  layout="grid"
                                  contentStyleClass="p-align-center ui-fluid"
                                  columnClasses="p-col-3, p-col-3,p-col-3, p-col-3">
+
                         <p:outputLabel for="txtnombre" value="Nombre:"/>
-                        <p:inputText id="txtnombre" maxlength="200" value="#{cursoBackBean.curso.nombre}"
+                        <p:inputText id="txtnombre" maxlength="200" value="#{oficinaBackBean.oficina.nombre}"
                                      style="width: 100%"/>
                         <h:outputText value=""/>
                         <h:outputText value=""/>
                         <p:outputLabel for="contrasap" value="Centro SAP:"/>
-                        <p:inputText id="contrasap" maxlength="8" value="#{cursoBackBean.curso.centroSap}"
+                        <p:inputText id="contrasap" maxlength="8" value="#{oficinaBackBean.oficina.centroSap}"
                                      style="width: 100%"/>
 
                         <p:outputLabel for="zona" value="Zona:"/>
-                        <p:inputText id="zona" maxlength="30" value="#{cursoBackBean.curso.zona}"
+                        <p:inputText id="zona" maxlength="30" value="#{oficinaBackBean.oficina.zona}"
                                      style="width: 100%"/>
                         <p:outputLabel for="sede" value="Sede:"/>
-                        <p:inputText id="sede" value="#{cursoBackBean.curso.sede}" style="width: 100%"/>
+                        <p:inputText id="sede" value="#{oficinaBackBean.oficina.sede}" style="width: 100%"/>
                     </p:panelGrid>
 
+                    <p:panelGrid columns="2">
+
+                        <p:fieldset legend="Documento series:">
+                            <p:panelGrid layout="grid" columns="4">
+                                <p:outputLabel for="txtDocumentoSerieConvencional" value="Convencional:"/>
+                                <p:inputText id="txtDocumentoSerieConvencional" maxlength="4"
+                                             value="#{oficinaBackBean.oficina.documentoSerieConvencional}"
+                                             style="width: 100%"/>
+                                <p:outputLabel for="txtDocumentoSerieOrganico" value="Orgánico:"/>
+                                <p:inputText id="txtDocumentoSerieOrganico" maxlength="4"
+                                             value="#{oficinaBackBean.oficina.documentoSerieOrganico}"
+                                             style="width: 100%"/>
+
+                            </p:panelGrid>
+                        </p:fieldset>
+
+                        <p:fieldset legend="Recibo egreso de caja:">
+                            <p:panelGrid layout="grid" columns="4">
+                                <p:outputLabel for="txtSerieReciboEgreso" value="Serie:"/>
+                                <p:inputMask id="txtSerieReciboEgreso"
+                                             value="#{oficinaBackBean.oficina.documentoSerieReciboEgreso}"
+                                             mask="9999-9"
+                                             validateMask="true"
+                                             style="width: 100%"/>
+                                <p:outputLabel for="txtNumeracionReciboEgreso" value="Numeración:"/>
+                                <p:inputText id="txtNumeracionReciboEgreso" readonly="true"
+                                             value="#{oficinaBackBean.oficina.formatConsecutivoEgreso}"
+                                             style="width: 100%; text-align: right;"/>
+                            </p:panelGrid>
+                        </p:fieldset>
+
+                    </p:panelGrid>
 
                     <f:facet name="footer">
                         <div class="ui-g-6 content-align-right">
                             <p:commandButton value="Guardar"
-                                             process="formModalCurso" icon="fa fa-save"
-                                             actionListener="#{cursoBackBean.save}"
-                                             update=":form-envases-list :global-message"
+                                             process="formModalAlumno" icon="fa fa-save"
+                                             actionListener="#{oficinaBackBean.save}"
+                                             update=":form-alumnos-list :global-message"
                                              style="margin: 0.1em"/>
                             <p:commandButton value="Cerrar" style="margin: 0.1em"
                                              styleClass="secondary-button"
@@ -164,7 +195,7 @@
                                              icon="fa fa-close"
                                              resetValues="true"
                                              update="@form"
-                                             oncomplete="PF('modalCurso').hide()"
+                                             oncomplete="PF('modalAlumno').hide()"
                             />
                         </div>
                     </f:facet>
