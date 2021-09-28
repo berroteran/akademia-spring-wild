@@ -1,0 +1,173 @@
+<ui:composition template="/templates/template.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="head" >
+
+    </ui:define>
+
+    <ui:define name="title">Historial de Matriculas</ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="form-envases-list" >
+            <p:toolbar>
+                <f:facet name="left">
+                    <p:commandButton value="Crear Curso" id="btnAgregarNuevo"
+                                     icon="fa fa-plus-circle"
+                                     oncomplete="PF('modalCurso').show()"
+                                     update=":formModalCurso"
+                                     process="@this"
+                                     actionListener="#{oficinaBackBean.crear}"/>
+
+                    <p:commandButton value="Refrescar"
+                                     process="@this"
+                                     disabled="true"
+                                     onclick="PF('oficinas-list').clearFilters();"
+                                     styleClass="secondary-button"/>
+
+                    <p:commandButton value="Limpiar Filtros"
+                                     process="@this"
+                                     onclick="PF('oficinas-list').clearFilters();"
+                                     styleClass="secondary-button">
+                    </p:commandButton>
+
+                </f:facet>
+            </p:toolbar>
+
+            <p:dataTable id="oficinas-list"
+                         widgetVar="oficinas-list"
+                         emptyMessage="No se encontraron registros"
+                         value="#{oficinaBackBean.oficinas}"
+                         selection="#{oficinaBackBean.oficina}"
+                         selectionMode="single"
+                         reflow="true"
+                         var="matricula"
+                         rowKey="#{matricula.id}"
+                         sortBy="#{matricula.id}"
+                         sortField="#{matricula.id}"
+                         paginator="true"
+                         rows="15"
+                         paginatorPosition="bottom">
+
+                <p:ajax event="rowDblselect"
+                        process="@this"
+                        update="formModalCurso :formModalCurso:panel-nuevo-oficina"
+                        listener="#{oficinaBackBean.onOficinaSelected}"
+                        oncomplete="PF('modalCurso').show()"/>
+
+                <p:column headerText="ID" style="text-align: right" width="50px;" sortBy="#{curso.id}">
+                    <h:outputText value="#{curso.id}"/>
+                </p:column>
+
+
+                <p:column headerText="Curso"
+                          width="300"
+                          filterable="true"
+                          sortBy="#{curso.nombre}"
+                          filterBy="#{curso.nombre}" filterMatchMode="contains">
+                    <h:outputText value="#{curso.nombre}"/>
+                </p:column>
+
+                <p:column headerText="Alumno" filterable="true" sortBy="#{curso.zona}"
+                          filterBy="#{curso.zona}" filterMatchMode="contains">
+                    <h:outputText value="#{curso.zona}"/>
+                </p:column>
+
+                <p:column headerText="Monto pagado" filterable="true" sortBy="#{curso.sede}"
+                          filterBy="#{curso.sede}" filterMatchMode="contains">
+                    <h:outputText value="#{curso.sede}"/>
+                </p:column>
+
+                <p:column headerText="Pagado" filterable="true" style="text-align: center"
+                          filterBy="#{curso.activo}" filterMatchMode="equals">
+                    <f:facet name="filter">
+
+                    </f:facet>
+                    <h:outputText value="#{curso.activo ? 'Si' : 'No.'}"/>
+                </p:column>
+
+                <p:column headerText="Fecha de Registro" filterable="true" sortBy="#{curso.sede}"
+                          filterBy="#{curso.sede}" filterMatchMode="contains">
+                    <h:outputText value="#{curso.sede}"/>
+                </p:column>
+
+
+            </p:dataTable>
+        </h:form>
+
+
+
+        <!--  MODAL OFICINA -->
+        <p:dialog id="modalCurso"
+                  widgetVar="modalCurso"
+                  showHeader="false"
+                  draggable="true"
+                  fitViewport="true"
+                  width="99%"
+                  height="auto"
+                  closable="true"
+                  closeOnEscape="true"
+                  modal="true">
+
+            <p:ajax event="close" process="@this" update="form-envases-list:oficinas-list"
+                    listener="#{oficinaBackBean.cerrarModalOficina()}"/>
+
+            <h:form id="formModalCurso">
+
+                <p:panel id="panel-nuevo-oficina" style="width: 100%; height: auto">
+                    <f:facet name="header">
+                        <div class="ui-g">
+                            <div class="ui-g-12" style="margin: auto">
+                                <h:outputText value="Curso" style="font-size: 16px;"/>
+                            </div>
+                        </div>
+                    </f:facet>
+
+                    <p:panelGrid columns="4"
+                                 layout="grid"
+                                 contentStyleClass="p-align-center ui-fluid"
+                                 columnClasses="p-col-3, p-col-3,p-col-3, p-col-3">
+
+                        <p:outputLabel for="txtnombre" value="Nombre:"/>
+                        <p:inputText id="txtnombre" maxlength="200" value="#{oficinaBackBean.oficina.nombre}"
+                                     style="width: 100%"/>
+                        <p:inputText id="sede" value="#{oficinaBackBean.oficina.sede}" style="width: 100%"/>
+                    </p:panelGrid>
+
+
+
+
+                    <f:facet name="footer">
+                        <div class="ui-g-6 content-align-right">
+                            <p:commandButton value="Guardar"
+                                             process="formModalCurso" icon="fa fa-save"
+                                             actionListener="#{oficinaBackBean.save}"
+                                             update=":form-envases-list :global-message"
+                                             style="margin: 0.1em"/>
+                            <p:commandButton value="Cerrar" style="margin: 0.1em"
+                                             styleClass="secondary-button"
+                                             process="@this"
+                                             icon="fa fa-close"
+                                             resetValues="true"
+                                             update="@form"
+                                             oncomplete="PF('modalCurso').hide()"
+                            />
+                        </div>
+                    </f:facet>
+
+                </p:panel>
+
+
+
+            </h:form>
+        </p:dialog>
+
+
+
+
+    </ui:define>
+
+</ui:composition>

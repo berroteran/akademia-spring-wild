@@ -1,5 +1,4 @@
 <ui:composition template="../../templates/template.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -59,31 +58,31 @@
                         listener="#{oficinaBackBean.onOficinaSelected}"
                         oncomplete="PF('modalOficina').show()"/>
 
-                <p:column headerText="ID" style="text-align: right" width="50px;" sortBy="#{oficina.id}">
-                    <h:outputText value="#{oficina.id}"/>
+                <p:column headerText="ID" style="text-align: right" width="50px;" sortBy="#{curso.id}">
+                    <h:outputText value="#{curso.id}"/>
                 </p:column>
 
 
                 <p:column headerText="Nombre"
                           width="300"
                           filterable="true"
-                          sortBy="#{oficina.nombre}"
-                          filterBy="#{oficina.nombre}" filterMatchMode="contains">
-                    <h:outputText value="#{oficina.nombre}"/>
+                          sortBy="#{curso.nombre}"
+                          filterBy="#{curso.nombre}" filterMatchMode="contains">
+                    <h:outputText value="#{curso.nombre}"/>
                 </p:column>
 
-                <p:column headerText="ZONA" filterable="true" sortBy="#{oficina.zona}"
-                          filterBy="#{oficina.zona}" filterMatchMode="contains">
-                    <h:outputText value="#{oficina.zona}"/>
+                <p:column headerText="ZONA" filterable="true" sortBy="#{curso.zona}"
+                          filterBy="#{curso.zona}" filterMatchMode="contains">
+                    <h:outputText value="#{curso.zona}"/>
                 </p:column>
 
-                <p:column headerText="Responsable" filterable="true" sortBy="#{oficina.sede}"
-                          filterBy="#{oficina.sede}" filterMatchMode="contains">
-                    <h:outputText value="#{oficina.sede}"/>
+                <p:column headerText="Responsable" filterable="true" sortBy="#{curso.sede}"
+                          filterBy="#{curso.sede}" filterMatchMode="contains">
+                    <h:outputText value="#{curso.sede}"/>
                 </p:column>
 
                 <p:column headerText="Activa" filterable="true" style="text-align: center"
-                          filterBy="#{oficina.activo}" filterMatchMode="equals">
+                          filterBy="#{curso.activo}" filterMatchMode="equals">
                     <f:facet name="filter">
                         <p:selectOneButton widgetVar="sobOficinaEstado"
                                            id="sobOficinaEstado"
@@ -95,7 +94,7 @@
                             <f:selectItem itemLabel="No" itemValue="false"/>
                         </p:selectOneButton>
                     </f:facet>
-                    <h:outputText value="#{oficina.activo ? 'Si' : 'No.'}"/>
+                    <h:outputText value="#{curso.activo ? 'Si' : 'No.'}"/>
                 </p:column>
 
             </p:dataTable>
@@ -172,20 +171,6 @@
                             </p:panelGrid>
                         </p:fieldset>
 
-                        <p:fieldset legend="Recibo egreso de caja:">
-                            <p:panelGrid layout="grid" columns="4">
-                                <p:outputLabel for="txtSerieReciboEgreso" value="Serie:"/>
-                                <p:inputMask id="txtSerieReciboEgreso"
-                                             value="#{oficinaBackBean.oficina.documentoSerieReciboEgreso}"
-                                             mask="9999-9"
-                                             validateMask="true"
-                                             style="width: 100%"/>
-                                <p:outputLabel for="txtNumeracionReciboEgreso" value="Numeración:"/>
-                                <p:inputText id="txtNumeracionReciboEgreso" readonly="true"
-                                             value="#{oficinaBackBean.oficina.formatConsecutivoEgreso}"
-                                             style="width: 100%; text-align: right;"/>
-                            </p:panelGrid>
-                        </p:fieldset>
 
                     </p:panelGrid>
 

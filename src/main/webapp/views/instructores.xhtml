@@ -1,0 +1,220 @@
+<ui:composition template="/templates/template.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="head" >
+
+    </ui:define>
+
+    <ui:define name="title">Planilla de Instructores</ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="form-envases-list" >
+            <p:toolbar>
+                <f:facet name="left">
+                    <p:commandButton value="Agregar Instructor" id="btnAgregarNuevo"
+                                     icon="fa fa-plus-circle"
+                                     oncomplete="PF('modalOficina').show()"
+                                     update=":formModalOficina"
+                                     process="@this"
+                                     actionListener="#{oficinaBackBean.crear}"/>
+
+                    <p:commandButton value="Refrescar"
+                                     process="@this"
+                                     disabled="true"
+                                     onclick="PF('oficinas-list').clearFilters();"
+                                     styleClass="secondary-button"/>
+
+                    <p:commandButton value="Limpiar Filtros"
+                                     process="@this"
+                                     onclick="PF('oficinas-list').clearFilters();"
+                                     styleClass="secondary-button">
+                    </p:commandButton>
+
+                </f:facet>
+            </p:toolbar>
+
+            <p:dataTable id="oficinas-list"
+                         widgetVar="oficinas-list"
+                         selectionMode="single"
+                         reflow="true"
+                         emptyMessage="No se encontraron registros"
+                         value="#{oficinaBackBean.oficinas}"
+                         selection="#{oficinaBackBean.oficina}"
+                         var="instructor"
+                         rowKey="#{instructor.id}"
+                         sortBy="#{instructor.id}"
+                         sortField="#{instructor.id}"
+                         paginator="true"
+                         rows="15"
+                         paginatorPosition="bottom">
+
+                <p:ajax event="rowDblselect"
+                        process="@this"
+                        update="formModalOficina :formModalOficina:panel-nuevo-oficina"
+                        listener="#{oficinaBackBean.onOficinaSelected}"
+                        oncomplete="PF('modalOficina').show()"/>
+
+                <p:column headerText="ID" style="text-align: right" width="50px;" sortBy="#{curso.id}">
+                    <h:outputText value="#{curso.id}"/>
+                </p:column>
+
+
+                <p:column headerText="Nombre"
+                          width="300"
+                          filterable="true"
+                          sortBy="#{curso.nombre}"
+                          filterBy="#{curso.nombre}" filterMatchMode="contains">
+                    <h:outputText value="#{curso.nombre}"/>
+                </p:column>
+
+                <p:column headerText="ZONA" filterable="true" sortBy="#{curso.zona}"
+                          filterBy="#{curso.zona}" filterMatchMode="contains">
+                    <h:outputText value="#{curso.zona}"/>
+                </p:column>
+
+                <p:column headerText="Responsable" filterable="true" sortBy="#{curso.sede}"
+                          filterBy="#{curso.sede}" filterMatchMode="contains">
+                    <h:outputText value="#{curso.sede}"/>
+                </p:column>
+
+                <p:column headerText="Activa" filterable="true" style="text-align: center"
+                          filterBy="#{curso.activo}" filterMatchMode="equals">
+                    <f:facet name="filter">
+                        <p:selectOneButton widgetVar="sobOficinaEstado"
+                                           id="sobOficinaEstado"
+                                           onchange="console.log('entro al select'); PF('oficinas-list').filter()"
+                                           styleClass="custom-filter" style="font-size: 10px;">
+                            <f:converter converterId="javax.faces.Boolean"/>
+                            <f:selectItem itemLabel="*" itemValue=""/>
+                            <f:selectItem itemLabel="Si" itemValue="true"/>
+                            <f:selectItem itemLabel="No" itemValue="false"/>
+                        </p:selectOneButton>
+                    </f:facet>
+                    <h:outputText value="#{curso.activo ? 'Si' : 'No.'}"/>
+                </p:column>
+
+            </p:dataTable>
+        </h:form>
+
+
+
+        <!--  MODAL OFICINA -->
+        <p:dialog id="modalOficina"
+                  showHeader="false"
+                  draggable="true"
+                  fitViewport="true"
+                  width="99%"
+                  height="auto"
+                  closable="true"
+                  closeOnEscape="true"
+                  widgetVar="modalOficina"
+                  modal="true">
+
+            <p:ajax event="close" process="@this" update="form-envases-list:oficinas-list"
+                    listener="#{oficinaBackBean.cerrarModalOficina()}"/>
+
+            <h:form id="formModalOficina">
+
+                <p:panel id="panel-nuevo-oficina" style="width: 100%; height: auto">
+                    <f:facet name="header">
+                        <div class="ui-g">
+                            <div class="ui-g-6" style="margin: auto">
+                                <h:outputText value="Instructor Data" style="font-size: 16px;"/>
+                            </div>
+                        </div>
+                    </f:facet>
+
+                    <p:panelGrid columns="4"
+                                 layout="grid"
+                                 contentStyleClass="p-align-center ui-fluid"
+                                 columnClasses="p-col-3, p-col-3,p-col-3, p-col-3">
+                        <p:outputLabel for="txtnombre" value="Nombre:"/>
+                        <p:inputText id="txtnombre" maxlength="200" value="#{oficinaBackBean.oficina.nombre}"
+                                     style="width: 100%"/>
+                        <h:outputText value=""/>
+                        <h:outputText value=""/>
+                        <p:outputLabel for="contrasap" value="Centro SAP:"/>
+                        <p:inputText id="contrasap" maxlength="8" value="#{oficinaBackBean.oficina.centroSap}"
+                                     style="width: 100%"/>
+
+                        <p:outputLabel for="zona" value="Zona:"/>
+                        <p:inputText id="zona" maxlength="30" value="#{oficinaBackBean.oficina.zona}"
+                                     style="width: 100%"/>
+                        <p:outputLabel for="sede" value="Sede:"/>
+                        <p:inputText id="sede" value="#{oficinaBackBean.oficina.sede}" style="width: 100%"/>
+                    </p:panelGrid>
+
+                    <p:fieldset legend="Direccion ">
+                        <p:inputTextarea id="txtDireccion"
+                                         maxlength="255"
+                                         style="width: 100%"
+                                         value="#{oficinaBackBean.oficina.direccion}"/>
+                    </p:fieldset>
+
+                    <p:panelGrid columns="2">
+
+                        <p:fieldset legend="Documento series:">
+                            <p:panelGrid layout="grid" columns="4">
+                                <p:outputLabel for="txtDocumentoSerieConvencional" value="Convencional:"/>
+                                <p:inputText id="txtDocumentoSerieConvencional" maxlength="4"
+                                             value="#{oficinaBackBean.oficina.documentoSerieConvencional}"
+                                             style="width: 100%"/>
+                                <p:outputLabel for="txtDocumentoSerieOrganico" value="Orgánico:"/>
+                                <p:inputText id="txtDocumentoSerieOrganico" maxlength="4"
+                                             value="#{oficinaBackBean.oficina.documentoSerieOrganico}"
+                                             style="width: 100%"/>
+
+                            </p:panelGrid>
+                        </p:fieldset>
+
+                        <p:fieldset legend="Recibo egreso de caja:">
+                            <p:panelGrid layout="grid" columns="4">
+                                <p:outputLabel for="txtSerieReciboEgreso" value="Serie:"/>
+                                <p:inputMask id="txtSerieReciboEgreso"
+                                             value="#{oficinaBackBean.oficina.documentoSerieReciboEgreso}"
+                                             mask="9999-9"
+                                             validateMask="true"
+                                             style="width: 100%"/>
+                                <p:outputLabel for="txtNumeracionReciboEgreso" value="Numeración:"/>
+                                <p:inputText id="txtNumeracionReciboEgreso" readonly="true"
+                                             value="#{oficinaBackBean.oficina.formatConsecutivoEgreso}"
+                                             style="width: 100%; text-align: right;"/>
+                            </p:panelGrid>
+                        </p:fieldset>
+
+                    </p:panelGrid>
+
+                    <f:facet name="footer">
+                        <div class="ui-g-6 content-align-right">
+                            <p:commandButton value="Guardar"
+                                             process="formModalOficina" icon="fa fa-save"
+                                             actionListener="#{oficinaBackBean.save}"
+                                             update=":form-envases-list :global-message"
+                                             style="margin: 0.1em"/>
+                            <p:commandButton value="Cerrar" style="margin: 0.1em"
+                                             styleClass="secondary-button"
+                                             process="@this"
+                                             icon="fa fa-close"
+                                             resetValues="true"
+                                             update="@form"
+                                             oncomplete="PF('modalOficina').hide()"
+                            />
+                        </div>
+                    </f:facet>
+                </p:panel>
+
+
+
+            </h:form>
+        </p:dialog>
+
+
+
+
+    </ui:define>
+
+</ui:composition>
