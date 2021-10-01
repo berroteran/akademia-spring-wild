@@ -6,13 +6,14 @@
 
     <div class="layout-topbar">
         <div class="layout-topbar-wrapper">
+
             <div class="layout-topbar-left">
                 <div class="menu-button">
                     <i class="fa fa-bars"></i>
                 </div>
                 <h:link id="logolink" outcome="dashboard" class="layout-topbar-logo">
                     <p:graphicImage
-                            name="images/#{guestPreferences.whiteLogo ?  'layout-siberia-logo-white.png'  : 'layout-siberia-logo-black.png'}"
+                            name="images/logo-footer.png"
                             library="siberia-layout"/>
                 </h:link>
             </div>
@@ -21,110 +22,6 @@
 
             <div class="layout-topbar-right">
                 <ul class="layout-topbar-actions">
-                    <li class="topbar-item search-item">
-                        <a href="#">
-                            <i class="topbar-icon fa fa-search"></i>
-                        </a>
-                        <ul>
-                            <li class="layout-submenu-item search-item">
-                                <h:form onsubmit="return false;">
-                                    <h:panelGroup styleClass="md-inputfield search-input-wrapper">
-                                        <p:inputText placeholder="Search..."/>
-                                        <i class="fa fa-search"></i>
-                                    </h:panelGroup>
-                                </h:form>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="topbar-item messages">
-                        <a href="#">
-                            <i class="topbar-icon fa fa-comment"></i>
-                        </a>
-                        <ul>
-                            <li class="layout-submenu-header">
-                                <h1>Messages <span>4</span></h1>
-                                <span> Mark All as Read</span>
-                            </li>
-                            <li class="layout-submenu-item">
-                                <div class="menu-text">
-                                    <p:graphicImage name="images/topbar/avatar-profile-1.png" library="siberia-layout"/>
-                                    <p>Hey there! Give me a call...</p>
-                                </div>
-                            </li>
-                            <li class="layout-submenu-item">
-                                <div class="menu-text">
-                                    <p:graphicImage name="images/topbar/avatar-profile-2.png" library="siberia-layout"/>
-                                    <p>Reports attached</p>
-                                </div>
-                            </li>
-                            <li class="layout-submenu-item">
-                                <div class="menu-text">
-                                    <p:graphicImage name="images/topbar/avatar-profile-3.png" library="siberia-layout"/>
-                                    <p>About your invoice</p>
-                                </div>
-                            </li>
-                            <li class="layout-submenu-item">
-                                <div class="menu-text">
-                                    <p:graphicImage name="images/topbar/avatar-profile-4.png" library="siberia-layout"/>
-                                    <p>Meeting today</p>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="topbar-item notifications">
-                        <a href="#">
-                            <i class="topbar-icon fa fa-bell"></i>
-                        </a>
-                        <ul>
-                            <li class="layout-submenu-header">
-                                <h1>Notifications </h1>
-                                <span> Mark All as Read</span>
-                            </li>
-                            <li class="layout-submenu-item">
-                                <div class="menu-text">
-                                    <div>
-                                        <p:graphicImage name="images/topbar/topbar-carmen.png"
-                                                        library="siberia-layout"/>
-                                        <p><strong>Carmen Beltrán </strong>mentioned you in a comment in PrimeFaces </p>
-                                    </div>
-                                  
-                                    <span class="time"> <i class="fa fa-clock-o"></i> 3h</span>
-                                </div>
-                            </li>
-                            <li class="layout-submenu-item">
-                                <div class="menu-text">
-                                    <div>
-                                        <p:graphicImage name="images/topbar/topbar-chun.png" library="siberia-layout"/>
-                                        <p><strong>Yi Chun-Hwa</strong> marked himself safe during <strong>The Getty
-                                                Fire</strong></p>
-                                    </div>
-                                   
-                                    <span class="time"> <i class="fa fa-clock-o"></i> 2d</span>
-                                </div>
-                            </li>
-                            <li class="layout-submenu-item">
-                                <div class="menu-text">
-                                    <div>
-                                        <p:graphicImage name="images/topbar/topbar-primefaces.png"
-                                                        library="siberia-layout"/>
-                                        <p><strong>PrimeFaces</strong> has a new post from <strong>Chineze Uchechey</strong></p>
-                                    </div>
-                                    <span class="time"> <i class="fa fa-clock-o"></i> 4w</span>
-                                </div>
-                            </li>
-                            <li class="layout-submenu-item">
-                                <div class="menu-text">
-                                    <div>
-                                        <p:graphicImage name="images/topbar/topbar-cermodern.png"
-                                                        library="siberia-layout"/>
-                                        <p><strong>CerModern</strong> added 2 new events near you </p>
-                                    </div>
-
-                                    <span class="time"> <i class="fa fa-clock-o"></i> 5w</span>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
 
                     <li class="topbar-item profile-item">
                         <a href="#">
@@ -133,7 +30,7 @@
                             </span>
 
                             <span class="profile-info-wrapper" style="width: 200px;">
-                                <h3><h:outputText value="#{sessionBackBean.getUserName()}"/></h3>
+                                <H3><h:outputText value="#{sessionBackBean.getUserName()}"/></H3>
                                 <span><h:outputText
                                         value="#{sessionBackBean.getLogin()}/#{sessionBackBean.oficina.nombre} "/></span>
                             </span>
@@ -175,9 +72,7 @@
                     </li>
                 </ul>
             </div>
-            <a href="#" class="layout-rightpanel-button">
-                <i class="fa fa-align-right"></i>
-            </a>
+
         </div>
     </div>
 
