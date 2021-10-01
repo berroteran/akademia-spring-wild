@@ -49,7 +49,17 @@
                                               value="#{matriculaBackBean.matricula.fechaMatricula}"
                                               showButtonBar="true"/>
                             </div>
+
+                        <p:outputLabel for="txtNoRecibo" value="No. Recibo" styleClass="p-col-12 p-md-2"/>
+                        <div class="p-col-12 p-md-4">
+                            <div class="ui-inputgroup">
+                                <span class="ui-inputgroup-addon"><i class="fa fa-th-list"></i></span>
+                                <p:inputText id="txtNoRecibo" required="true" style="alignment: right;text-align: right; "/>
+                            </div>
                         </div>
+
+                        </div>
+
                     </div>
 
                     <div class="p-col-12">
@@ -76,7 +86,6 @@
                                                            itemValue="#{alumnoItem.codigoSAPYNombreDescripcionIcono}"/>
                                         </p:selectOneMenu>
                                     </div>
-
                                 </div>
                             </div>
 

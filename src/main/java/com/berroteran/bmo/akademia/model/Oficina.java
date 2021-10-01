@@ -29,11 +29,13 @@ public class Oficina extends AbstractEntity {
     @Column(length = 500)
     private String direccion;
 
+    private String telefono;
+
+    private String responsable;
+
+
     @Column(name = "doc_serie_convencional", length = 4)
     private String documentoSerieConvencional;
-
-    @Column(name = "doc_serie_organico", length = 4)
-    private String documentoSerieOrganico;
 
     @Column(name = "doc_serie_recibo_egreso", length = 6)
     private String documentoSerieReciboEgreso;
@@ -44,13 +46,8 @@ public class Oficina extends AbstractEntity {
     @Column(name = "no_reporte_production_trans")
     private Integer noReporteProductionTrans;
 
-    @Column(name = "c3", length = 2)
-    private String c3;
-
-    @Column(name = "c4", length = 2)
-    private String c4;
-
     private boolean activo;
+
 
 
     public String getCodigo() {
@@ -127,13 +124,6 @@ public class Oficina extends AbstractEntity {
         this.documentoSerieConvencional = documentoSerieConvencional;
     }
 
-    public String getDocumentoSerieOrganico() {
-        return documentoSerieOrganico;
-    }
-
-    public void setDocumentoSerieOrganico(String documentoSerieOrganico) {
-        this.documentoSerieOrganico = documentoSerieOrganico;
-    }
 
     public String getDocumentoSerieReciboEgreso() {
         return documentoSerieReciboEgreso;
@@ -168,7 +158,6 @@ public class Oficina extends AbstractEntity {
                 ", sede='" + sede + '\'' +
                 ", direccion='" + direccion + '\'' +
                 ", documentoSerieConvencional='" + documentoSerieConvencional + '\'' +
-                ", documentoSerieOrganico='" + documentoSerieOrganico + '\'' +
                 ", activo=" + activo +
                 '}';
     }
@@ -201,20 +190,14 @@ public class Oficina extends AbstractEntity {
         this.noReporteProductionTrans = noReporteProductionTrans;
     }
 
-    public String getC3() {
-        return c3== null ? "" : c3;
+
+
+    public String getTelefono() {
+        return telefono;
     }
 
-    public void setC3(String c3) {
-        this.c3 = c3;
-    }
-
-    public String getC4() {
-        return c4 == null ? "" : c4;
-    }
-
-    public void setC4(String c4) {
-        this.c4 = c4;
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 
 

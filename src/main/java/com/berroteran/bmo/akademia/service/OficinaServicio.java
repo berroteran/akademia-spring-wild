@@ -20,27 +20,27 @@ public class OficinaServicio {
     private static final Logger LOGGER = Logger.getLogger(OficinaServicio.class.getName());
 
     @Autowired
-    private OficinaRepository OficinaRepositorio;
+    private OficinaRepository oficinaRepositorio;
 
 
     public Iterable<Oficina> findAll() {
-        return OficinaRepositorio.findAll();
+        return oficinaRepositorio.findAll();
     }
 
     public Collection<Oficina> findAll(String stringFilter) {
         if (stringFilter == null || stringFilter.isEmpty()) {
-            return (Collection<Oficina>) OficinaRepositorio.findAll();
+            return (Collection<Oficina>) oficinaRepositorio.findAll();
         } else {
-            return OficinaRepositorio.search(stringFilter);
+            return oficinaRepositorio.search(stringFilter);
         }
     }
 
     public long count() {
-        return OficinaRepositorio.count();
+        return oficinaRepositorio.count();
     }
 
     public void delete(Oficina Oficina) {
-        OficinaRepositorio.delete(Oficina);
+        oficinaRepositorio.delete(Oficina);
     }
 
     @Transactional
@@ -51,7 +51,7 @@ public class OficinaServicio {
             throw new BusinessException("La Oficina esta nulo. ¿Está seguro que está bien escrito?");
 
         }
-        OficinaRepositorio.save(Oficina);
+        oficinaRepositorio.save(Oficina);
     }
 
 
@@ -62,6 +62,6 @@ public class OficinaServicio {
     }
 
     public List<Oficina> getAllActiva() {
-        return OficinaRepositorio.getAllActivos();
+        return oficinaRepositorio.getAllActivos();
     }
 }
