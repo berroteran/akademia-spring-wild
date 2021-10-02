@@ -144,9 +144,31 @@
 
                             <div class="ui-fluid">
                                 <div class="p-field p-grid">
+                                    <p:outputLabel for="cboSucursal" styleClass="p-col-12 p-md-2" value="Sucursal"/>
+                                    <div class="p-col-12 p-md-10">
+                                        <p:selectOneMenu id="cboSucursal"
+                                                         widgetVar="cboSucursal"
+                                                         filter="true"
+                                                         required="true"
+                                                         value="#{matriculaBackBean.matricula.sucursal}"
+                                                         onchange="PF('atencionListTbl').filter()"
+                                                         filterMatchMode="contains"
+                                                         style="width: 100%;">
+                                            <f:selectItem itemLabel="Seleccione sucursal" itemValue="#{null}"/>
+                                            <f:selectItems value="#{matriculaBackBean.oficinas}"
+                                                           var="oficinaItem"
+                                                           itemLabel="#{oficinaItem.nombre}"
+                                                           itemValue="#{oficinaItem}"/>
+                                        </p:selectOneMenu>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="ui-fluid">
+                                <div class="p-field p-grid">
                                     <p:outputLabel for="cboCurso" styleClass="p-col-12 p-md-2" value="Curso"/>
                                     <div class="p-col-12 p-md-10">
-
                                         <p:selectOneMenu id="cboCurso"
                                                          widgetVar="cboCurso"
                                                          filter="true"

@@ -18,11 +18,16 @@ public class Matricula extends AbstractEntity {
     private BigDecimal cantidadPagada;
     private BigDecimal descuento;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn( )
     private Cliente alumno;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
+    private Oficina sucursal;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private Curso curso;
 
@@ -114,5 +119,13 @@ public class Matricula extends AbstractEntity {
 
     public void setActivo(boolean activo) {
         this.activo = activo;
+    }
+
+    public Oficina getSucursal() {
+        return sucursal;
+    }
+
+    public void setSucursal(Oficina sucursal) {
+        this.sucursal = sucursal;
     }
 }
