@@ -8,7 +8,7 @@
 
     </ui:define>
 
-    <ui:define name="title">Gestion de cursos</ui:define>
+    <ui:define name="title">Catalogo de cursos</ui:define>
 
     <ui:define name="content">
 
@@ -108,16 +108,13 @@
                   showHeader="false"
                   draggable="true"
                   fitViewport="true"
-                  width="99%"
+                  width="90%"
                   height="auto"
                   closable="true"
                   closeOnEscape="true"
                   responsive="true"
                   widgetVar="modalCurso"
                   modal="true">
-
-            <p:ajax event="close" process="@this" update="form-envases-list:cursos-list"
-                    listener="#{cursoBackBean.cerrarmodalCurso()}"/>
 
             <h:form id="formModalCurso">
 
@@ -140,14 +137,14 @@
                         <h:outputText value=""/>
                         <h:outputText value=""/>
                         <p:outputLabel for="contrasap" value="Centro SAP:"/>
-                        <p:inputText id="contrasap" maxlength="8" value="#{cursoBackBean.curso.centroSap}"
+                        <p:inputText id="contrasap" maxlength="8" value="#{cursoBackBean.curso.descripcion}"
                                      style="width: 100%"/>
 
                         <p:outputLabel for="zona" value="Zona:"/>
-                        <p:inputText id="zona" maxlength="30" value="#{cursoBackBean.curso.zona}"
+                        <p:inputText id="zona" maxlength="30" value="#{cursoBackBean.curso.descripcion}"
                                      style="width: 100%"/>
                         <p:outputLabel for="sede" value="Sede:"/>
-                        <p:inputText id="sede" value="#{cursoBackBean.curso.sede}" style="width: 100%"/>
+                        <p:inputText id="sede" value="#{cursoBackBean.curso.descripcion}" style="width: 100%"/>
                     </p:panelGrid>
 
 
@@ -158,6 +155,7 @@
                                              actionListener="#{cursoBackBean.save}"
                                              update=":form-envases-list :global-message"
                                              style="margin: 0.1em"/>
+
                             <p:commandButton value="Cerrar" style="margin: 0.1em"
                                              styleClass="secondary-button"
                                              process="@this"
@@ -174,8 +172,6 @@
 
             </h:form>
         </p:dialog>
-
-
 
 
     </ui:define>
