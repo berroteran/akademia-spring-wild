@@ -15,18 +15,15 @@ public class Curso extends AbstractEntity {
     private Integer nivel =1;
     private String descripcion;
     private String intructor;
-    private String generacion;
     private LocalDate fechaInicio;
-    private Integer cupostotales;
-    private Integer cuposDisponibles;
 
-    @ManyToOne
-    private Oficina sucursal;
+    private Boolean activo;
+
+
 
     public Integer getId() {
         return id;
     }
-
     public void setId(Integer id) {
         this.id = id;
     }
@@ -34,7 +31,6 @@ public class Curso extends AbstractEntity {
     public String getNombre() {
         return nombre;
     }
-
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -42,7 +38,6 @@ public class Curso extends AbstractEntity {
     public Integer getNivel() {
         return nivel;
     }
-
     public void setNivel(Integer nivel) {
         this.nivel = nivel;
     }
@@ -69,5 +64,13 @@ public class Curso extends AbstractEntity {
 
     public void setFechaInicio(LocalDate fechaInicio) {
         this.fechaInicio = fechaInicio;
+    }
+
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
     }
 }

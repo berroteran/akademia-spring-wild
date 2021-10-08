@@ -4,7 +4,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
 
-    <ui:define name="head" >
+    <ui:define name="head">
 
     </ui:define>
 
@@ -12,7 +12,7 @@
 
     <ui:define name="content">
 
-        <h:form id="form-envases-list" >
+        <h:form id="form-envases-list">
             <p:toolbar>
                 <f:facet name="left">
                     <p:commandButton value="Agregar Curso"
@@ -72,15 +72,13 @@
                     <h:outputText value="#{curso.nombre}"/>
                 </p:column>
 
-                <p:column headerText="Nivel" filterable="true" sortBy="#{curso.zona}"
-                          filterBy="#{curso.zona}" filterMatchMode="contains">
-                    <h:outputText value="#{curso.zona}"/>
+                <p:column headerText="Nivel"
+                          filterable="true"
+                          sortBy="#{curso.nivel}"
+                          filterBy="#{curso.nivel}" filterMatchMode="contains">
+                    <h:outputText value="#{curso.nivel}"/>
                 </p:column>
 
-                <p:column headerText="Instructor" filterable="true" sortBy="#{curso.sede}"
-                          filterBy="#{curso.sede}" filterMatchMode="contains">
-                    <h:outputText value="#{curso.sede}"/>
-                </p:column>
 
                 <p:column headerText="Activo" filterable="true" style="text-align: center"
                           filterBy="#{curso.activo}" filterMatchMode="equals">
@@ -98,9 +96,12 @@
                     <h:outputText value="#{curso.activo ? 'Si' : 'No.'}"/>
                 </p:column>
 
+                <p:column>
+                    <p:commandButton value="Estadisticas" actionListener="#{cursoBackBean.estadisticas()}"/>
+                </p:column>
+
             </p:dataTable>
         </h:form>
-
 
 
         <!--  MODAL OFICINA -->
@@ -127,24 +128,23 @@
                         </div>
                     </f:facet>
 
-                    <p:panelGrid columns="4"
-                                 layout="grid"
-                                 contentStyleClass="p-align-center ui-fluid"
-                                 columnClasses="p-col-3, p-col-3,p-col-3, p-col-3">
+                    <p:panelGrid layout="grid" columns="2"
+
+                                 styleClass="ui-panelgrid-blank ui-fluid">
+
                         <p:outputLabel for="txtnombre" value="Nombre:"/>
                         <p:inputText id="txtnombre" maxlength="200" value="#{cursoBackBean.curso.nombre}"
                                      style="width: 100%"/>
-                        <h:outputText value=""/>
-                        <h:outputText value=""/>
-                        <p:outputLabel for="contrasap" value="Centro SAP:"/>
-                        <p:inputText id="contrasap" maxlength="8" value="#{cursoBackBean.curso.descripcion}"
+
+
+                        <p:outputLabel for="txtDescripcion" value="Descripcion:"/>
+                        <p:inputTextarea id="txtDescripcion" cols="2" rows="2"
+                                         value="#{cursoBackBean.curso.descripcion}" style="width: 100%"/>
+
+                        <p:outputLabel for="txtNivel" value="Nivel:"/>
+                        <p:inputText id="txtNivel" maxlength="30" value="#{cursoBackBean.curso.descripcion}"
                                      style="width: 100%"/>
 
-                        <p:outputLabel for="zona" value="Zona:"/>
-                        <p:inputText id="zona" maxlength="30" value="#{cursoBackBean.curso.descripcion}"
-                                     style="width: 100%"/>
-                        <p:outputLabel for="sede" value="Sede:"/>
-                        <p:inputText id="sede" value="#{cursoBackBean.curso.descripcion}" style="width: 100%"/>
                     </p:panelGrid>
 
 
@@ -167,7 +167,6 @@
                         </div>
                     </f:facet>
                 </p:panel>
-
 
 
             </h:form>

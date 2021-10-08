@@ -12,4 +12,7 @@ import java.util.List;
 @Repository
 public interface CursoRepository extends CrudRepository<Curso, Integer> {
 
+    @Query("select c from Curso c where c.activo = true")
+    List<Curso> getAllActivos();
+
 }

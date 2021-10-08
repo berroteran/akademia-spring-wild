@@ -26,20 +26,13 @@ public class CursoServicio {
     @Autowired
     private CursoRepository cursoRepository;
 
-    public Iterable<Oficina> findAll() {
-        return oficinaRepositorio.findAll();
+    public Iterable<Curso> findAll() {
+        return cursoRepository.findAll();
     }
 
-    public Collection<Oficina> findAll(String stringFilter) {
-        if (stringFilter == null || stringFilter.isEmpty()) {
-            return (Collection<Oficina>) oficinaRepositorio.findAll();
-        } else {
-            return oficinaRepositorio.search(stringFilter);
-        }
-    }
 
     public long count() {
-        return oficinaRepositorio.count();
+        return cursoRepository.count();
     }
 
     public void delete(Curso curso) {
@@ -58,13 +51,7 @@ public class CursoServicio {
     }
 
 
-    public Map<String, Integer> getStats() {
-        HashMap<String, Integer> stats = new HashMap<>();
-        findAll().forEach(Oficina -> stats.put(Oficina.getCodigo(), 1));
-        return stats;
-    }
-
-    public List<Oficina> getAllActiva() {
-        return oficinaRepositorio.getAllActivos();
+    public List<Curso> getAllActivos() {
+        return cursoRepository.getAllActivos();
     }
 }
