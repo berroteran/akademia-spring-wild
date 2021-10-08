@@ -27,13 +27,13 @@ public class CursoBackBean extends BaseBackBean implements Serializable {
     private List<Oficina> oficinas;
 
     private Curso curso;
-    private List<Curso> cursos;
+    private Iterable<Curso> cursos;
 
 
     @PostConstruct
     public void init() {
         oficinas = (List<Oficina>) oficinaService.findAll();
-        cursos = (List<Curso>) cursoServicio.findAll().iterator();
+        cursos =  cursoServicio.findAll();
     }
 
     public void onload(){
@@ -83,6 +83,16 @@ public class CursoBackBean extends BaseBackBean implements Serializable {
         return null;
     }
 
+    public void estadisticas(){
+        try{
+
+            showInfoMessage("Estadistica", "Función aún no implementada.");
+        }catch(Exception e){
+            showErrorMessage("Estadistica", e.getMessage());
+        }
+    }
+
+
     public void setOficinas(List<Oficina> oficinas) {
         this.oficinas = oficinas;
     }
@@ -95,11 +105,11 @@ public class CursoBackBean extends BaseBackBean implements Serializable {
         this.curso = curso;
     }
 
-    public List<Curso> getCursos() {
+    public Iterable<Curso> getCursos() {
         return cursos;
     }
 
-    public void setCursos(List<Curso> cursos) {
+    public void setCursos(Iterable<Curso> cursos) {
         this.cursos = cursos;
     }
 }
