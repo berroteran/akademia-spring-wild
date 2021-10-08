@@ -23,13 +23,15 @@ public class MatriculaServicio {
 
     @Autowired
     private OficinaRepository OficinaRepositorio;
+
     @Autowired
     private MatriculaRepository matriculaRepository;
 
 
-    public Iterable<Oficina> findAll() {
-        return OficinaRepositorio.findAll();
+    public Iterable<Matricula> findAll() {
+        return matriculaRepository.findAll();
     }
+
 
     public Collection<Oficina> findAll(String stringFilter) {
         if (stringFilter == null || stringFilter.isEmpty()) {
@@ -47,6 +49,7 @@ public class MatriculaServicio {
         OficinaRepositorio.delete(Oficina);
     }
 
+
     @Transactional
     public void save(Matricula matricula) throws BusinessException {
         if (matricula == null) {
@@ -59,13 +62,9 @@ public class MatriculaServicio {
     }
 
 
-    public Map<String, Integer> getStats() {
-        HashMap<String, Integer> stats = new HashMap<>();
-        findAll().forEach(Oficina -> stats.put(Oficina.getCodigo(), 1));
-        return stats;
+    public List<Matricula> getAllActiva() {
+        //return matriculaRepository.getAllActivos();
+        return null;
     }
 
-    public List<Oficina> getAllActiva() {
-        return OficinaRepositorio.getAllActivos();
-    }
 }

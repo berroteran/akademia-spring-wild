@@ -20,28 +20,28 @@
                                      oncomplete="PF('modalCurso').show()"
                                      update=":formModalCurso"
                                      process="@this"
-                                     actionListener="#{oficinaBackBean.crear}"/>
+                                     actionListener="#{matriculaListaBackBean.crear}"/>
 
                     <p:commandButton value="Refrescar"
                                      process="@this"
                                      disabled="true"
-                                     onclick="PF('oficinas-list').clearFilters();"
+                                     onclick="PF('matriculas-list').clearFilters();"
                                      styleClass="secondary-button"/>
 
                     <p:commandButton value="Limpiar Filtros"
                                      process="@this"
-                                     onclick="PF('oficinas-list').clearFilters();"
+                                     onclick="PF('matriculas-list').clearFilters();"
                                      styleClass="secondary-button">
                     </p:commandButton>
 
                 </f:facet>
             </p:toolbar>
 
-            <p:dataTable id="oficinas-list"
-                         widgetVar="oficinas-list"
+            <p:dataTable id="matriculas-list"
+                         widgetVar="matriculas-list"
                          emptyMessage="No se encontraron registros"
-                         value="#{oficinaBackBean.oficinas}"
-                         selection="#{oficinaBackBean.oficina}"
+                         value="#{matriculaListaBackBean.matriculas}"
+                         selection="#{matriculaListaBackBean.matricula}"
                          selectionMode="single"
                          reflow="true"
                          var="matricula"
@@ -50,12 +50,13 @@
                          sortField="#{matricula.id}"
                          paginator="true"
                          rows="15"
+                         lazy="true"
                          paginatorPosition="bottom">
 
                 <p:ajax event="rowDblselect"
                         process="@this"
                         update="formModalCurso :formModalCurso:panel-nuevo-oficina"
-                        listener="#{oficinaBackBean.onOficinaSelected}"
+                        listener="#{matriculaListaBackBean.onOficinaSelected}"
                         oncomplete="PF('modalCurso').show()"/>
 
                 <p:column headerText="ID" style="text-align: right" width="50px;" sortBy="#{curso.id}">
@@ -112,8 +113,8 @@
                   closeOnEscape="true"
                   modal="true">
 
-            <p:ajax event="close" process="@this" update="form-envases-list:oficinas-list"
-                    listener="#{oficinaBackBean.cerrarModalOficina()}"/>
+            <p:ajax event="close" process="@this" update="form-envases-list:matriculas-list"
+                    listener="#{matriculaListaBackBean.cerrarModalOficina()}"/>
 
             <h:form id="formModalCurso">
 
@@ -132,9 +133,9 @@
                                  columnClasses="p-col-3, p-col-3,p-col-3, p-col-3">
 
                         <p:outputLabel for="txtnombre" value="Nombre:"/>
-                        <p:inputText id="txtnombre" maxlength="200" value="#{oficinaBackBean.oficina.nombre}"
+                        <p:inputText id="txtnombre" maxlength="200" value="#{matriculaListaBackBean.oficina.nombre}"
                                      style="width: 100%"/>
-                        <p:inputText id="sede" value="#{oficinaBackBean.oficina.sede}" style="width: 100%"/>
+                        <p:inputText id="sede" value="#{matriculaListaBackBean.oficina.sede}" style="width: 100%"/>
                     </p:panelGrid>
 
 
@@ -144,7 +145,7 @@
                         <div class="ui-g-6 content-align-right">
                             <p:commandButton value="Guardar"
                                              process="formModalCurso" icon="fa fa-save"
-                                             actionListener="#{oficinaBackBean.save}"
+                                             actionListener="#{matriculaListaBackBean.save}"
                                              update=":form-envases-list :global-message"
                                              style="margin: 0.1em"/>
                             <p:commandButton value="Cerrar" style="margin: 0.1em"
