@@ -1,7 +1,7 @@
 package com.berroteran.bmo.akademia.view.bean;
 
 import com.berroteran.bmo.akademia.model.Cliente;
-import com.berroteran.bmo.akademia.model.Curso;
+import com.berroteran.bmo.akademia.model.Materia;
 import com.berroteran.bmo.akademia.model.Matricula;
 import com.berroteran.bmo.akademia.model.Oficina;
 import com.berroteran.bmo.akademia.service.MatriculaServicio;
@@ -33,8 +33,8 @@ public class MatriculaBackBean extends BaseBackBean implements Serializable {
     private Matricula matricula;
     private List<Cliente> alumnosLista;
     private Cliente alumno;
-    private List<Curso> cursos;
-    private Curso curso;
+    private List<Materia> cursos;
+    private Materia curso;
 
     @PostConstruct
     public void init() {
@@ -122,19 +122,19 @@ public class MatriculaBackBean extends BaseBackBean implements Serializable {
         this.alumno = alumno;
     }
 
-    public List<Curso> getCursos() {
+    public List<Materia> getCursos() {
         return cursos;
     }
 
-    public void setCursos(List<Curso> cursos) {
+    public void setCursos(List<Materia> cursos) {
         this.cursos = cursos;
     }
 
-    public Curso getCurso() {
+    public Materia getCurso() {
         return curso;
     }
 
-    public void setCurso(Curso curso) {
+    public void setCurso(Materia curso) {
         this.curso = curso;
     }
 }

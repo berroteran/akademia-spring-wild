@@ -1,26 +1,25 @@
 package com.berroteran.bmo.akademia.model;
 
-public enum EstadoRemesaEnum {
+public enum CursoNivelEnum {
 
-    ANULADO(0, "Anulado")
-    , EN_CURSO(1, "En curso")
-    , PENDIENTE(2, "Pendiente")
-    , RECEPCION_PARCIAL(3, "Recepcion parcial")
-    , RECEPCIONADO(4, "Recepcionado");
+    ANULADO(0, "No definido"),
+    PRINCIPIANTE(1, "Principiante"),
+    INTERMEDIO(2, "Intermedio"),
+    AVANZADO(3, "Avanzado"),
+    ;
 
 
 
     private Integer id;
     private String descripcion;
 
-
-    EstadoRemesaEnum(Integer id, String descripcion) {
+    CursoNivelEnum(Integer id, String descripcion) {
         this.id = id;
         this.descripcion = descripcion;
     }
 
-    public static EstadoRemesaEnum getById(Integer id) {
-        for (EstadoRemesaEnum e : values()) {
+    public static CursoNivelEnum getById(Integer id) {
+        for (CursoNivelEnum e : values()) {
             if (e.id.equals(id)) {
                 return e;
             }
@@ -28,6 +27,7 @@ public enum EstadoRemesaEnum {
 
         return null;
     }
+
 
 
     public Integer getId() {

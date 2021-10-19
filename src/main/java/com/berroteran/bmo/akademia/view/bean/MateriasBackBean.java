@@ -1,10 +1,12 @@
-package com.berroteran.bmo.akademia.view.bean.configuracion;
+package com.berroteran.bmo.akademia.view.bean;
 
-import com.berroteran.bmo.akademia.model.Curso;
+import com.berroteran.bmo.akademia.model.CursoNivelEnum;
+import com.berroteran.bmo.akademia.model.Materia;
 import com.berroteran.bmo.akademia.model.Oficina;
 import com.berroteran.bmo.akademia.service.CursoServicio;
+import com.berroteran.bmo.akademia.service.HorariosServicio;
+import com.berroteran.bmo.akademia.service.MateriasServicio;
 import com.berroteran.bmo.akademia.service.OficinaServicio;
-import com.berroteran.bmo.akademia.view.bean.BaseBackBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,28 +14,32 @@ import javax.annotation.PostConstruct;
 import javax.faces.event.ActionListener;
 import javax.faces.view.ViewScoped;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 
 @Component
 @ViewScoped
-public class CursoBackBean extends BaseBackBean implements Serializable {
+public class MateriasBackBean extends BaseBackBean implements Serializable {
 
     @Autowired
     private OficinaServicio oficinaService;
     @Autowired
-    private CursoServicio cursoServicio;
+    private HorariosServicio horarioServicio;
+    @Autowired
+    private MateriasServicio materiasServicio;
 
     private Oficina oficina;
     private List<Oficina> oficinas;
+    private List<CursoNivelEnum> horarioNiveles = Arrays.asList(CursoNivelEnum.values());
 
-    private Curso curso;
-    private Iterable<Curso> cursos;
+    private Materia materia;
+    private Iterable<Materia> materias;
 
 
     @PostConstruct
     public void init() {
         oficinas = (List<Oficina>) oficinaService.findAll();
-        cursos =  cursoServicio.findAll();
+        materias =  materiasServicio.findAll();
     }
 
     public void onload(){
@@ -46,7 +52,7 @@ public class CursoBackBean extends BaseBackBean implements Serializable {
 
     public ActionListener crear() {
         try{
-            curso = new Curso();
+            materia = new Materia();
         }catch (Exception e){
             showErrorMessage("Registro de Oficinas", e.getMessage());
         }
@@ -74,13 +80,21 @@ public class CursoBackBean extends BaseBackBean implements Serializable {
     public ActionListener save() {
         try {
 
-            cursoServicio.guardarCurso( curso );
+            materiasServicio.guardarMateria(materia);
 
             showInfoMessage("CURSO GUARDADO SATISFACTORIAMENTE", "");
         }catch(Exception e){
-            showErrorMessage("Registro de curso", e.getMessage());
+            showErrorMessage("Registro de horario", e.getMessage());
         }
         return null;
+    }
+
+    public void cargarDatos(){
+
+    }
+
+    public void horarioSelected(){
+
     }
 
     public void estadisticas(){
@@ -97,19 +111,27 @@ public class CursoBackBean extends BaseBackBean implements Serializable {
         this.oficinas = oficinas;
     }
 
-    public Curso getCurso() {
-        return curso;
+    public Materia getMateria() {
+        return materia;
     }
 
-    public void setCurso(Curso curso) {
-        this.curso = curso;
+    public void setMateria(Materia materia) {
+        this.materia = materia;
     }
 
-    public Iterable<Curso> getCursos() {
-        return cursos;
+    public Iterable<Materia> getMaterias() {
+        return materias;
     }
 
-    public void setCursos(Iterable<Curso> cursos) {
-        this.cursos = cursos;
+    public void setMaterias(Iterable<Materia> materias) {
+        this.materias = materias;
+    }
+
+    public List<CursoNivelEnum> getCursoNiveles() {
+        return horarioNiveles;
+    }
+
+    public void setCursoNiveles(List<CursoNivelEnum> horarioNiveles) {
+        this.horarioNiveles = horarioNiveles;
     }
 }

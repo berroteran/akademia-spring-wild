@@ -7,7 +7,7 @@
     <ui:define name="head">
     </ui:define>
 
-    <ui:define name="title">Catalogo de cursos</ui:define>
+    <ui:define name="title">Administrador de Cursos-Horario y Disponibilidad</ui:define>
 
     <ui:define name="content"   >
 
@@ -17,7 +17,7 @@
 
             <p:toolbar>
                 <f:facet name="left">
-                    <p:commandButton value="Agregar Curso"
+                    <p:commandButton value="Crear nueva Disponibilidad de Curso."
                                      id="btnAgregarNuevo"
                                      icon="fa fa-plus-circle"
                                      oncomplete="PF('modalCurso').show()"
@@ -69,16 +69,16 @@
                 <p:column headerText="Nombre"
                           width="300"
                           filterable="true"
-                          sortBy="#{curso.materia}"
-                          filterBy="#{curso.materia}" filterMatchMode="contains">
-                    <h:outputText value="#{curso.materia}"/>
+                          sortBy="#{curso.nombre}"
+                          filterBy="#{curso.nombre}" filterMatchMode="contains">
+                    <h:outputText value="#{curso.nombre}"/>
                 </p:column>
 
-                <p:column headerText="sucursal"
+                <p:column headerText="Nivel"
                           filterable="true"
-                          sortBy="#{curso.sucursal}"
-                          filterBy="#{curso.sucursal}" filterMatchMode="contains">
-                    <h:outputText value="#{curso.sucursal}"/>
+                          sortBy="#{curso.nivel}"
+                          filterBy="#{curso.nivel}" filterMatchMode="contains">
+                    <h:outputText value="#{curso.nivel}"/>
                 </p:column>
 
 
@@ -117,7 +117,6 @@
                   closeOnEscape="true"
                   responsive="true"
                   widgetVar="modalCurso"
-
                   modal="true">
 
             <h:form id="formModalCurso"  >
@@ -135,77 +134,36 @@
                                  columnClasses="p-col-2, p-col-8"
                                  styleClass="ui-panelgrid-blank ui-fluid">
 
-                        <p:outputLabel value="Sucural:"/>
-                        <p:selectOneMenu id="cboSucursal"
-                                         widgetVar="cboSucursal"
-                                         filter="true"
-                                         required="true"
-                                         converter="selectOneMenuConverter"
-                                         value="#{cursoBackBean.curso.sucursal}"
-                                         filterMatchMode="contains"
-                                         style="width: 100%;">
-
-                            <f:selectItem itemLabel="Seleccione sucursal" itemValue="#{null}" noSelectionOption="true"/>
-                            <f:selectItems value="#{cursoBackBean.oficinas}"
-                                           var="oficinaItem"
-                                           itemLabel="#{oficinaItem.nombre}"
-                                           itemValue="#{oficinaItem}"/>
-                        </p:selectOneMenu>
-
-                        <p:outputLabel value="Materia:"/>
-                        <p:selectOneMenu id="cboMateria"
-                                         widgetVar="cboMateria"
-                                         filter="true"
-                                         required="true"
-                                         converter="selectOneMenuConverter"
-                                         value="#{cursoBackBean.curso.materia}"
-                                         filterMatchMode="contains"
-                                         style="width: 100%;">
-                            <f:selectItem itemLabel="Seleccione sucursal" itemValue="#{null}" noSelectionOption="true"/>
-                            <f:selectItems value="#{cursoBackBean.materias}"
-                                           var="materiaItem"
-                                           itemLabel="#{materiaItem.nombre}"
-                                           itemValue="#{materiaItem}"/>
-                        </p:selectOneMenu>
+                        <p:outputLabel for="txtnombre" value="Nombre:"/>
+                        <p:inputText id="txtnombre" maxlength="200" value="#{cursoBackBean.curso.nombre}"
+                                     style="width: 100%"/>
 
 
-                        <p:outputLabel value="Horario:"/>
-                        <p:selectOneMenu id="cboHorario"
-                                         widgetVar="cboHorario"
-                                         filter="true"
-                                         required="true"
-                                         converter="selectOneMenuConverter"
-                                         rendered="#{cursoBackBean.getOficinaFromUser() eq null}"
-                                         value="#{cursoBackBean.curso.horario}"
-                                         filterMatchMode="contains"
-                                         style="width: 100%;">
-                            <f:selectItem itemLabel="Seleccione horario" itemValue="#{null}" noSelectionOption="true"/>
-                            <f:selectItems value="#{cursoBackBean.horarios}"
-                                           var="horarioItem"
-                                           itemLabel="#{horarioItem.nombre}"
-                                           itemValue="#{horarioItem}"/>
-                        </p:selectOneMenu>
-
-                        <p:outputLabel value="Fecha Inicio:"/>
-                        <p:outputLabel value="F:"/>
-
-                        <p:outputLabel value="Fecha Fin:"/>
-                        <p:outputLabel value="f:"/>
-
-                        <p:outputLabel value="Cupos:"/>
-                        <p:outputLabel value="Materia:"/>
-
-                        <p:outputLabel value="Cupos Disponibles:"/>
-                        <p:outputLabel value="Materia:"/>
-
-                        <p:outputLabel for="txtComentarios" value="Comentarios"/>
-                        <p:inputTextarea id="txtComentarios"
+                        <p:outputLabel for="txtDescripcion" value="Descripcion:"/>
+                        <p:inputTextarea id="txtDescripcion"
                                          cols="2"
                                          rows="6"
                                          styleClass="p-col-4"
-                                         value="#{cursoBackBean.curso.comentarios}"
+                                         value="#{cursoBackBean.curso.descripcion}"
                                          style="width: 100%"/>
 
+                        <p:outputLabel for="cboNivel" value="Nivel:"/>
+                        <p:selectOneMenu id="cboNivel"
+                                         widgetVar="cboNivel"
+                                         value="#{cursoBackBean.curso.nivel}"
+                                         filter="true"
+                                         filterMatchMode="contains"
+                                         style="width:100%;"
+                                         effect="fade"
+                                         converter="selectOneMenuConverter"
+                                         requiredMessage="Debe seleccionar un nivel del curso."
+                                         tabindex="7">
+                            <f:selectItem itemLabel="Seleccione" itemValue="#{null}"/>
+                            <f:selectItems value="#{cursoBackBean.cursoNiveles}"
+                                           var="cursoItem"
+                                           itemLabel="#{cursoItem.descripcion}"
+                                           itemValue="#{cursoItem}"/>
+                        </p:selectOneMenu>
 
                     </p:panelGrid>
 

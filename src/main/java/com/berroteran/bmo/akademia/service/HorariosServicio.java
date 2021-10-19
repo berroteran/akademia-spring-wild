@@ -1,8 +1,9 @@
 package com.berroteran.bmo.akademia.service;
 
 import com.berroteran.bmo.akademia.data.repository.CursoRepository;
+import com.berroteran.bmo.akademia.data.repository.HorarioRepository;
 import com.berroteran.bmo.akademia.data.repository.OficinaRepository;
-import com.berroteran.bmo.akademia.model.Curso;
+import com.berroteran.bmo.akademia.model.Horario;
 import com.berroteran.bmo.akademia.model.Materia;
 import com.berroteran.bmo.akademia.utils.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,43 +15,30 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Service
-public class CursoServicio {
+public class HorariosServicio {
 
-    private static final Logger LOGGER = Logger.getLogger(CursoServicio.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(HorariosServicio.class.getName());
 
     @Autowired
     private OficinaRepository oficinaRepositorio;
+
     @Autowired
-    private CursoRepository cursoRepository;
-
-    public Iterable<Curso> findAll() {
-        return cursoRepository.findAll();
-    }
+    private HorarioRepository horarioRepository;
 
 
-    public long count() {
-        return cursoRepository.count();
-    }
-
-    public void delete(Curso curso) {
-        cursoRepository.delete(curso);
+    public Iterable<Horario> findAll() {
+     return   horarioRepository.findAll();
     }
 
 
     @Transactional
-    public void guardarCurso(Curso curso) throws BusinessException {
-        if ( curso == null) {
+    public void guardarHorario(Horario horario) throws BusinessException {
+
+        if (horario == null) {
             LOGGER.log(Level.SEVERE, "La Oficina esta nulo. ¿Está seguro que está bien escrito?");
             throw new BusinessException("La Oficina esta nulo. ¿Está seguro que está bien escrito?");
-
         }
-        cursoRepository.save(curso);
-    }
+        horarioRepository.save( horario );
 
-
-
-
-    public Iterable<Curso> findAllActivos() {
-        return cursoRepository.findAllActivos();
     }
 }

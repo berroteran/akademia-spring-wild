@@ -1,7 +1,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui"
+                xmlns:p="http://primefaces.org/ui" xmlns:h="http://java.sun.com/jsf/html"
                 template="/templates/template.xhtml">
 
 
@@ -76,7 +76,6 @@
                                                          widgetVar="cboALumno"
                                                          filter="true"
                                                          value="#{matriculaBackBean.matricula.alumno}"
-                                                         onchange="PF('atencionListTbl').filter()"
                                                          filterMatchMode="contains"
                                                          style="width: 100%;">
                                             <f:selectItem itemLabel="Selecciones o cree un alumno" itemValue="#{null}"/>
@@ -142,7 +141,16 @@
                         <div class="card card-w-title">
                             <h1>Datos del curso</h1>
 
-                            <div class="ui-fluid">
+                            <div class="ui-fluid" >
+                            <div class="p-field p-grid">
+                                <p:outputLabel for="txtSucursal" rendered="#{matriculaListaBackBean.getOficinaFromUser() ne null}"  styleClass="p-col-12 p-md-2" value="Sucursal"/>
+                                <div class="p-col-12 p-md-10">
+                                <h:outputText id="txtSucursal" rendered="#{matriculaListaBackBean.getOficinaFromUser() ne null}"  />
+                            </div>
+                            </div>
+                            </div>
+
+                            <div class="ui-fluid" >
                                 <div class="p-field p-grid">
                                     <p:outputLabel for="cboSucursal" styleClass="p-col-12 p-md-2" value="Sucursal"/>
                                     <div class="p-col-12 p-md-10">
@@ -150,11 +158,11 @@
                                                          widgetVar="cboSucursal"
                                                          filter="true"
                                                          required="true"
+                                                         rendered="#{matriculaListaBackBean.getOficinaFromUser() eq null}"
                                                          value="#{matriculaBackBean.matricula.sucursal}"
-                                                         onchange="PF('atencionListTbl').filter()"
                                                          filterMatchMode="contains"
                                                          style="width: 100%;">
-                                            <f:selectItem itemLabel="Seleccione sucursal" itemValue="#{null}"/>
+                                            <f:selectItem itemLabel="Seleccione sucursal" itemValue="#{null}" noSelectionOption="true"/>
                                             <f:selectItems value="#{matriculaBackBean.oficinas}"
                                                            var="oficinaItem"
                                                            itemLabel="#{oficinaItem.nombre}"

@@ -1,0 +1,188 @@
+<ui:composition template="/templates/template.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="head">
+    </ui:define>
+
+    <ui:define name="title">Catalogo de Horarios</ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="form-horarios-list">
+
+            <p:remoteCommand actionListener="#{horariosBackBean.cargarDatos()}"/>
+
+            <p:toolbar>
+                <f:facet name="left">
+                    <p:commandButton value="Agregar Horario"
+                                     id="btnAgregarNuevo"
+                                     icon="fa fa-plus-circle"
+                                     oncomplete="PF('modalCurso').show()"
+                                     update=":formModalCurso"
+                                     process="@this"
+                                     actionListener="#{horariosBackBean.crear}"/>
+
+                    <p:commandButton value="Refrescar"
+                                     process="@this"
+                                     disabled="true"
+                                     onclick="PF('horarios-list').clearFilters();"
+                                     styleClass="secondary-button"/>
+
+                    <p:commandButton value="Limpiar Filtros"
+                                     process="@this"
+                                     onclick="PF('horarios-list').clearFilters();"
+                                     styleClass="secondary-button">
+                    </p:commandButton>
+
+                </f:facet>
+            </p:toolbar>
+
+
+            <p:dataTable id="horarios-list"
+                         widgetVar="horarios-list"
+                         selectionMode="single"
+                         reflow="true"
+                         emptyMessage="No se encontraron registros"
+                         value="#{horariosBackBean.cursos}"
+                         selection="#{horariosBackBean.curso}"
+                         var="curso"
+                         rowKey="#{curso.id}"
+                         sortBy="#{curso.id}"
+                         sortField="#{curso.id}"
+                         paginator="true"
+                         rows="15"
+                         paginatorPosition="bottom">
+
+                <p:ajax event="rowDblselect"
+                        process="@this"
+                        update="formModalCurso :formModalCurso:panel-nuevo-curso"
+                        listener="#{horariosBackBean.cursoSelected}"
+                        oncomplete="PF('modalCurso').show()"/>
+
+                <p:column headerText="ID" style="text-align: right" width="50px;" sortBy="#{curso.id}">
+                    <h:outputText value="#{curso.id}"/>
+                </p:column>
+
+                <p:column headerText="Horario"
+                          width="300"
+                          filterable="true"
+                          sortBy="#{curso.nombre}"
+                          filterBy="#{curso.nombre}" filterMatchMode="contains">
+                    <h:outputText value="#{curso.nombre}"/>
+                </p:column>
+
+
+                <p:column headerText="Activo" filterable="true" style="text-align: center"
+                          filterBy="#{curso.activo}" filterMatchMode="equals">
+                    <f:facet name="filter">
+                        <p:selectOneButton widgetVar="sobCursoEstado"
+                                           id="sobCursoEstado"
+                                           onchange="console.log('entro al select'); PF('horarios-list').filter()"
+                                           styleClass="custom-filter" style="font-size: 10px;">
+                            <f:converter converterId="javax.faces.Boolean"/>
+                            <f:selectItem itemLabel="*" itemValue=""/>
+                            <f:selectItem itemLabel="Si" itemValue="true"/>
+                            <f:selectItem itemLabel="No" itemValue="false"/>
+                        </p:selectOneButton>
+                    </f:facet>
+                    <h:outputText value="#{curso.activo ? 'Si' : 'No.'}"/>
+                </p:column>
+
+                <p:column headerText="-">
+                    <p:commandButton value="Estadisticas" actionListener="#{horariosBackBean.estadisticas()}"/>
+                </p:column>
+
+                <p:column headerText="-" width="45">
+                    <p:commandButton icon="fa fa-trash-o"
+                                     styleClass="danger-btn"
+                                     process="@this"
+                                     update="@this"
+                                     style="width: 40px;text-align: center"
+                                     disabled="#{!atencion.activa or atencion.estadoProceso.id > 1 or atencion.compraId gt 0 }"
+                                     onmousedown="PF('atencionListTbl').unselectAllRows();PF('atencionListTbl').selectRow(#{atencion.id});"
+                                     actionListener="#{atencionBackBean.onDesactivarAtencion(atencion)}">
+                        <p:confirm header="Confirmación" message="¿Seguro que desea anular esta Atencion?"
+                                   icon="fa fa-exclamation-triangle"/>
+                    </p:commandButton>
+                </p:column>
+
+            </p:dataTable>
+        </h:form>
+
+
+        <!--  MODAL OFICINA -->
+        <p:dialog id="modalCurso"
+                  showHeader="false"
+                  draggable="true"
+                  fitViewport="true"
+                  width="600"
+                  height="auto"
+                  closable="true"
+                  closeOnEscape="true"
+                  responsive="true"
+                  widgetVar="modalCurso"
+
+                  modal="true">
+
+            <h:form id="formModalCurso">
+
+                <p:panel id="panel-nuevo-curso" style="width: 100%; height: auto">
+                    <f:facet name="header">
+                        <div class="ui-g">
+                            <div class="ui-g-12" style="margin: auto">
+                                <h:outputText value="Horario" style="font-size: 16px;"/>
+                            </div>
+                        </div>
+                    </f:facet>
+
+                    <p:panelGrid layout="grid" columns="2"
+                                 columnClasses="p-col-2, p-col-8"
+                                 styleClass="ui-panelgrid-blank ui-fluid">
+
+                        <p:outputLabel for="txtnombre" value="Nombre:"/>
+                        <p:inputText id="txtnombre" maxlength="200" value="#{horariosBackBean.curso.nombre}"
+                                     style="width: 100%"/>
+
+
+                        <p:outputLabel for="txtDescripcion" value="Descripcion:"/>
+                        <p:inputTextarea id="txtDescripcion"
+                                         cols="2"
+                                         rows="6"
+                                         styleClass="p-col-4"
+                                         value="#{horariosBackBean.curso.descripcion}"
+                                         style="width: 100%"/>
+
+                    </p:panelGrid>
+
+
+                    <f:facet name="footer">
+                        <div class="ui-g-6 content-align-right">
+                            <p:commandButton value="Guardar"
+                                             process="formModalCurso" icon="fa fa-save"
+                                             actionListener="#{horariosBackBean.save}"
+                                             update=":form-horarios-list :global-message"
+                                             style="margin: 0.1em"/>
+
+                            <p:commandButton value="Cerrar" style="margin: 0.1em"
+                                             styleClass="secondary-button"
+                                             process="@this"
+                                             icon="fa fa-close"
+                                             resetValues="true"
+                                             update="@form"
+                                             oncomplete="PF('modalCurso').hide()"
+                            />
+                        </div>
+                    </f:facet>
+                </p:panel>
+
+
+            </h:form>
+        </p:dialog>
+
+
+    </ui:define>
+
+</ui:composition>

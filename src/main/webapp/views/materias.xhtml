@@ -7,46 +7,46 @@
     <ui:define name="head">
     </ui:define>
 
-    <ui:define name="title">Catalogo de cursos</ui:define>
+    <ui:define name="title">Catalogo de Materias(Cursos)</ui:define>
 
     <ui:define name="content"   >
 
         <h:form id="form-envases-list"  >
 
-            <p:remoteCommand actionListener="#{cursoBackBean.cargarDatos()}" />
+            <p:remoteCommand actionListener="#{materiasBackBean.cargarDatos()}" />
 
             <p:toolbar>
                 <f:facet name="left">
-                    <p:commandButton value="Agregar Curso"
+                    <p:commandButton value="Agregar Materia (Curso) "
                                      id="btnAgregarNuevo"
                                      icon="fa fa-plus-circle"
                                      oncomplete="PF('modalCurso').show()"
                                      update=":formModalCurso"
                                      process="@this"
-                                     actionListener="#{cursoBackBean.crear}"/>
+                                     actionListener="#{materiasBackBean.crear}"/>
 
                     <p:commandButton value="Refrescar"
                                      process="@this"
                                      disabled="true"
-                                     onclick="PF('cursos-list').clearFilters();"
+                                     onclick="PF('materias-list').clearFilters();"
                                      styleClass="secondary-button"/>
 
                     <p:commandButton value="Limpiar Filtros"
                                      process="@this"
-                                     onclick="PF('cursos-list').clearFilters();"
+                                     onclick="PF('materias-list').clearFilters();"
                                      styleClass="secondary-button">
                     </p:commandButton>
 
                 </f:facet>
             </p:toolbar>
 
-            <p:dataTable id="cursos-list"
-                         widgetVar="cursos-list"
+            <p:dataTable id="materias-list"
+                         widgetVar="materias-list"
                          selectionMode="single"
                          reflow="true"
                          emptyMessage="No se encontraron registros"
-                         value="#{cursoBackBean.cursos}"
-                         selection="#{cursoBackBean.curso}"
+                         value="#{materiasBackBean.materias}"
+                         selection="#{materiasBackBean.materia}"
                          var="curso"
                          rowKey="#{curso.id}"
                          sortBy="#{curso.id}"
@@ -58,7 +58,7 @@
                 <p:ajax event="rowDblselect"
                         process="@this"
                         update="formModalCurso :formModalCurso:panel-nuevo-curso"
-                        listener="#{cursoBackBean.cursoSelected}"
+                        listener="#{materiasBackBean.cursoSelected}"
                         oncomplete="PF('modalCurso').show()"/>
 
                 <p:column headerText="ID" style="text-align: right" width="50px;" sortBy="#{curso.id}">
@@ -69,16 +69,16 @@
                 <p:column headerText="Nombre"
                           width="300"
                           filterable="true"
-                          sortBy="#{curso.materia}"
-                          filterBy="#{curso.materia}" filterMatchMode="contains">
-                    <h:outputText value="#{curso.materia}"/>
+                          sortBy="#{curso.nombre}"
+                          filterBy="#{curso.nombre}" filterMatchMode="contains">
+                    <h:outputText value="#{curso.nombre}"/>
                 </p:column>
 
-                <p:column headerText="sucursal"
+                <p:column headerText="Nivel"
                           filterable="true"
-                          sortBy="#{curso.sucursal}"
-                          filterBy="#{curso.sucursal}" filterMatchMode="contains">
-                    <h:outputText value="#{curso.sucursal}"/>
+                          sortBy="#{curso.nivel}"
+                          filterBy="#{curso.nivel}" filterMatchMode="contains">
+                    <h:outputText value="#{curso.nivel}"/>
                 </p:column>
 
 
@@ -87,7 +87,7 @@
                     <f:facet name="filter">
                         <p:selectOneButton widgetVar="sobCursoEstado"
                                            id="sobCursoEstado"
-                                           onchange="console.log('entro al select'); PF('cursos-list').filter()"
+                                           onchange="console.log('entro al select'); PF('materias-list').filter()"
                                            styleClass="custom-filter" style="font-size: 10px;">
                             <f:converter converterId="javax.faces.Boolean"/>
                             <f:selectItem itemLabel="*" itemValue=""/>
@@ -99,7 +99,7 @@
                 </p:column>
 
                 <p:column>
-                    <p:commandButton value="Estadisticas" actionListener="#{cursoBackBean.estadisticas()}"/>
+                    <p:commandButton value="Estadisticas" actionListener="#{materiasBackBean.estadisticas()}"/>
                 </p:column>
 
             </p:dataTable>
@@ -126,7 +126,7 @@
                     <f:facet name="header">
                         <div class="ui-g">
                             <div class="ui-g-12" style="margin: auto">
-                                <h:outputText value="Información de Curso" style="font-size: 16px;"/>
+                                <h:outputText value="Información de Materia" style="font-size: 16px;"/>
                             </div>
                         </div>
                     </f:facet>
@@ -135,77 +135,36 @@
                                  columnClasses="p-col-2, p-col-8"
                                  styleClass="ui-panelgrid-blank ui-fluid">
 
-                        <p:outputLabel value="Sucural:"/>
-                        <p:selectOneMenu id="cboSucursal"
-                                         widgetVar="cboSucursal"
-                                         filter="true"
-                                         required="true"
-                                         converter="selectOneMenuConverter"
-                                         value="#{cursoBackBean.curso.sucursal}"
-                                         filterMatchMode="contains"
-                                         style="width: 100%;">
-
-                            <f:selectItem itemLabel="Seleccione sucursal" itemValue="#{null}" noSelectionOption="true"/>
-                            <f:selectItems value="#{cursoBackBean.oficinas}"
-                                           var="oficinaItem"
-                                           itemLabel="#{oficinaItem.nombre}"
-                                           itemValue="#{oficinaItem}"/>
-                        </p:selectOneMenu>
-
-                        <p:outputLabel value="Materia:"/>
-                        <p:selectOneMenu id="cboMateria"
-                                         widgetVar="cboMateria"
-                                         filter="true"
-                                         required="true"
-                                         converter="selectOneMenuConverter"
-                                         value="#{cursoBackBean.curso.materia}"
-                                         filterMatchMode="contains"
-                                         style="width: 100%;">
-                            <f:selectItem itemLabel="Seleccione sucursal" itemValue="#{null}" noSelectionOption="true"/>
-                            <f:selectItems value="#{cursoBackBean.materias}"
-                                           var="materiaItem"
-                                           itemLabel="#{materiaItem.nombre}"
-                                           itemValue="#{materiaItem}"/>
-                        </p:selectOneMenu>
+                        <p:outputLabel for="txtnombre" value="Nombre:"/>
+                        <p:inputText id="txtnombre" maxlength="200" value="#{materiasBackBean.materia.nombre}"
+                                     style="width: 100%"/>
 
 
-                        <p:outputLabel value="Horario:"/>
-                        <p:selectOneMenu id="cboHorario"
-                                         widgetVar="cboHorario"
-                                         filter="true"
-                                         required="true"
-                                         converter="selectOneMenuConverter"
-                                         rendered="#{cursoBackBean.getOficinaFromUser() eq null}"
-                                         value="#{cursoBackBean.curso.horario}"
-                                         filterMatchMode="contains"
-                                         style="width: 100%;">
-                            <f:selectItem itemLabel="Seleccione horario" itemValue="#{null}" noSelectionOption="true"/>
-                            <f:selectItems value="#{cursoBackBean.horarios}"
-                                           var="horarioItem"
-                                           itemLabel="#{horarioItem.nombre}"
-                                           itemValue="#{horarioItem}"/>
-                        </p:selectOneMenu>
-
-                        <p:outputLabel value="Fecha Inicio:"/>
-                        <p:outputLabel value="F:"/>
-
-                        <p:outputLabel value="Fecha Fin:"/>
-                        <p:outputLabel value="f:"/>
-
-                        <p:outputLabel value="Cupos:"/>
-                        <p:outputLabel value="Materia:"/>
-
-                        <p:outputLabel value="Cupos Disponibles:"/>
-                        <p:outputLabel value="Materia:"/>
-
-                        <p:outputLabel for="txtComentarios" value="Comentarios"/>
-                        <p:inputTextarea id="txtComentarios"
+                        <p:outputLabel for="txtDescripcion" value="Descripcion:"/>
+                        <p:inputTextarea id="txtDescripcion"
                                          cols="2"
                                          rows="6"
                                          styleClass="p-col-4"
-                                         value="#{cursoBackBean.curso.comentarios}"
+                                         value="#{materiasBackBean.materia.descripcion}"
                                          style="width: 100%"/>
 
+                        <p:outputLabel for="cboNivel" value="Nivel:"/>
+                        <p:selectOneMenu id="cboNivel"
+                                         widgetVar="cboNivel"
+                                         value="#{materiasBackBean.materia.nivel}"
+                                         filter="true"
+                                         filterMatchMode="contains"
+                                         style="width:100%;"
+                                         effect="fade"
+                                         converter="selectOneMenuConverter"
+                                         requiredMessage="Debe seleccionar un nivel del curso."
+                                         tabindex="7">
+                            <f:selectItem itemLabel="Seleccione" itemValue="#{null}"/>
+                            <f:selectItems value="#{materiasBackBean.cursoNiveles}"
+                                           var="cursoItem"
+                                           itemLabel="#{cursoItem.descripcion}"
+                                           itemValue="#{cursoItem}"/>
+                        </p:selectOneMenu>
 
                     </p:panelGrid>
 
@@ -214,7 +173,7 @@
                         <div class="ui-g-6 content-align-right">
                             <p:commandButton value="Guardar"
                                              process="formModalCurso" icon="fa fa-save"
-                                             actionListener="#{cursoBackBean.save}"
+                                             actionListener="#{materiasBackBean.save}"
                                              update=":form-envases-list :global-message"
                                              style="margin: 0.1em"/>
 

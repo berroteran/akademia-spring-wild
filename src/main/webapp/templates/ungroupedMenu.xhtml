@@ -24,8 +24,15 @@
             <p:menuitem id="frm_alumnos" value="Alumnos" icon="fa fa-fw fa-square-o"
                         outcome="/views/alumnos.xhtml"/>
 
-            <p:menuitem id="frm_sample" value="Cursos " icon="fa fa-fw fa-square-o"
+            <p:menuitem id="frm_curso" value="Cursos" icon="fa fa-fw fa-square-o"
                         outcome="/views/cursos.xhtml "/>
+
+
+            <p:menuitem id="frm_cohorte" value="Cohorte" icon="fa fa-fw fa-square-o"
+                        outcome="/views/cohorte.xhtml "/>
+
+            <p:menuitem id="frm_materias" value="Cursos" icon="fa fa-fw fa-square-o"
+                        outcome="/views/materias.xhtml "/>
 
 
             <p:menuitem id="frm_baba" value="Promociones" icon="fa fa-fw fa-square-o"
@@ -41,13 +48,16 @@
 
             <p:menuitem id="pg_trasegado" value="Sucursales" icon="fa fa-fw fa-square-o"
                         outcome="/views/oficina/oficinas.xhtml"/>
+            <p:menuitem id="cat_prov" value="Instructores" outcome="/views/horarios.xhtml"
+                        icon="fa fa-fw fa-columns"/>
 
         </p:submenu>
 
 
         <p:submenu id="sb_components" label="Catalogos" icon="fa fa-fw fa-star">
-            <p:menuitem id="cat_prov" value="Proveedor" outcome="/views/oficina/oficinas.xhtml"
-                        icon="fa fa-fw fa-columns"/>
+
+            <p:menuitem id="frm_horarios" value="Horarios" icon="fa fa-fw fa-square-o"
+                        outcome="/views/horarios.xhtml "/>
 
         </p:submenu>
 

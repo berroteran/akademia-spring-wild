@@ -29,7 +29,7 @@ public class Matricula extends AbstractEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
-    private Curso curso;
+    private Materia curso;
 
     private String comoSupo;
 
@@ -97,11 +97,11 @@ public class Matricula extends AbstractEntity {
         this.alumno = alumno;
     }
 
-    public Curso getCurso() {
+    public Materia getCurso() {
         return curso;
     }
 
-    public void setCurso(Curso curso) {
+    public void setCurso(Materia curso) {
         this.curso = curso;
     }
 

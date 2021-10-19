@@ -4,18 +4,32 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@SequenceGenerator(name = "seqCurso", sequenceName = "seqCurso", allocationSize = 1 )
+@SequenceGenerator(name = "seqCursoMat", sequenceName = "seqCursoMat", allocationSize = 1 )
 public class Curso extends AbstractEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqCurso" )
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqCursoMat" )
     private Integer id;
 
-    private String nombre;
-    private Integer nivel =1;
-    private String descripcion;
-    private String intructor;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
+    private Oficina sucursal;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
+    private Horario horario;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
+    private Materia materia;
+
+    private String comentarios;
+
     private LocalDate fechaInicio;
+    private LocalDate fechaFin;
+
+    private Integer cupos;
+    private Integer disponibles;
 
     private Boolean activo;
 
@@ -28,34 +42,29 @@ public class Curso extends AbstractEntity {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+
+    public Oficina getSucursal() {
+        return sucursal;
     }
 
-    public Integer getNivel() {
-        return nivel;
-    }
-    public void setNivel(Integer nivel) {
-        this.nivel = nivel;
+    public void setSucursal(Oficina sucursal) {
+        this.sucursal = sucursal;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public Horario getHorario() {
+        return horario;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setHorario(Horario horario) {
+        this.horario = horario;
     }
 
-    public String getIntructor() {
-        return intructor;
+    public String getComentarios() {
+        return comentarios;
     }
 
-    public void setIntructor(String intructor) {
-        this.intructor = intructor;
+    public void setComentarios(String comentarios) {
+        this.comentarios = comentarios;
     }
 
     public LocalDate getFechaInicio() {
@@ -66,11 +75,43 @@ public class Curso extends AbstractEntity {
         this.fechaInicio = fechaInicio;
     }
 
+    public LocalDate getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(LocalDate fechaFin) {
+        this.fechaFin = fechaFin;
+    }
+
+    public Integer getCupos() {
+        return cupos;
+    }
+
+    public void setCupos(Integer cupos) {
+        this.cupos = cupos;
+    }
+
+    public Integer getDisponibles() {
+        return disponibles;
+    }
+
+    public void setDisponibles(Integer disponibles) {
+        this.disponibles = disponibles;
+    }
+
     public Boolean getActivo() {
         return activo;
     }
 
     public void setActivo(Boolean activo) {
         this.activo = activo;
+    }
+
+    public Materia getMateria() {
+        return materia;
+    }
+
+    public void setMateria(Materia materia) {
+        this.materia = materia;
     }
 }

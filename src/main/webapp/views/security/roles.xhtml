@@ -67,9 +67,14 @@
             </p:dataTable>
         </h:form>
 
-        <p:dialog id="modalUsuario" height="500" showHeader="false" width="650"
-                  hideEffect=""
-                  widgetVar="modalUsuario" modal="true">
+        <p:dialog id="modalUsuario"
+                  height="500"
+                  showHeader="false"
+                  width="650"
+                  hideEffect="Scales"
+                  widgetVar="modalUsuario"
+                  modal="true">
+
             <h:form id="formModalUsuario" style="height: 100%; width: 100%">no
                 <p:panel id="panel-nuevo-producto">
                     <f:facet name="header">
@@ -77,19 +82,24 @@
                                 value="#{rolesBackBean.user.id eq null ? 'Nuevo Usuario' : 'Actualizar Datos Usuario'}"/>
                         </h4>
                     </f:facet>
-                    <p:panelGrid columns="4" layout="flex" columnClasses="p-col-2, p-col-4, p-col-2, p-col-4"
+                    <p:panelGrid columns="4"
+                                 layout="flex"
+                                 columnClasses="p-col-2, p-col-4, p-col-2, p-col-4"
                                  contentStyleClass="p-align-baseline ui-fluid">
                         <p:outputLabel for="txtUsername" value="Username"/>
                         <p:inputText id="txtUsername" value="#{rolesBackBean.user.login}"/>
                         <p:outputLabel for="txtNombre" value="Nombre"/>
                         <p:inputText id="txtNombre" value="#{rolesBackBean.user.firstName}"/>
                     </p:panelGrid>
+
                     <p:panelGrid columns="2" layout="flex" columnClasses="p-col-2, p-col-10"
                                  contentStyleClass="p-align-baseline ui-fluid">
                         <p:outputLabel for="txtApellidos" value="Apellidos"/>
                         <p:inputText id="txtApellidos" value="#{rolesBackBean.user.lastName}"/>
                         <p:outputLabel for="txtCorreo" value="Correo"/>
                         <p:inputText id="txtCorreo" value="#{rolesBackBean.user.email}"/>
+
+
                         <p:outputLabel for="sbolActivo" value="Activo"/>
                         <p:selectBooleanButton id="sbolActivo"
                                                value="#{rolesBackBean.user.activo }"
