@@ -219,7 +219,7 @@ body .ui-selectonemenu-panel .ui-selectonemenu-filter-container .ui-selectonemen
 
 
 
-@media (max-width: 392px) {
+@media (max-width: 500px) {
 
     body .ui-dialog{
         width: 98%;

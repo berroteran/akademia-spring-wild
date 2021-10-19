@@ -3,16 +3,13 @@ package com.berroteran.bmo.akademia.service;
 import com.berroteran.bmo.akademia.data.repository.CursoRepository;
 import com.berroteran.bmo.akademia.data.repository.OficinaRepository;
 import com.berroteran.bmo.akademia.model.Curso;
-import com.berroteran.bmo.akademia.model.Oficina;
+import com.berroteran.bmo.akademia.model.Materia;
 import com.berroteran.bmo.akademia.utils.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -51,7 +48,9 @@ public class CursoServicio {
     }
 
 
-    public List<Curso> getAllActivos() {
-        return cursoRepository.getAllActivos();
+
+
+    public Iterable<Curso> findAllActivos() {
+        return cursoRepository.findAllActivos();
     }
 }

@@ -10,6 +10,7 @@
             body .ui-fieldset .ui-fieldset-legend {
                 border: none;
             }
+
             body .ui-datatable thead th .ui-column-title {
                 font-weight: 800;
             }
@@ -39,10 +40,11 @@
 
                 <f:facet name="header">
 
-                    <p:commandButton value="Agregar" id="btnAgregarNuevo"
+                    <p:commandButton value="Crear Usuario"
+                                     id="btnAgregarNuevo"
                                      icon="fa fa-plus-circle"
                                      oncomplete="PF('modalUsuario').show()"
-                                     update=":modalUsuario"
+                                     update=":modalUsuario :formModalUsuario"
                                      process="@this"
                                      actionListener="#{usuariosBackBean.crear}"/>
 
@@ -51,16 +53,18 @@
                 <p:column headerText="id" sortable="true" sortBy="#{usuario.id}" filterBy="#{usuario.id}" width="55">
                     <h:outputText value="#{usuario.id}"/>
                 </p:column>
-                <p:column headerText="Login (usuario)" sortable="true" sortBy="#{usuario.login}" filterBy="#{usuario.login}">
+                <p:column headerText="Login (usuario)" sortable="true" sortBy="#{usuario.login}"
+                          filterBy="#{usuario.login}">
                     <h:outputText value="#{usuario.login}"/>
                 </p:column>
-                <p:column headerText="Nombres del usuario" sortBy="#{usuario.firstName}" filterBy="#{usuario.firstName}" >
+                <p:column headerText="Nombres del usuario" sortBy="#{usuario.firstName}"
+                          filterBy="#{usuario.firstName}">
                     <h:outputText value="#{usuario.firstName.concat(' ').concat(usuario.lastName)}"/>
                 </p:column>
                 <p:column headerText="Correo" sortBy="#{usuario.email}">
                     <h:outputText value="#{usuario.email}"/>
                 </p:column>
-                <p:column headerText="Activo" >
+                <p:column headerText="Activo">
                     <p:selectBooleanCheckbox value="#{usuario.activo}"/>
                 </p:column>
 
@@ -68,13 +72,10 @@
         </h:form>
 
 
-
-
         <p:dialog id="modalUsuario"
                   height="auto"
-                  showHeader="truse"
+                  showHeader="true"
                   width="800"
-                  hideEffect=""
                   widgetVar="modalUsuario"
                   modal="true"
                   draggable="true"
@@ -88,7 +89,9 @@
                     <f:facet name="header">
                         <div class="ui-g">
                             <div class="ui-g-4" style="margin: auto">
-                                <h:outputText  value="#{usuariosBackBean.usuario.id eq null ? 'Nuevo Usuario' : 'Actualizar Datos Usuario'}"  style="font-size: 16px;font-weight: bold" />
+                                <h:outputText
+                                        value="#{usuariosBackBean.usuario.id eq null ? 'Nuevo Usuario' : 'Actualizar Datos Usuario'}"
+                                        style="font-size: 16px;font-weight: bold"/>
                             </div>
                             <div class="ui-g-8 content-align-right">
                                 <p:commandButton value="Restablecer Contraseña" style="margin: 0.1em"
@@ -102,28 +105,50 @@
                                         actionListener="#{usuariosBackBean.save}"
                                         update=":formUsuarios" style="margin: 0.1em"/>
 
-                                <p:commandButton value="Cerrar" style="margin: 0.1em" styleClass="secondary-button"
+                                <p:commandButton value="Cerrar"
+                                                 style="margin: 0.1em" styleClass="secondary-button"
                                                  icon="fa fa-close" resetValues="true"
-                                                 update=":formModalUsuario" oncomplete="PF('modalUsuario').hide()"/>
+                                                 update=":formModalUsuario"
+                                                 oncomplete="PF('modalUsuario').hide()"/>
                             </div>
                         </div>
                     </f:facet>
 
-                    <p:panelGrid columns="4" layout="flex" columnClasses="p-col-2, p-col-4, p-col-2, p-col-4"
+                    <p:panelGrid columns="4"
+                                 layout="flex"
+                                 columnClasses="p-col-2, p-col-4, p-col-2, p-col-4"
                                  contentStyleClass="p-align-baseline ui-fluid">
                         <p:outputLabel for="txtUsername" value="Username"/>
-                        <p:inputText id="txtUsername" value="#{usuariosBackBean.usuario.login}"/>
+                        <p:inputText id="txtUsername" value="#{usuariosBackBean.usuario.login}" autocomplete="false"/>
                         <p:outputLabel for="txtCorreo" value="Correo"/>
                         <p:inputText id="txtCorreo" value="#{usuariosBackBean.usuario.email}"/>
                     </p:panelGrid>
 
-                    <p:panelGrid columns="4" layout="flex" columnClasses="p-col-2, p-col-4, p-col-2, p-col-4"
+                    <p:panelGrid columns="4" layout="flex"
+                                 columnClasses="p-col-2, p-col-4, p-col-2, p-col-4"
                                  contentStyleClass="p-align-baseline ui-fluid">
                         <p:outputLabel for="txtNombre" value="Nombre"/>
                         <p:inputText id="txtNombre" value="#{usuariosBackBean.usuario.firstName}"/>
                         <p:outputLabel for="txtApellidos" value="Apellidos"/>
                         <p:inputText id="txtApellidos" value="#{usuariosBackBean.usuario.lastName}"/>
                     </p:panelGrid>
+
+                    <p:panelGrid>
+                        <p:outputLabel for="cboSucursal" styleClass="p-col-12 p-md-2" value="Sucursal"/>
+                            <p:selectOneMenu id="cboSucursal"
+                                             widgetVar="cboSucursal"
+                                             filter="true"
+                                             value="#{usuariosBackBean.usuario.oficina}"
+                                             filterMatchMode="contains"
+                                             style="width: 100%;">
+                                <f:selectItem itemLabel="ADMIN (Todas las Sucursales" itemValue="#{null}"/>
+                                <f:selectItems value="#{usuariosBackBean.oficinas}"
+                                               var="oficinaItem"
+                                               itemLabel="#{oficinaItem.nombre}"
+                                               itemValue="#{oficinaItem}"/>
+                            </p:selectOneMenu>
+                    </p:panelGrid>
+
                     <p:panel>
                         <p:outputLabel for="sbolActivo" value="Activo: "/>
                         <p:selectBooleanButton id="sbolActivo"
@@ -136,7 +161,9 @@
                         <p:panelGrid columns="2" layout="flex"
                                      columnClasses="p-col-3, p-col-8"
                                      contentStyleClass="p-align-baseline ui-fluid">
-                            <p:password id="password" name="password"
+                            <p:password id="password"
+                                        name="password"
+                                        autocomplete="false"
                                         value="#{usuariosBackBean.password}"
                                         placeholder="Escribe una contraseña"/>
                             <p:password id="password2" name="password2"
@@ -165,7 +192,8 @@
 
                                         <p:commandButton value="Agregar Rol" id="btnAgregarNuevoRol"
                                                          icon="fa fa-plus-circle"
-                                                         oncomplete="PF('modalUsuario').show()" update=":modalUsuario"
+                                                         oncomplete="PF('modalUsuario').show()"
+                                                         update=":modalUsuario"
                                                          process="@this"
                                                          actionListener="#{rolesBackBean.crear}"/>
                                     </f:facet>

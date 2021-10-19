@@ -13,6 +13,7 @@ public enum EstadoRemesaEnum {
     private Integer id;
     private String descripcion;
 
+
     EstadoRemesaEnum(Integer id, String descripcion) {
         this.id = id;
         this.descripcion = descripcion;

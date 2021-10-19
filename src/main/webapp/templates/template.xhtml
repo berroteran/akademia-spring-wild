@@ -27,6 +27,7 @@
         <ui:include src="./topbar.xhtml"></ui:include>
         <ui:include src="./rightpanel.xhtml"></ui:include>
 
+
         <div class="layout-main">
             <div class="layout-content" >
                     <h3>
@@ -48,17 +49,17 @@
             <div class="layout-mask"></div>
         </div>
 
+        <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
         <p:dialog widgetVar="statusDialog" appendTo="@(body)" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
             <i class="fa fa-circle-o-notch fa-spin ajax-loader fa-5x" aria-hidden="true"></i>
         </p:dialog>
 
         <h:form id="global-message">
-            <p:growl id="message" showDetail="true" life="7000"
-                     showSummary="true" severity="info">
+            <p:growl id="message" showDetail="true" life="7000" showSummary="true" severity="info">
                 <p:autoUpdate/>
             </p:growl>
-            <p:growl id="messageError" showDetail="true" life="7000" severity="error"
-                     showSummary="true" >
+            <p:growl id="messageError" showDetail="true" life="7000" severity="error" showSummary="true" >
                 <p:autoUpdate/>
             </p:growl>
         </h:form>
