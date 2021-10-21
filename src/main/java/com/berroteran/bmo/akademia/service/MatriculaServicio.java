@@ -64,6 +64,9 @@ public class MatriculaServicio {
         if ( matricula.getAlumno() == null )
             throw new BusinessException("El alumno es requerido para poder matricular.");
 
+        if ( matricula.getCantidadPagada() == null )
+            throw new BusinessException("EL monto pagado es requerido para poder matricular.");
+
         return matriculaRepository.save( matricula );
     }
 

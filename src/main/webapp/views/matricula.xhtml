@@ -107,7 +107,7 @@
                                         <div class="p-col-12 p-md-4">
                                             <div class="ui-inputgroup">
                                                 <span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
-                                                <p:inputText id="txtNombres" required="true" value="#{matriculaBackBean.matricula.alumno.nombres}" />
+                                                <p:inputText id="txtNombres" widgetVar="txtNombres" required="true" value="#{matriculaBackBean.alumno.nombres}" />
                                             </div>
                                         </div>
 
@@ -116,7 +116,7 @@
                                         <div class="p-col-12 p-md-4">
                                             <div class="ui-inputgroup">
                                                 <span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
-                                                <p:inputText id="txtApellidos" required="true" value="#{matriculaBackBean.matricula.alumno.apellidos}" />
+                                                <p:inputText id="txtApellidos" required="true" value="#{matriculaBackBean.alumno.apellidos}" />
                                             </div>
                                         </div>
 
@@ -130,7 +130,7 @@
                                         <div class="p-col-12 p-md-4">
                                             <div class="ui-inputgroup">
                                                 <span class="ui-inputgroup-addon"><i class="fa fa-info-circle"></i></span>
-                                                <p:inputMask id="txtCedula" required="true" value="#{matriculaBackBean.matricula.alumno.dni}" mask="999 - 999999 - 9999a" validateMask="true" style="text-align: right" />
+                                                <p:inputMask id="txtCedula"  value="#{matriculaBackBean.alumno.dni}" mask="999 - 999999 - 9999a" validateMask="true" style="text-align: right" />
                                             </div>
                                         </div>
 
@@ -252,6 +252,7 @@
                                             <span class="ui-inputgroup-addon"><i class="fa fa-credit-card"></i></span>
                                             <span class="ui-inputgroup-addon"><i class="fa fa-cc-visa"></i></span>
                                             <p:inputNumber id="txtMontopagado"
+                                                           widgetVar="txtMontopagado"
                                                            placeholder="Monto pagado"
                                                            decimalSeparator="."
                                                            thousandSeparator=","
@@ -261,7 +262,7 @@
                                                            style="text-align: right;"
                                                            value="#{matriculaBackBean.matricula.cantidadPagada}"
                                                            required="true"
-                                                           requiredMessage="El precio del curso es obligatorio"/>
+                                                           requiredMessage="El monto pagado del curso es obligatorio"/>
                                             <span class="ui-inputgroup-addon">$</span>
                                             <span class="ui-inputgroup-addon">.00</span>
                                         </div>
@@ -279,7 +280,6 @@
                                                            thousandSeparator=","
                                                            minValue="0"
                                                            maxValue="#{matriculaBackBean.matricula.curso.precio}"
-                                                           required="true"
                                                            maxlength="6"/>
                                             <span class="ui-inputgroup-addon">$</span>
                                             <span class="ui-inputgroup-addon">.00</span>
@@ -304,7 +304,7 @@
 
                 <div class="p-col-12 p-lg-6">
                     <p:commandButton value="Guardar"
-                                     process="@this :form-matricula buttonbar"
+                                     process="@this :form-matricula txtNombres  buttonbar txtMontopagado"
                                      icon="fa fa-save"
                                      actionListener="#{matriculaBackBean.saveMatricula}"
                                      update=":form-matricula txtSucursal cboSucursal :global-message"

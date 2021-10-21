@@ -5,6 +5,7 @@ import com.berroteran.bmo.akademia.service.AlumnoServicio;
 import com.berroteran.bmo.akademia.service.CursoServicio;
 import com.berroteran.bmo.akademia.service.MatriculaServicio;
 import com.berroteran.bmo.akademia.service.OficinaServicio;
+import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -43,10 +44,15 @@ public class MatriculaBackBean extends BaseBackBean implements Serializable {
     public void init() {
         oficinas = (List<Oficina>) oficinaService.findAll();
         alumnosLista = (List<Cliente>) alumnoServicio.findAll();
+        //
         matricula = new Matricula();
         matricula.setSucursal( getOficinaFromUser() );
-        matricula.setAlumno( new Cliente() );
+        newAlumno();
+        matricula.setAlumno( alumno  );
+        PrimeFaces.current().ajax().update("form-matricula");
+        PrimeFaces.current().ajax().update("txtNombres");
     }
+
 
     public void onload(){
 
@@ -85,7 +91,7 @@ public class MatriculaBackBean extends BaseBackBean implements Serializable {
 
     public void saveMatricula() {
         try {
-
+            getMatricula().setAlumno( alumno );
             matriculaServicio.saveMatricula( getMatricula() );
 
             showInfoMessage("MATRICULA GUARDADA SATISFACTORIAMENTE", "");
@@ -99,12 +105,8 @@ public class MatriculaBackBean extends BaseBackBean implements Serializable {
     }
 
     public void actualizaCursos(){
-        System.out.println("osxxxxxxxx:");
         try {
-            System.out.println("Cursosxxxxxxxxx: ");
             cursos = cursoServicio.findCursosActivosBySucursal(matricula.getSucursal());
-            System.out.println("Cursos: ");
-            System.out.println(cursos);
         }catch (Exception e){
             e.printStackTrace();
             showErrorMessage("Actualizar Curso", e.getMessage());
@@ -118,13 +120,27 @@ public class MatriculaBackBean extends BaseBackBean implements Serializable {
     public void actualizaAlumno(){
         try{
             if ( matricula.getAlumno() == null){
-                matricula.setAlumno( new Cliente() );
+                matricula.setAlumno( newAlumno() );
             }
             if ( matricula.getAlumno() != null){
+                alumno = matricula.getAlumno();
+                PrimeFaces.current().ajax().update("txtNombres");
             }
         }catch(Exception e){
             showErrorMessage("Obtener Alumno", e.getMessage());
         }
+    }
+
+
+    private Cliente newAlumno() {
+        System.out.println("Creando nuevo alumno");
+
+        alumno = new Cliente();
+        alumno.setNombres("");
+        alumno.setApellidos("");
+        alumno.setDni("");
+        alumno.setTelefono("");
+        return alumno;
     }
 
     //= ======
@@ -132,6 +148,7 @@ public class MatriculaBackBean extends BaseBackBean implements Serializable {
     public Matricula getMatricula() {
         return matricula;
     }
+
     public void setMatricula(Matricula matricula) {
         this.matricula = matricula;
     }

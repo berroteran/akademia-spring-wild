@@ -26,7 +26,7 @@ public class Cliente extends AbstractEntity {
     }
 
     public String getNombres() {
-        return nombres;
+        return nombres == null ? "" : nombres;
     }
 
     public void setNombres(String nombres) {
