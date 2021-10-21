@@ -1,9 +1,8 @@
 package com.berroteran.bmo.akademia.view.bean;
 
-import com.berroteran.bmo.akademia.model.Cliente;
-import com.berroteran.bmo.akademia.model.Materia;
-import com.berroteran.bmo.akademia.model.Matricula;
-import com.berroteran.bmo.akademia.model.Oficina;
+import com.berroteran.bmo.akademia.model.*;
+import com.berroteran.bmo.akademia.service.AlumnoServicio;
+import com.berroteran.bmo.akademia.service.CursoServicio;
 import com.berroteran.bmo.akademia.service.MatriculaServicio;
 import com.berroteran.bmo.akademia.service.OficinaServicio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,19 +26,26 @@ public class MatriculaBackBean extends BaseBackBean implements Serializable {
 
     @Autowired
     private MatriculaServicio matriculaServicio;
+    @Autowired
+    private CursoServicio cursoServicio;
+    @Autowired
+    private AlumnoServicio alumnoServicio;
 
     private Oficina oficina;
     private List<Oficina> oficinas;
     private Matricula matricula;
     private List<Cliente> alumnosLista;
     private Cliente alumno;
-    private List<Materia> cursos;
-    private Materia curso;
+
+    private List<Curso> cursos;
 
     @PostConstruct
     public void init() {
         oficinas = (List<Oficina>) oficinaService.findAll();
+        alumnosLista = (List<Cliente>) alumnoServicio.findAll();
         matricula = new Matricula();
+        matricula.setSucursal( getOficinaFromUser() );
+        matricula.setAlumno( new Cliente() );
     }
 
     public void onload(){
@@ -52,9 +58,7 @@ public class MatriculaBackBean extends BaseBackBean implements Serializable {
 
     public ActionListener crear() {
         try{
-
             oficina = new Oficina();
-
         }catch (Exception e){
             showErrorMessage("Registro de Oficinas", e.getMessage());
         }
@@ -79,23 +83,49 @@ public class MatriculaBackBean extends BaseBackBean implements Serializable {
     public void  cerrarModalOficina() {
     }
 
-    public ActionListener save() {
+    public void saveMatricula() {
         try {
 
-            matriculaServicio.save( getMatricula() );
+            matriculaServicio.saveMatricula( getMatricula() );
 
-            showInfoMessage("OFICINA GUARDADO SATISFACTORIAMENTE", "");
+            showInfoMessage("MATRICULA GUARDADA SATISFACTORIAMENTE", "");
         }catch(Exception e){
             showErrorMessage("Matriculando", e.getMessage());
         }
-        return null;
     }
 
     public void setOficinas(List<Oficina> oficinas) {
         this.oficinas = oficinas;
     }
 
+    public void actualizaCursos(){
+        System.out.println("osxxxxxxxx:");
+        try {
+            System.out.println("Cursosxxxxxxxxx: ");
+            cursos = cursoServicio.findCursosActivosBySucursal(matricula.getSucursal());
+            System.out.println("Cursos: ");
+            System.out.println(cursos);
+        }catch (Exception e){
+            e.printStackTrace();
+            showErrorMessage("Actualizar Curso", e.getMessage());
+        }
+    }
 
+    public Oficina getOficinaFromUser(){
+        return sessionBackBean.getOficina();
+    }
+
+    public void actualizaAlumno(){
+        try{
+            if ( matricula.getAlumno() == null){
+                matricula.setAlumno( new Cliente() );
+            }
+            if ( matricula.getAlumno() != null){
+            }
+        }catch(Exception e){
+            showErrorMessage("Obtener Alumno", e.getMessage());
+        }
+    }
 
     //= ======
 
@@ -122,19 +152,12 @@ public class MatriculaBackBean extends BaseBackBean implements Serializable {
         this.alumno = alumno;
     }
 
-    public List<Materia> getCursos() {
+    public List<Curso> getCursos() {
         return cursos;
     }
 
-    public void setCursos(List<Materia> cursos) {
+    public void setCursos(List<Curso> cursos) {
         this.cursos = cursos;
     }
 
-    public Materia getCurso() {
-        return curso;
-    }
-
-    public void setCurso(Materia curso) {
-        this.curso = curso;
-    }
 }

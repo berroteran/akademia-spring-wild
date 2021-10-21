@@ -10,9 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -51,14 +49,22 @@ public class MatriculaServicio {
 
 
     @Transactional
-    public void save(Matricula matricula) throws BusinessException {
-        if (matricula == null) {
-
-            LOGGER.log(Level.SEVERE, "La Oficina esta nulo. ¿Está seguro que está bien escrito?");
-            throw new BusinessException("La Oficina esta nulo. ¿Está seguro que está bien escrito?");
-
+    public Matricula saveMatricula(Matricula matricula) throws BusinessException {
+        if (matricula.getSucursal() == null) {
+            LOGGER.log(Level.SEVERE, "La Sucursal esta nulo. ¿Está seguro que está bien escrito?");
+            throw new BusinessException("La Sucursal esta nulo. Debe seleccionar una sucursal.");
         }
-        matriculaRepository.save( matricula );
+        if (matricula.getCurso()  == null) {
+            LOGGER.log(Level.SEVERE, "El curso está nulo. ¿Está seguro que está bien escrito?");
+            throw new BusinessException("El curso está  nulo. ¿Está seguro que está bien escrito?");
+        }
+        if (matricula.getFechaMatricula() == null )
+            throw new BusinessException("La fecha de Matricula no puede ser nulo");
+
+        if ( matricula.getAlumno() == null )
+            throw new BusinessException("El alumno es requerido para poder matricular.");
+
+        return matriculaRepository.save( matricula );
     }
 
 

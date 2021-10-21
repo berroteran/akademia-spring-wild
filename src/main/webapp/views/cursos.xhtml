@@ -69,16 +69,34 @@
                 <p:column headerText="Nombre"
                           width="300"
                           filterable="true"
-                          sortBy="#{curso.materia}"
-                          filterBy="#{curso.materia}" filterMatchMode="contains">
-                    <h:outputText value="#{curso.materia}"/>
+                          sortBy="#{curso.materia.nombre}"
+                          filterBy="#{curso.materia.nombre}"
+                          filterMatchMode="contains">
+                    <h:outputText value="#{curso.materia.nombre}"/>
                 </p:column>
 
                 <p:column headerText="sucursal"
                           filterable="true"
-                          sortBy="#{curso.sucursal}"
-                          filterBy="#{curso.sucursal}" filterMatchMode="contains">
-                    <h:outputText value="#{curso.sucursal}"/>
+                          sortBy="#{curso.sucursal.nombre}"
+                          filterBy="#{curso.sucursal.nombre}"
+                          filterMatchMode="contains">
+                    <h:outputText value="#{curso.sucursal.nombre}"/>
+                </p:column>
+
+                <p:column headerText="Fecha de Inicio">
+                    <h:outputText  pattern="dd/MMM/yyyy" value="#{curso.fechaInicio}" />
+                </p:column>
+
+                <p:column headerText="Fecha Fin" >
+                    <h:outputText  pattern="dd/MMM/yyyy" value="#{curso.fechaFin}" />
+                </p:column>
+
+                <p:column headerText="Cupos" >
+                    <h:outputText  pattern="dd/MMM/yyyy" value="#{curso.cupos}" />
+                </p:column>
+
+                <p:column headerText="Disponibles" >
+                    <h:outputText  pattern="dd/MMM/yyyy" value="#{curso.disponibles}" />
                 </p:column>
 
 
@@ -161,7 +179,7 @@
                                          value="#{cursoBackBean.curso.materia}"
                                          filterMatchMode="contains"
                                          style="width: 100%;">
-                            <f:selectItem itemLabel="Seleccione sucursal" itemValue="#{null}" noSelectionOption="true"/>
+                            <f:selectItem itemLabel="Seleccione materia" itemValue="#{null}" noSelectionOption="true"/>
                             <f:selectItems value="#{cursoBackBean.materias}"
                                            var="materiaItem"
                                            itemLabel="#{materiaItem.nombre}"
@@ -187,16 +205,16 @@
                         </p:selectOneMenu>
 
                         <p:outputLabel value="Fecha Inicio:"/>
-                        <p:outputLabel value="F:"/>
+                        <p:datePicker id="dpFechaInicio" widgetVar="dpFechaInicio" pattern="dd/MMM/yyyy" value="#{cursoBackBean.curso.fechaInicio}" />
 
                         <p:outputLabel value="Fecha Fin:"/>
-                        <p:outputLabel value="f:"/>
+                        <p:datePicker id="dpFechaFin" widgetVar="dpFechaFin" pattern="dd/MMM/yyyy" value="#{cursoBackBean.curso.fechaFin}" />
 
                         <p:outputLabel value="Cupos:"/>
-                        <p:outputLabel value="Materia:"/>
+                        <p:inputNumber id="txtCursos" widgetVar="txtCursos" style="text-align: right;" value="#{cursoBackBean.curso.cupos}" />
 
                         <p:outputLabel value="Cupos Disponibles:"/>
-                        <p:outputLabel value="Materia:"/>
+                        <p:inputNumber id="txtDisponibles" widgetVar="txtDisponibles" style="text-align: right;" value="#{cursoBackBean.curso.disponibles}" />
 
                         <p:outputLabel for="txtComentarios" value="Comentarios"/>
                         <p:inputTextarea id="txtComentarios"

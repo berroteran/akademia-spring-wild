@@ -25,8 +25,11 @@ public class Curso extends AbstractEntity {
 
     private String comentarios;
 
+    @Column(nullable = false)
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
+
+    private Double precio;
 
     private Integer cupos;
     private Integer disponibles;
@@ -113,5 +116,17 @@ public class Curso extends AbstractEntity {
 
     public void setMateria(Materia materia) {
         this.materia = materia;
+    }
+
+    public String getNombre(){
+        return materia.getNombre() + " - "  + horario.getNombre();
+    }
+
+    public Double getPrecio() {
+        return precio == null ? 0d : precio;
+    }
+
+    public void setPrecio(Double precio) {
+        this.precio = precio;
     }
 }
