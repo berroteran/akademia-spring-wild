@@ -83,6 +83,7 @@
                                                              filter="true"
                                                              value="#{matriculaBackBean.matricula.alumno}"
                                                              filterMatchMode="contains"
+                                                             converter="selectOneMenuConverter"
                                                              tabindex="4"
                                                              style="width: 100%;">
 
@@ -92,8 +93,8 @@
                                                               itemValue="#{null}"/>
                                                 <f:selectItems value="#{matriculaBackBean.alumnosLista}"
                                                                var="alumnoItem"
-                                                               itemLabel="#{alumnoItem.nombre}"
-                                                               itemValue="#{alumnoItem.codigoSAPYNombreDescripcionIcono}"/>
+                                                               itemLabel="#{alumnoItem.nombres}"
+                                                               itemValue="#{alumnoItem}"/>
                                             </p:selectOneMenu>
                                         </div>
                                     </div>
