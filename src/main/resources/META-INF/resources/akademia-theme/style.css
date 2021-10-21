@@ -325,3 +325,8 @@ body .ui-selectonemenu-panel .ui-selectonemenu-filter-container .ui-selectonemen
         width: 100%;
     }
 }
+
+
+.ui-fluid .ui-calendar, .ui-fluid .ui-calendar input {
+    text-align: right;
+}

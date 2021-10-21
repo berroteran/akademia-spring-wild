@@ -34,10 +34,6 @@ public class HorariosServicio {
     @Transactional
     public void guardarHorario(Horario horario) throws BusinessException {
 
-        if (horario == null) {
-            LOGGER.log(Level.SEVERE, "La Oficina esta nulo. ¿Está seguro que está bien escrito?");
-            throw new BusinessException("La Oficina esta nulo. ¿Está seguro que está bien escrito?");
-        }
         horarioRepository.save( horario );
 
     }

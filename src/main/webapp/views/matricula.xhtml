@@ -1,7 +1,8 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
                 template="/templates/template.xhtml">
 
 
@@ -25,240 +26,295 @@
 
     <ui:define name="title">Registro de Matricula</ui:define>
 
+
     <ui:define name="content">
 
-        <div class="p-grid ui-fluid">
-            <div class="p-col-12 p-g-12">
+        <h:form id="form-matricula" >
+            <div class="p-grid ui-fluid">
+                <div class="p-col-12 p-g-12">
+                    <div class="p-grid">
 
-                <div class="p-grid">
-
-                    <div class="card ui-fluid p-col-12">
-                        <div class="p-field p-grid">
-                            <p:outputLabel for="buttonbar" value="Fecha Matricula"/>
-                            <div class="p-field p-col-12 p-md-4">
-                                <p:datePicker id="buttonbar"
-                                              pattern="dd/MM/yyyy"
-                                              showIcon="true"
-                                              locale="es"
-                                              tabindex="1"
-                                              buttonTabindex="3"
-                                              required="true"
-                                              requiredMessage="Debe seleccionar una Fecha de Compra"
-                                              mindate="01/09/2021"
-                                              maxdate="#{matriculaBackBean.obtenerFechaActual()}"
-                                              value="#{matriculaBackBean.matricula.fechaMatricula}"
-                                              showButtonBar="true"/>
-                            </div>
-
-                        <p:outputLabel for="txtNoRecibo" value="No. Recibo" styleClass="p-col-12 p-md-2"/>
-                        <div class="p-col-12 p-md-4">
-                            <div class="ui-inputgroup">
-                                <span class="ui-inputgroup-addon"><i class="fa fa-th-list"></i></span>
-                                <p:inputText id="txtNoRecibo" required="true" style="alignment: right;text-align: right; "/>
-                            </div>
-                        </div>
-
-                        </div>
-
-                    </div>
-
-                    <div class="p-col-12">
-                        <div class="card card-w-title">
-
-                            <h1>Datos del Alumno</h1>
-
-                            <div class="ui-fluid">
-                                <div class="p-field p-grid p-col-12">
-
-                                    <p:outputLabel for="cboAlumno" styleClass="p-col-12 p-md-2" value="Alumno"/>
-                                    <div class="p-col-12 p-md-10">
-                                        <p:selectOneMenu id="cboAlumno"
-                                                         widgetVar="cboALumno"
-                                                         filter="true"
-                                                         value="#{matriculaBackBean.matricula.alumno}"
-                                                         filterMatchMode="contains"
-                                                         style="width: 100%;">
-                                            <f:selectItem itemLabel="Selecciones o cree un alumno" itemValue="#{null}"/>
-                                            <f:selectItems value="#{matriculaBackBean.alumnosLista}"
-                                                           var="alumnoItem"
-                                                           itemLabel="#{alumnoItem.nombre}"
-                                                           itemValue="#{alumnoItem.codigoSAPYNombreDescripcionIcono}"/>
-                                        </p:selectOneMenu>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="ui-fluid">
-
-                                <div class="p-field p-grid p-col-12">
-
-                                    <p:outputLabel for="txtNombres" value="Nombres" styleClass="p-col-12 p-md-2"/>
-                                    <div class="p-col-12 p-md-4">
-                                        <div class="ui-inputgroup">
-                                            <span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
-                                            <p:inputText id="txtNombres" required="true"/>
-                                        </div>
-                                    </div>
-
-                                    <p:outputLabel for="txtApellidos" value="Apellidos" styleClass="p-col-12 p-md-2"/>
-                                    <div class="p-col-12 p-md-4">
-                                        <div class="ui-inputgroup">
-                                            <span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
-                                            <p:inputText id="txtApellidos" required="true"/>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                            </div>
-
-                            <div class="ui-fluid">
-                                <div class="p-field p-grid p-col-12">
-
-                                    <p:outputLabel for="txtCedula" value="Cedula" styleClass="p-col-12 p-md-2"/>
-                                    <div class="p-col-12 p-md-4">
-                                        <div class="ui-inputgroup">
-                                            <span class="ui-inputgroup-addon"><i class="fa fa-info-circle"></i></span>
-                                            <p:inputText id="txtCedula" required="true"/>
-                                        </div>
-                                    </div>
-
-                                    <p:outputLabel for="txtTelefono" value="Telefono" styleClass="p-col-12 p-md-2"/>
-                                    <div class="p-col-12 p-md-4">
-                                        <div class="ui-inputgroup">
-                                            <span class="ui-inputgroup-addon"><i class="fa fa-phone"></i></span>
-                                            <p:inputText id="txtTelefono" required="false"/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                        </div>
-                    </div>
-
-                    <div class="p-col-12">
-                        <div class="card card-w-title">
-                            <h1>Datos del curso</h1>
-
-                            <div class="ui-fluid" >
+                        <div class="card ui-fluid p-col-12">
                             <div class="p-field p-grid">
-                                <p:outputLabel for="txtSucursal" rendered="#{matriculaListaBackBean.getOficinaFromUser() ne null}"  styleClass="p-col-12 p-md-2" value="Sucursal"/>
-                                <div class="p-col-12 p-md-10">
-                                <h:outputText id="txtSucursal" rendered="#{matriculaListaBackBean.getOficinaFromUser() ne null}"  />
-                            </div>
-                            </div>
-                            </div>
-
-                            <div class="ui-fluid" >
-                                <div class="p-field p-grid">
-                                    <p:outputLabel for="cboSucursal" styleClass="p-col-12 p-md-2" value="Sucursal"/>
-                                    <div class="p-col-12 p-md-10">
-                                        <p:selectOneMenu id="cboSucursal"
-                                                         widgetVar="cboSucursal"
-                                                         filter="true"
-                                                         required="true"
-                                                         rendered="#{matriculaListaBackBean.getOficinaFromUser() eq null}"
-                                                         value="#{matriculaBackBean.matricula.sucursal}"
-                                                         filterMatchMode="contains"
-                                                         style="width: 100%;">
-                                            <f:selectItem itemLabel="Seleccione sucursal" itemValue="#{null}" noSelectionOption="true"/>
-                                            <f:selectItems value="#{matriculaBackBean.oficinas}"
-                                                           var="oficinaItem"
-                                                           itemLabel="#{oficinaItem.nombre}"
-                                                           itemValue="#{oficinaItem}"/>
-                                        </p:selectOneMenu>
-                                    </div>
+                                <p:outputLabel for="buttonbar" value="Fecha Matricula"/>
+                                <div class="p-field p-col-12 p-md-4">
+                                    <p:datePicker id="buttonbar"
+                                                  widgetVar="buttonbar"
+                                                  pattern="dd/MM/yyyy"
+                                                  showIcon="true"
+                                                  locale="es"
+                                                  tabindex="1"
+                                                  buttonTabindex="2"
+                                                  required="true"
+                                                  requiredMessage="Debe seleccionar una Fecha de Compra"
+                                                  mindate="01/10/2021"
+                                                  maxdate="#{matriculaBackBean.obtenerFechaActual()}"
+                                                  value="#{matriculaBackBean.matricula.fechaMatricula}"
+                                                  showButtonBar="true"/>
                                 </div>
-                            </div>
 
-
-                            <div class="ui-fluid">
-                                <div class="p-field p-grid">
-                                    <p:outputLabel for="cboCurso" styleClass="p-col-12 p-md-2" value="Curso"/>
-                                    <div class="p-col-12 p-md-10">
-                                        <p:selectOneMenu id="cboCurso"
-                                                         widgetVar="cboCurso"
-                                                         filter="true"
-                                                         value="#{matriculaBackBean.matricula.alumno}"
-                                                         onchange="PF('atencionListTbl').filter()"
-                                                         filterMatchMode="contains"
-                                                         style="width: 100%;">
-                                            <f:selectItem itemLabel="Selecciones curso" itemValue="#{null}"/>
-                                            <f:selectItems value="#{matriculaBackBean.alumnosLista}"
-                                                           var="alumnoItem"
-                                                           itemLabel="#{alumnoItem.nombre}"
-                                                           itemValue="#{alumnoItem.codigoSAPYNombreDescripcionIcono}"/>
-                                        </p:selectOneMenu>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="p-grid ui-fluid">
-                                <div class="p-col-12 p-md-6">
+                                <p:outputLabel for="txtNoRecibo" value="No. Recibo" styleClass="p-col-12 p-md-2"/>
+                                <div class="p-col-12 p-md-4">
                                     <div class="ui-inputgroup">
-                                        <span class="ui-inputgroup-addon"><i class="fa fa-credit-card"></i></span>
-                                        <span class="ui-inputgroup-addon"><i class="fa fa-cc-visa"></i></span>
-                                        <p:inputNumber id="txtPrecio"
-                                                       placeholder="Monto pagado"
-                                                       decimalSeparator="."
-                                                       thousandSeparator=","
-                                                       maxlength="6"
-                                                       minValue="0"
-                                                       value="#{matriculaBackBean.matricula.cantidadPagada}"
-                                                    required="true"
-                                                     requiredMessage="El precio del curso es obligatorio" />
-                                        <span class="ui-inputgroup-addon">$</span>
-                                        <span class="ui-inputgroup-addon">.00</span>
-                                    </div>
-                                </div>
-
-                                <div class="p-col-12 p-md-6">
-                                    <div class="ui-inputgroup">
-                                        <span class="ui-inputgroup-addon"><i class="fa fa-credit-card"></i></span>
-                                        <span class="ui-inputgroup-addon"><i class="fa fa-cc-visa"></i></span>
-                                        <p:inputNumber id="txtDescuento"
-                                                       value="#{matriculaBackBean.matricula.descuento}"
-                                                       placeholder="Descuento"
-                                                     decimalSeparator="."
-                                                     thousandSeparator=","
-                                                     minValue="0"
+                                        <span class="ui-inputgroup-addon"><i class="fa fa-th-list"></i></span>
+                                        <p:inputText id="txtNoRecibo"
                                                      required="true"
-                                                     maxlength="6" />
-                                        <span class="ui-inputgroup-addon">$</span>
-                                        <span class="ui-inputgroup-addon">.00</span>
+                                                     tabindex="3"
+                                                     style="alignment: right;text-align: right; "/>
                                     </div>
                                 </div>
 
                             </div>
 
                         </div>
-                    </div>
+
+                        <div class="p-col-12">
+                            <div class="card card-w-title">
+
+                                <h1>Datos del Alumno</h1>
+
+                                <div class="ui-fluid">
+                                    <div class="p-field p-grid p-col-12">
+
+                                        <p:outputLabel for="cboAlumno" styleClass="p-col-12 p-md-2" value="Alumno"/>
+                                        <div class="p-col-12 p-md-10">
+                                            <p:selectOneMenu id="cboAlumno"
+                                                             widgetVar="cboALumno"
+                                                             filter="true"
+                                                             value="#{matriculaBackBean.matricula.alumno}"
+                                                             filterMatchMode="contains"
+                                                             tabindex="4"
+                                                             style="width: 100%;">
+
+                                                <p:ajax event="change" listener="#{matriculaBackBean.actualizaAlumno}" update="txtNombres txtApellidos txtCedula txtTelefono" />
+
+                                                <f:selectItem itemLabel="Selecciones o cree un alumno"
+                                                              itemValue="#{null}"/>
+                                                <f:selectItems value="#{matriculaBackBean.alumnosLista}"
+                                                               var="alumnoItem"
+                                                               itemLabel="#{alumnoItem.nombre}"
+                                                               itemValue="#{alumnoItem.codigoSAPYNombreDescripcionIcono}"/>
+                                            </p:selectOneMenu>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="ui-fluid">
+
+                                    <div class="p-field p-grid p-col-12">
+
+                                        <p:outputLabel for="txtNombres" value="Nombres" styleClass="p-col-12 p-md-2"/>
+                                        <div class="p-col-12 p-md-4">
+                                            <div class="ui-inputgroup">
+                                                <span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
+                                                <p:inputText id="txtNombres" required="true" value="#{matriculaBackBean.matricula.alumno.nombres}" />
+                                            </div>
+                                        </div>
+
+                                        <p:outputLabel for="txtApellidos" value="Apellidos"
+                                                       styleClass="p-col-12 p-md-2"/>
+                                        <div class="p-col-12 p-md-4">
+                                            <div class="ui-inputgroup">
+                                                <span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
+                                                <p:inputText id="txtApellidos" required="true" value="#{matriculaBackBean.matricula.alumno.apellidos}" />
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="ui-fluid">
+                                    <div class="p-field p-grid p-col-12">
+
+                                        <p:outputLabel for="txtCedula" value="Cedula" styleClass="p-col-12 p-md-2"/>
+                                        <div class="p-col-12 p-md-4">
+                                            <div class="ui-inputgroup">
+                                                <span class="ui-inputgroup-addon"><i class="fa fa-info-circle"></i></span>
+                                                <p:inputMask id="txtCedula" required="true" value="#{matriculaBackBean.matricula.alumno.dni}" mask="999 - 999999 - 9999a" validateMask="true" style="text-align: right" />
+                                            </div>
+                                        </div>
+
+                                        <p:outputLabel for="txtTelefono" value="Telefono" styleClass="p-col-12 p-md-2"/>
+                                        <div class="p-col-12 p-md-4">
+                                            <div class="ui-inputgroup">
+                                                <span class="ui-inputgroup-addon"><i class="fa fa-phone"></i></span>
+                                                <p:inputText id="txtTelefono" required="false"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
 
-                    <div class="p-col-12">
-                        <div class="card card-w-title">
-                            <h1>Observaciones</h1>
-                            <p:inputTextarea rows="3" placeholder="Observaciones" autoResize="false"/>
+                            </div>
                         </div>
+
+                        <div class="p-col-12">
+                            <div class="card card-w-title">
+                                <h1>Datos del curso</h1>
+
+                                <div class="ui-fluid">
+                                    <div class="p-field p-grid">
+                                        <p:outputLabel for="txtSucursal"
+                                                       rendered="#{matriculaBackBean.getOficinaFromUser() ne null}"
+                                                       styleClass="p-col-12 p-md-2" value="Sucursal"/>
+                                        <div class="p-col-12 p-md-10">
+                                            <h:outputText id="txtSucursal"
+                                                          rendered="#{matriculaBackBean.getOficinaFromUser() ne null}"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="ui-fluid">
+                                    <div class="p-field p-grid">
+                                        <p:outputLabel for="cboSucursal" styleClass="p-col-12 p-md-2" value="Sucursal"/>
+                                        <div class="p-col-12 p-md-10">
+                                            <p:selectOneMenu id="cboSucursal"
+                                                             widgetVar="cboSucursal"
+                                                             required="true"
+                                                             requiredMessage="La sucursal es requerida para matricular"
+                                                             rendered="#{matriculaBackBean.getOficinaFromUser() eq null}"
+                                                             value="#{matriculaBackBean.matricula.sucursal}"
+                                                             filter="true"
+                                                             valueChangeListener="#{matriculaBackBean.actualizaCursos}"
+                                                             filterMatchMode="contains"
+                                                             converter="selectOneMenuConverter"
+                                                             style="width: 100%;">
+
+                                                <p:ajax event="change"
+                                                        process="@this"
+                                                        listener="#{matriculaBackBean.actualizaCursos}"
+                                                        update="cboCurso"/>
+
+                                                <f:selectItem itemLabel="Seleccione sucursal" itemValue="#{null}"
+                                                              noSelectionOption="true"/>
+                                                <f:selectItems value="#{matriculaBackBean.oficinas}"
+                                                               var="oficinaItem"
+                                                               itemLabel="#{oficinaItem.nombre}"
+                                                               itemValue="#{oficinaItem}"/>
+                                            </p:selectOneMenu>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="ui-fluid">
+                                    <div class="p-field p-grid">
+                                        <p:outputLabel for="cboCurso" styleClass="p-col-12 p-md-2" value="Curso"/>
+                                        <div class="p-col-12 p-md-10">
+                                            <p:selectOneMenu id="cboCurso"
+                                                             widgetVar="cboCurso"
+                                                             value="#{matriculaBackBean.matricula.curso}"
+                                                             filter="true"
+                                                             filterMatchMode="contains"
+                                                             converter="selectOneMenuConverter"
+                                                             style="width: 100%;">
+
+                                                <p:ajax event="change"
+                                                        process="@this"
+                                                        update="lblFechaInicio lblPrecio"/>
+
+                                                <f:selectItem itemLabel="Selecciones curso" itemValue="#{null}"/>
+                                                <f:selectItems value="#{matriculaBackBean.cursos}"
+                                                               var="cursoItem"
+                                                               itemLabel="#{cursoItem.nombre}"
+                                                               itemValue="#{cursoItem}"/>
+                                            </p:selectOneMenu>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="ui-fluid">
+                                    <div class="p-field p-grid">
+                                        <h:outputText value="Fecha de inicio" styleClass="p-col-12 p-md-2"/>
+                                        <div class="p-col-12 p-md-10">
+                                            <h:outputText id="lblFechaInicio"
+                                                          value="#{matriculaBackBean.matricula.curso.fechaInicio}">
+                                                <f:convertDateTime type="localDate" pattern="dd/MMM/yyyy"/>
+                                            </h:outputText>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ui-fluid">
+                                    <div class="p-field p-grid">
+                                        <h:outputText value="Precio USD" styleClass="p-col-12 p-md-2"/>
+                                        <div class="p-col-12 p-md-10">
+                                            <h:outputText id="lblPrecio"
+                                                          value="#{matriculaBackBean.matricula.curso.precio}">
+                                                <f:convertNumber type="number" maxFractionDigits="2"
+                                                                 pattern="#,#00.00"/>
+                                            </h:outputText>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="p-grid ui-fluid">
+                                    <div class="p-col-12 p-md-6">
+                                        <div class="ui-inputgroup">
+                                            <span class="ui-inputgroup-addon"><i class="fa fa-credit-card"></i></span>
+                                            <span class="ui-inputgroup-addon"><i class="fa fa-cc-visa"></i></span>
+                                            <p:inputNumber id="txtMontopagado"
+                                                           placeholder="Monto pagado"
+                                                           decimalSeparator="."
+                                                           thousandSeparator=","
+                                                           maxlength="6"
+                                                           minValue="0"
+                                                           maxValue="#{matriculaBackBean.matricula.curso.precio}"
+                                                           style="text-align: right;"
+                                                           value="#{matriculaBackBean.matricula.cantidadPagada}"
+                                                           required="true"
+                                                           requiredMessage="El precio del curso es obligatorio"/>
+                                            <span class="ui-inputgroup-addon">$</span>
+                                            <span class="ui-inputgroup-addon">.00</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="p-col-12 p-md-6">
+                                        <div class="ui-inputgroup">
+                                            <span class="ui-inputgroup-addon"><i class="fa fa-credit-card"></i></span>
+                                            <span class="ui-inputgroup-addon"><i class="fa fa-cc-visa"></i></span>
+                                            <p:inputNumber id="txtDescuento"
+                                                           value="#{matriculaBackBean.matricula.descuento}"
+                                                           placeholder="Descuento"
+                                                           style="text-align: right;"
+                                                           decimalSeparator="."
+                                                           thousandSeparator=","
+                                                           minValue="0"
+                                                           maxValue="#{matriculaBackBean.matricula.curso.precio}"
+                                                           required="true"
+                                                           maxlength="6"/>
+                                            <span class="ui-inputgroup-addon">$</span>
+                                            <span class="ui-inputgroup-addon">.00</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="p-col-12">
+                            <div class="card card-w-title">
+                                <h1>Observaciones</h1>
+                                <p:inputTextarea rows="3" placeholder="Observaciones" autoResize="false"/>
+                            </div>
+                        </div>
+
                     </div>
+                </div>
+
+                <div class="p-col-12 p-lg-6">
+                    <p:commandButton value="Guardar"
+                                     process="@this :form-matricula buttonbar"
+                                     icon="fa fa-save"
+                                     actionListener="#{matriculaBackBean.saveMatricula}"
+                                     update=":form-matricula txtSucursal cboSucursal :global-message"
+                                     style="margin: 0.1em"/>
 
                 </div>
-            </div>
-
-            <div class="p-col-12 p-lg-6">
-                <p:commandButton value="Guardar"
-                                 process="@this"
-                                 icon="fa fa-save"
-                                 actionListener="#{matriculaBackBean.save}"
-                                 update=" :global-message"
-                                 style="margin: 0.1em"/>
 
             </div>
 
-
-        </div>
+        </h:form>
 
     </ui:define>
 

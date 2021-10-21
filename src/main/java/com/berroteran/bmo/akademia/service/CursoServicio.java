@@ -4,6 +4,7 @@ import com.berroteran.bmo.akademia.data.repository.CursoRepository;
 import com.berroteran.bmo.akademia.data.repository.OficinaRepository;
 import com.berroteran.bmo.akademia.model.Curso;
 import com.berroteran.bmo.akademia.model.Materia;
+import com.berroteran.bmo.akademia.model.Oficina;
 import com.berroteran.bmo.akademia.utils.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,10 +40,9 @@ public class CursoServicio {
 
     @Transactional
     public void guardarCurso(Curso curso) throws BusinessException {
-        if ( curso == null) {
+        if ( curso.getSucursal() == null) {
             LOGGER.log(Level.SEVERE, "La Oficina esta nulo. ¿Está seguro que está bien escrito?");
             throw new BusinessException("La Oficina esta nulo. ¿Está seguro que está bien escrito?");
-
         }
         cursoRepository.save(curso);
     }
@@ -52,5 +52,9 @@ public class CursoServicio {
 
     public Iterable<Curso> findAllActivos() {
         return cursoRepository.findAllActivos();
+    }
+
+    public List<Curso> findCursosActivosBySucursal(Oficina sucursal) {
+        return cursoRepository.getActivosBySucursal(sucursal);
     }
 }

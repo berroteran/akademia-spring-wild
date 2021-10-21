@@ -13,23 +13,28 @@ public class Matricula extends AbstractEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqMatricula" )
     private Integer id;
+
+    @Column(nullable = false)
     private Integer norecibo;
+    @Column(nullable = false)
     private LocalDate fechaMatricula;
+    @Column(nullable = false)
     private BigDecimal cantidadPagada;
+
     private BigDecimal descuento;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn( )
+    @JoinColumn( nullable = false)
     private Cliente alumno;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
+    @JoinColumn(nullable = false)
     private Oficina sucursal;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
-    private Materia curso;
+    @JoinColumn(nullable = false)
+    private Curso curso;
 
     private String comoSupo;
 
@@ -97,11 +102,11 @@ public class Matricula extends AbstractEntity {
         this.alumno = alumno;
     }
 
-    public Materia getCurso() {
+    public Curso getCurso() {
         return curso;
     }
 
-    public void setCurso(Materia curso) {
+    public void setCurso(Curso curso) {
         this.curso = curso;
     }
 

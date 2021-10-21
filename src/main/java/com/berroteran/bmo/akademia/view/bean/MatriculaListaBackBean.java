@@ -1,9 +1,7 @@
 package com.berroteran.bmo.akademia.view.bean;
 
-import com.berroteran.bmo.akademia.model.Cliente;
-import com.berroteran.bmo.akademia.model.Materia;
-import com.berroteran.bmo.akademia.model.Matricula;
-import com.berroteran.bmo.akademia.model.Oficina;
+import com.berroteran.bmo.akademia.model.*;
+import com.berroteran.bmo.akademia.service.CursoServicio;
 import com.berroteran.bmo.akademia.service.MatriculaServicio;
 import com.berroteran.bmo.akademia.service.OficinaServicio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +25,9 @@ public class MatriculaListaBackBean extends BaseBackBean implements Serializable
 
     @Autowired
     private MatriculaServicio matriculaServicio;
+    @Autowired
+    private CursoServicio cursoServicio;
+
 
     private Oficina oficina;
     private List<Oficina> oficinas;
@@ -34,8 +35,9 @@ public class MatriculaListaBackBean extends BaseBackBean implements Serializable
     private Iterable<Matricula> matriculas;
     private List<Cliente> alumnosLista;
     private Cliente alumno;
-    private List<Materia> cursos;
-    private Materia curso;
+
+    private List<Curso> cursos;
+    private Curso curso;
 
     @PostConstruct
     public void init() {
@@ -80,22 +82,9 @@ public class MatriculaListaBackBean extends BaseBackBean implements Serializable
     public void  cerrarModalOficina() {
     }
 
-    public ActionListener save() {
-        try {
-
-            matriculaServicio.save( getMatricula() );
-
-            showInfoMessage("OFICINA GUARDADO SATISFACTORIAMENTE", "");
-        }catch(Exception e){
-            showErrorMessage("Matriculando", e.getMessage());
-        }
-        return null;
-    }
-
     public void setOficinas(List<Oficina> oficinas) {
         this.oficinas = oficinas;
     }
-
 
 
     //= ======
@@ -123,19 +112,19 @@ public class MatriculaListaBackBean extends BaseBackBean implements Serializable
         this.alumno = alumno;
     }
 
-    public List<Materia> getCursos() {
+    public List<Curso> getCursos() {
         return cursos;
     }
 
-    public void setCursos(List<Materia> cursos) {
+    public void setCursos(List<Curso> cursos) {
         this.cursos = cursos;
     }
 
-    public Materia getCurso() {
+    public Curso getCurso() {
         return curso;
     }
 
-    public void setCurso(Materia curso) {
+    public void setCurso(Curso curso) {
         this.curso = curso;
     }
 

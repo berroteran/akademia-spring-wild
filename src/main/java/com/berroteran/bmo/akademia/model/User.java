@@ -32,7 +32,7 @@ public class User extends AbstractEntity {
     private boolean admin;
 
     @ManyToOne
-    @JoinColumn(name = "oficina_id")
+    @JoinColumn(name = "oficina_id", nullable = false)
     private Oficina oficina;
 
 
