@@ -79,17 +79,18 @@ public class Matricula extends AbstractEntity {
     }
 
     public BigDecimal getCantidadPagada() {
-        return cantidadPagada;
+        return cantidadPagada == null ? BigDecimal.ZERO:  cantidadPagada ;
     }
-
     public void setCantidadPagada(BigDecimal cantidadPagada) {
         this.cantidadPagada = cantidadPagada;
     }
 
-    public BigDecimal getDescuento() {
-        return descuento;
+    public Double getDescuentoD() {
+        return descuento == null ? 0d : descuento.doubleValue();
     }
-
+    public BigDecimal getDescuento() {
+        return descuento == null ? BigDecimal.ZERO : descuento;
+    }
     public void setDescuento(BigDecimal descuento) {
         this.descuento = descuento;
     }

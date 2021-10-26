@@ -211,7 +211,7 @@
 
                                                 <p:ajax event="change"
                                                         process="@this"
-                                                        update="lblFechaInicio lblPrecio"/>
+                                                        update="lblFechaInicio lblPrecio txtDescuento lblTotal txtMontopagado"/>
 
                                                 <f:selectItem itemLabel="Selecciones curso" itemValue="#{null}"/>
                                                 <f:selectItems value="#{matriculaBackBean.cursos}"
@@ -254,14 +254,20 @@
                                                     <div class="ui-inputgroup">
                                                         <span class="ui-inputgroup-addon"><i class="fa fa-money"></i></span>
                                                         <p:inputNumber id="txtDescuento"
+                                                                       widgetVar="txtDescuento"
                                                                        value="#{matriculaBackBean.matricula.descuento}"
                                                                        placeholder="Descuento"
                                                                        style="text-align: right;"
                                                                        decimalSeparator="."
                                                                        thousandSeparator=","
                                                                        minValue="0"
-                                                                       maxValue="#{matriculaBackBean.matricula.curso.precio}"
-                                                                       maxlength="6"/>
+                                                                       maxValue="#{matriculaBackBean.matricula.curso.precioBD eq null ? 0 :matriculaBackBean.matricula.curso.precioBD }"
+                                                                       maxlength="6">
+                                                            <p:ajax event="change"
+                                                                    process="@this"
+                                                                    listener="#{matriculaBackBean.actualizaDescuento}"
+                                                                    update="lblTotal txtMontopagado" />
+                                                        </p:inputNumber>
                                                         <span class="ui-inputgroup-addon">$</span>
                                                         <span class="ui-inputgroup-addon">.00</span>
                                                     </div>
@@ -274,7 +280,7 @@
                                         <h:outputText value="Total a pagar USD" styleClass="p-col-12 p-md-2"/>
                                         <div class="p-col-12 p-md-10">
                                             <h:outputText id="lblTotal"
-                                                          value="#{matriculaBackBean.matricula.curso.precio}">
+                                                          value="#{matriculaBackBean.matricula.curso.precio - matriculaBackBean.matricula.descuento}">
                                                 <f:convertNumber type="number" maxFractionDigits="2"
                                                                  pattern="#,#00.00"/>
                                             </h:outputText>
@@ -291,16 +297,18 @@
                                             <span class="ui-inputgroup-addon"><i class="fa fa-cc-visa"></i></span>
                                             <p:inputNumber id="txtMontopagado"
                                                            widgetVar="txtMontopagado"
-                                                           placeholder="Monto pagado"
+                                                           placeholder="#{matriculaBackBean.matricula.curso.precio - matriculaBackBean.matricula.getDescuentoD()}"
                                                            decimalSeparator="."
                                                            thousandSeparator=","
                                                            maxlength="6"
                                                            minValue="0"
-                                                           maxValue="#{matriculaBackBean.matricula.curso.precio}"
+                                                           maxValue="#{matriculaBackBean.matricula.curso.precio - matriculaBackBean.matricula.getDescuentoD() }"
                                                            style="text-align: right;"
                                                            value="#{matriculaBackBean.matricula.cantidadPagada}"
                                                            required="true"
-                                                           requiredMessage="El monto pagado del curso es obligatorio"/>
+                                                           requiredMessage="El monto pagado del curso es obligatorio">
+                                                <p:ajax event="change" process="@this" />
+                                            </p:inputNumber>
                                             <span class="ui-inputgroup-addon">$</span>
                                             <span class="ui-inputgroup-addon">.00</span>
                                         </div>
@@ -322,14 +330,14 @@
                     </div>
                 </div>
 
-                <div class="p-col-12 p-lg-6">
-                    <p:commandButton value="Ver Recibo" disabled="true" />
+                <div class="p-col-12 p-lg-12">
                     <p:commandButton value="Guardar"
                                      process="@this :form-matricula txtNombres  buttonbar txtMontopagado"
                                      icon="fa fa-save"
                                      actionListener="#{matriculaBackBean.saveMatricula}"
                                      update=":form-matricula txtSucursal cboSucursal :global-message"
                                      style="margin: 0.1em"/>
+                    <p:commandButton value="Ver Recibo" disabled="true" styleClass="info-btn"/>
 
                 </div>
 

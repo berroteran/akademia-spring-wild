@@ -31,6 +31,7 @@
                          value="#{usuariosBackBean.usuarios}"
                          selection="#{usuariosBackBean.usuario}"
                          var="usuario"
+
                          rowKey="#{usuario.id}"
                          paginator="true"
                          rows="10"
@@ -50,18 +51,26 @@
 
                 </f:facet>
 
-                <p:column headerText="id" sortable="true" sortBy="#{usuario.id}" filterBy="#{usuario.id}" width="55">
+                <p:column headerText="id"
+                          sortable="true"
+                          style="text-align: right;"
+                          sortBy="#{usuario.id}"
+                          filterBy="#{usuario.id}" width="55">
                     <h:outputText value="#{usuario.id}"/>
                 </p:column>
-                <p:column headerText="Login (usuario)" sortable="true" sortBy="#{usuario.login}"
+                <p:column headerText="Login (usuario)"
+                          sortable="true"
+                          sortBy="#{usuario.login}"
                           filterBy="#{usuario.login}">
                     <h:outputText value="#{usuario.login}"/>
                 </p:column>
-                <p:column headerText="Nombres del usuario" sortBy="#{usuario.firstName}"
+                <p:column headerText="Nombres del usuario"
+                          sortBy="#{usuario.firstName}"
                           filterBy="#{usuario.firstName}">
                     <h:outputText value="#{usuario.firstName.concat(' ').concat(usuario.lastName)}"/>
                 </p:column>
-                <p:column headerText="Correo" sortBy="#{usuario.email}">
+                <p:column headerText="Correo"
+                          sortBy="#{usuario.email}">
                     <h:outputText value="#{usuario.email}"/>
                 </p:column>
                 <p:column headerText="Activo">
@@ -84,7 +93,6 @@
             <h:form id="formModalUsuario" style="height: 100%; width: 100%">
 
                 <p:panel id="panel-nuevo-producto">
-
 
                     <f:facet name="header">
                         <div class="ui-g">
@@ -135,18 +143,18 @@
 
                     <p:panelGrid>
                         <p:outputLabel for="cboSucursal" styleClass="p-col-12 p-md-2" value="Sucursal"/>
-                            <p:selectOneMenu id="cboSucursal"
-                                             widgetVar="cboSucursal"
-                                             filter="true"
-                                             value="#{usuariosBackBean.usuario.oficina}"
-                                             filterMatchMode="contains"
-                                             style="width: 100%;">
-                                <f:selectItem itemLabel="ADMIN (Todas las Sucursales" itemValue="#{null}"/>
-                                <f:selectItems value="#{usuariosBackBean.oficinas}"
-                                               var="oficinaItem"
-                                               itemLabel="#{oficinaItem.nombre}"
-                                               itemValue="#{oficinaItem}"/>
-                            </p:selectOneMenu>
+                        <p:selectOneMenu id="cboSucursal"
+                                         widgetVar="cboSucursal"
+                                         filter="true"
+                                         value="#{usuariosBackBean.usuario.oficina}"
+                                         filterMatchMode="contains"
+                                         style="width: 100%;">
+                            <f:selectItem itemLabel="ADMIN (Todas las Sucursales" itemValue="#{null}"/>
+                            <f:selectItems value="#{usuariosBackBean.oficinas}"
+                                           var="oficinaItem"
+                                           itemLabel="#{oficinaItem.nombre}"
+                                           itemValue="#{oficinaItem}"/>
+                        </p:selectOneMenu>
                     </p:panelGrid>
 
                     <p:panel>
@@ -185,12 +193,14 @@
                                              rowKey="#{rol.id}"
                                              paginator="true" rows="10" paginatorPosition="bottom">
 
-                                    <p:ajax event="rowDblselect" update=":modalUsuario"
+                                    <p:ajax event="rowDblselect"
+                                            update=":modalUsuario"
                                             oncomplete="PF('modalUsuario').show()"/>
                                     <p:ajax event="rowSelect" update="@this"/>
                                     <f:facet name="header">
 
-                                        <p:commandButton value="Agregar Rol" id="btnAgregarNuevoRol"
+                                        <p:commandButton value="Agregar Rol"
+                                                         id="btnAgregarNuevoRol"
                                                          icon="fa fa-plus-circle"
                                                          oncomplete="PF('modalUsuario').show()"
                                                          update=":modalUsuario"

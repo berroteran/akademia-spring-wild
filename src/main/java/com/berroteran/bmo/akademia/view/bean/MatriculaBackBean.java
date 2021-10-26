@@ -96,6 +96,7 @@ public class MatriculaBackBean extends BaseBackBean implements Serializable {
 
             showInfoMessage("MATRICULA GUARDADA SATISFACTORIAMENTE", "");
         }catch(Exception e){
+            e.printStackTrace();
             showErrorMessage("Matriculando", e.getMessage());
         }
     }
@@ -141,6 +142,11 @@ public class MatriculaBackBean extends BaseBackBean implements Serializable {
         alumno.setDni("");
         alumno.setTelefono("");
         return alumno;
+    }
+
+
+    public void actualizaDescuento(){
+
     }
 
     //= ======
