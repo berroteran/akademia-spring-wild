@@ -14,7 +14,6 @@
 
 .ui-datatable-data {
     font-size: 0.9em;
-
 }
 
 .ui-panel .ui-panel-titlebar {
@@ -56,7 +55,6 @@
 .layout-content {
     padding: 20px 1% !important;
 }
-
 .layout-topbar {
     background-color: #6F5899 !important;
     background-image: none !important;
@@ -70,9 +68,6 @@
     padding: 0.2em 0.5em !important;
 }
 
-.ui-button {
-    font-size: 1.2em !important;
-}
 
 .p-datepicker input {
     width: 98% !important;
@@ -81,79 +76,60 @@
 .p-col-5p {
     width: 5%;
 }
-
 .p-col-10p {
     width: 10%;
 }
-
 .p-col-15p {
     width: 15%;
 }
-
 .p-col-20p {
 !important width: 20 %;
 }
-
 .p-col-25p {
     width: 25%;
 }
-
 .p-col-30p {
     width: 30%;
 }
-
 .p-col-35p {
     width: 35%;
 }
-
 .p-col-40p {
     width: 40%;
 }
-
 .p-col-45p {
     width: 45%;
 }
-
 .p-col-50p {
     width: 50%;
 }
-
 .p-col-55p {
     width: 55%;
 }
-
 .p-col-60p {
     width: 60%;
 }
-
 .p-col-65p {
     width: 65%;
 }
-
 .p-col-70p {
     width: 70%;
 }
-
 .p-col-75p {
     width: 75%;
 }
-
 .p-col-80p {
     width: 80%;
 }
-
 .p-col-85p {
     width: 85%;
 }
-
 .p-col-90p {
     width: 90%;
 }
-
 .p-col-95p {
     width: 95%;
 }
-
 .p-col-100p {
     width: 100%;
 }
@@ -218,10 +194,9 @@ body .ui-selectonemenu-panel .ui-selectonemenu-filter-container .ui-selectonemen
 }
 
 
-
 @media (max-width: 500px) {
 
-    body .ui-dialog{
+    body .ui-dialog {
         width: 98%;
     }
 

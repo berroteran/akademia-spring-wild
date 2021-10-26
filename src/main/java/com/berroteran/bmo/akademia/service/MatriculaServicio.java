@@ -27,7 +27,7 @@ public class MatriculaServicio {
 
 
     public Iterable<Matricula> findAll() {
-        return matriculaRepository.findAll();
+        return matriculaRepository.getAllDataActivas();
     }
 
 
@@ -67,6 +67,7 @@ public class MatriculaServicio {
         if ( matricula.getCantidadPagada() == null )
             throw new BusinessException("EL monto pagado es requerido para poder matricular.");
 
+        matricula.setActivo(true);
         return matriculaRepository.save( matricula );
     }
 
