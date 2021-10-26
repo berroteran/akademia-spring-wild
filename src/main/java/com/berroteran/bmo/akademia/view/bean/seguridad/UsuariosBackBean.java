@@ -40,10 +40,12 @@ public class UsuariosBackBean extends BaseBackBean implements Serializable {
     public void init() {
         this.setUsuarios(usuarioService.findAll());
         oficinas = (List<Oficina>) oficinaService.findAll();
+        usuario = new User();
     }
 
     public void crear() {
         usuario = new User();
+        usuario.setActivo(true);
     }
 
     public void onUsuarioSelected() {

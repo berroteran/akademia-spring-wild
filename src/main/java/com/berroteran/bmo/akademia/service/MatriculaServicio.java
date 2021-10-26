@@ -1,7 +1,10 @@
 package com.berroteran.bmo.akademia.service;
 
+import com.berroteran.bmo.akademia.data.repository.AlumnoRepository;
+import com.berroteran.bmo.akademia.data.repository.CursoRepository;
 import com.berroteran.bmo.akademia.data.repository.MatriculaRepository;
 import com.berroteran.bmo.akademia.data.repository.OficinaRepository;
+import com.berroteran.bmo.akademia.model.Curso;
 import com.berroteran.bmo.akademia.model.Matricula;
 import com.berroteran.bmo.akademia.model.Oficina;
 import com.berroteran.bmo.akademia.utils.BusinessException;
@@ -24,6 +27,12 @@ public class MatriculaServicio {
 
     @Autowired
     private MatriculaRepository matriculaRepository;
+
+    @Autowired
+    private CursoRepository cursoRepository;
+
+    @Autowired
+    private AlumnoRepository alumnoRepository;
 
 
     public Iterable<Matricula> findAll() {
@@ -67,7 +76,31 @@ public class MatriculaServicio {
         if ( matricula.getCantidadPagada() == null )
             throw new BusinessException("EL monto pagado es requerido para poder matricular.");
 
+        if ( matricula.getCantidadPagada().doubleValue() < 0d )
+            throw new BusinessException("EL monto pagado no puede ser menor a 0.");
+
+        if ( matricula.getCantidadPagada().doubleValue() > ( matricula.getCurso().getPrecio() -  matricula.getDescuento().doubleValue() ) )
+            throw new BusinessException("EL monto pagado no puede ser mayor al monto con descuento..");
+
+        if ( matricula.getCurso().getDisponibles() == 0 )
+            throw new BusinessException("No se puede guardar esta matricula, ya no tiene cupos.");
+
+        if ( matricula.getAlumno().getId() != null){
+            matricula.setAlumno( alumnoRepository.findById( matricula.getAlumno().getId() ).get() );
+            if ( matricula.getAlumno() == null ){
+                throw new BusinessException("El alumno que desea matricular, no existe.");
+            }
+        }
+
+        Curso c =  cursoRepository.findById( matricula.getCurso().getId() ).get();
+        if ( c == null )
+            throw new BusinessException("El curso que intenta actualizar no existe.");
+
+        c.setDisponibles( c.getDisponibles()-1);
+        cursoRepository.save( c );
+
         matricula.setActivo(true);
+
         return matriculaRepository.save( matricula );
     }
 

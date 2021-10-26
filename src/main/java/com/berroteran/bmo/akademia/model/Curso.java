@@ -1,6 +1,7 @@
 package com.berroteran.bmo.akademia.model;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -129,4 +130,9 @@ public class Curso extends AbstractEntity {
     public void setPrecio(Double precio) {
         this.precio = precio;
     }
+
+    public BigDecimal getPrecioBD(){
+        return BigDecimal.valueOf(getPrecio());
+    }
+
 }
