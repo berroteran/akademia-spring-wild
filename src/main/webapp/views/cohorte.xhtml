@@ -17,7 +17,7 @@
 
             <p:toolbar>
                 <f:facet name="left">
-                    <p:commandButton value="Crear nueva Disponibilidad de Curso."
+                    <p:commandButton value="Agregar Curso"
                                      id="btnAgregarNuevo"
                                      icon="fa fa-plus-circle"
                                      oncomplete="PF('modalCurso').show()"
@@ -69,16 +69,34 @@
                 <p:column headerText="Nombre"
                           width="300"
                           filterable="true"
-                          sortBy="#{curso.nombre}"
-                          filterBy="#{curso.nombre}" filterMatchMode="contains">
-                    <h:outputText value="#{curso.nombre}"/>
+                          sortBy="#{curso.materia.nombre}"
+                          filterBy="#{curso.materia.nombre}"
+                          filterMatchMode="contains">
+                    <h:outputText value="#{curso.materia.nombre}"/>
                 </p:column>
 
-                <p:column headerText="Nivel"
+                <p:column headerText="sucursal"
                           filterable="true"
-                          sortBy="#{curso.nivel}"
-                          filterBy="#{curso.nivel}" filterMatchMode="contains">
-                    <h:outputText value="#{curso.nivel}"/>
+                          sortBy="#{curso.sucursal.nombre}"
+                          filterBy="#{curso.sucursal.nombre}"
+                          filterMatchMode="contains">
+                    <h:outputText value="#{curso.sucursal.nombre}"/>
+                </p:column>
+
+                <p:column headerText="Fecha de Inicio">
+                    <h:outputText  pattern="dd/MMM/yyyy" value="#{curso.fechaInicio}" />
+                </p:column>
+
+                <p:column headerText="Fecha Fin" >
+                    <h:outputText  pattern="dd/MMM/yyyy" value="#{curso.fechaFin}" />
+                </p:column>
+
+                <p:column headerText="Cupos" >
+                    <h:outputText  pattern="dd/MMM/yyyy" value="#{curso.cupos}" />
+                </p:column>
+
+                <p:column headerText="Disponibles" >
+                    <h:outputText  pattern="dd/MMM/yyyy" value="#{curso.disponibles}" />
                 </p:column>
 
 
@@ -117,6 +135,7 @@
                   closeOnEscape="true"
                   responsive="true"
                   widgetVar="modalCurso"
+
                   modal="true">
 
             <h:form id="formModalCurso"  >
@@ -134,36 +153,77 @@
                                  columnClasses="p-col-2, p-col-8"
                                  styleClass="ui-panelgrid-blank ui-fluid">
 
-                        <p:outputLabel for="txtnombre" value="Nombre:"/>
-                        <p:inputText id="txtnombre" maxlength="200" value="#{cursoBackBean.curso.nombre}"
-                                     style="width: 100%"/>
+                        <p:outputLabel value="Sucural:"/>
+                        <p:selectOneMenu id="cboSucursal"
+                                         widgetVar="cboSucursal"
+                                         filter="true"
+                                         required="true"
+                                         converter="selectOneMenuConverter"
+                                         value="#{cursoBackBean.curso.sucursal}"
+                                         filterMatchMode="contains"
+                                         style="width: 100%;">
+
+                            <f:selectItem itemLabel="Seleccione sucursal" itemValue="#{null}" noSelectionOption="true"/>
+                            <f:selectItems value="#{cursoBackBean.oficinas}"
+                                           var="oficinaItem"
+                                           itemLabel="#{oficinaItem.nombre}"
+                                           itemValue="#{oficinaItem}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Materia:"/>
+                        <p:selectOneMenu id="cboMateria"
+                                         widgetVar="cboMateria"
+                                         filter="true"
+                                         required="true"
+                                         converter="selectOneMenuConverter"
+                                         value="#{cursoBackBean.curso.materia}"
+                                         filterMatchMode="contains"
+                                         style="width: 100%;">
+                            <f:selectItem itemLabel="Seleccione materia" itemValue="#{null}" noSelectionOption="true"/>
+                            <f:selectItems value="#{cursoBackBean.materias}"
+                                           var="materiaItem"
+                                           itemLabel="#{materiaItem.nombre}"
+                                           itemValue="#{materiaItem}"/>
+                        </p:selectOneMenu>
 
 
-                        <p:outputLabel for="txtDescripcion" value="Descripcion:"/>
-                        <p:inputTextarea id="txtDescripcion"
+                        <p:outputLabel value="Horario:"/>
+                        <p:selectOneMenu id="cboHorario"
+                                         widgetVar="cboHorario"
+                                         filter="true"
+                                         required="true"
+                                         converter="selectOneMenuConverter"
+                                         rendered="#{cursoBackBean.getOficinaFromUser() eq null}"
+                                         value="#{cursoBackBean.curso.horario}"
+                                         filterMatchMode="contains"
+                                         style="width: 100%;">
+                            <f:selectItem itemLabel="Seleccione horario" itemValue="#{null}" noSelectionOption="true"/>
+                            <f:selectItems value="#{cursoBackBean.horarios}"
+                                           var="horarioItem"
+                                           itemLabel="#{horarioItem.nombre}"
+                                           itemValue="#{horarioItem}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Fecha Inicio:"/>
+                        <p:datePicker id="dpFechaInicio" widgetVar="dpFechaInicio" pattern="dd/MMM/yyyy" value="#{cursoBackBean.curso.fechaInicio}" />
+
+                        <p:outputLabel value="Fecha Fin:"/>
+                        <p:datePicker id="dpFechaFin" widgetVar="dpFechaFin" pattern="dd/MMM/yyyy" value="#{cursoBackBean.curso.fechaFin}" />
+
+                        <p:outputLabel value="Cupos:"/>
+                        <p:inputNumber id="txtCursos" widgetVar="txtCursos" style="text-align: right;" value="#{cursoBackBean.curso.cupos}" />
+
+                        <p:outputLabel value="Cupos Disponibles:"/>
+                        <p:inputNumber id="txtDisponibles" widgetVar="txtDisponibles" style="text-align: right;" value="#{cursoBackBean.curso.disponibles}" />
+
+                        <p:outputLabel for="txtComentarios" value="Comentarios"/>
+                        <p:inputTextarea id="txtComentarios"
                                          cols="2"
                                          rows="6"
                                          styleClass="p-col-4"
-                                         value="#{cursoBackBean.curso.descripcion}"
+                                         value="#{cursoBackBean.curso.comentarios}"
                                          style="width: 100%"/>
 
-                        <p:outputLabel for="cboNivel" value="Nivel:"/>
-                        <p:selectOneMenu id="cboNivel"
-                                         widgetVar="cboNivel"
-                                         value="#{cursoBackBean.curso.nivel}"
-                                         filter="true"
-                                         filterMatchMode="contains"
-                                         style="width:100%;"
-                                         effect="fade"
-                                         converter="selectOneMenuConverter"
-                                         requiredMessage="Debe seleccionar un nivel del curso."
-                                         tabindex="7">
-                            <f:selectItem itemLabel="Seleccione" itemValue="#{null}"/>
-                            <f:selectItems value="#{cursoBackBean.cursoNiveles}"
-                                           var="cursoItem"
-                                           itemLabel="#{cursoItem.descripcion}"
-                                           itemValue="#{cursoItem}"/>
-                        </p:selectOneMenu>
 
                     </p:panelGrid>
 
