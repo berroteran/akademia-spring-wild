@@ -15,12 +15,6 @@
         <h:form id="form-envases-list" >
             <p:toolbar>
                 <f:facet name="left">
-                    <p:commandButton value="Crear Curso" id="btnAgregarNuevo"
-                                     icon="fa fa-plus-circle"
-                                     oncomplete="PF('modalCurso').show()"
-                                     update=":formModalCurso"
-                                     process="@this"
-                                     actionListener="#{matriculaListaBackBean.crear}"/>
 
                     <p:commandButton value="Refrescar"
                                      process="@this"
@@ -67,34 +61,36 @@
                 <p:column headerText="Curso"
                           width="300"
                           filterable="true"
-                          sortBy="#{curso.nombre}"
-                          filterBy="#{curso.nombre}" filterMatchMode="contains">
-                    <h:outputText value="#{curso.nombre}"/>
+                          sortBy="#{matricula.curso.nombre}"
+                          filterBy="#{matricula.curso.nombre}" filterMatchMode="contains">
+                    <h:outputText value="#{matricula.curso.nombre}"/>
                 </p:column>
 
-                <p:column headerText="Alumno" filterable="true" sortBy="#{curso.zona}"
-                          filterBy="#{curso.zona}" filterMatchMode="contains">
-                    <h:outputText value="#{curso.zona}"/>
+                <p:column headerText="Alumno" filterable="true" sortBy="#{matricula.alumno.nombres}" filterBy="#{matricula.alumno.nombres}" filterMatchMode="contains">
+                    <h:outputText value="#{matricula.alumno.nombres}"/>
                 </p:column>
 
-                <p:column headerText="Monto pagado" filterable="true" sortBy="#{curso.sede}"
-                          filterBy="#{curso.sede}" filterMatchMode="contains">
-                    <h:outputText value="#{curso.sede}"/>
+                <p:column headerText="Monto pagado" filterable="true" sortBy="#{matricula.cantidadPagada}"
+                          filterBy="#{matricula.cantidadPagada}"
+                          style="text-align: right"
+                          filterMatchMode="contains">
+                    <h:outputText value="#{matricula.cantidadPagada}" style="text-align: right"/>
                 </p:column>
 
-                <p:column headerText="Pagado" filterable="true" style="text-align: center"
-                          filterBy="#{curso.activo}" filterMatchMode="equals">
+                <p:column headerText="Pagado" filterable="true" style="text-align: center" filterBy="#{curso.activo}" filterMatchMode="equals">
                     <f:facet name="filter">
-
                     </f:facet>
                     <h:outputText value="#{curso.activo ? 'Si' : 'No.'}"/>
                 </p:column>
 
-                <p:column headerText="Fecha de Registro" filterable="true" sortBy="#{curso.sede}"
-                          filterBy="#{curso.sede}" filterMatchMode="contains">
-                    <h:outputText value="#{curso.sede}"/>
+                <p:column headerText="Fecha de Matricula"
+                          filterable="true"
+                          style="text-align: right"
+                          sortBy="#{matricula.fechaMatricula}"
+                          filterBy="#{matricula.fechaMatricula}"
+                          filterMatchMode="contains">
+                    <h:outputText value="#{matricula.fechaMatricula}" style="text-align: right"/>
                 </p:column>
-
 
             </p:dataTable>
         </h:form>
