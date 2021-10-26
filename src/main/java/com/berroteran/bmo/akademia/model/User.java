@@ -4,6 +4,7 @@ import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -15,14 +16,15 @@ public class User extends AbstractEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqUser")
     private Integer id;
 
-    @Column(name = "LOGIN", length = 255, nullable = false, unique = true)
+    @Column(name = "LOGIN", length = 30, nullable = false, unique = true)
     private String login;
-    @Column(name = "PASSWORD", length = 255, nullable = false)
+    @Column(name = "PASSWORD", length = 30, nullable = false)
     private String password;
-    @Column(name = "FIRST_NAME", length = 255, nullable = false)
+    @Column(name = "FIRST_NAME", length = 30, nullable = false)
     private String firstName;
-    @Column(name = "LAST_NAME", length = 255, nullable = false)
+    @Column(name = "LAST_NAME", length = 30, nullable = false)
     private String lastName;
+
     private String email;
 
     @ColumnDefault("false")
@@ -149,6 +151,13 @@ public class User extends AbstractEntity {
     public void setRoles(Set<Roles> roles) {
         this.roles = roles;
     }
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id+login);
+    }
+
 
     @Override
     public String toString() {

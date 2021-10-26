@@ -40,7 +40,7 @@
             <p:dataTable id="alumnos-list"
                          widgetVar="alumnos-list"
                          emptyMessage="No se encontraron registros"
-                         value="#{oficinaBackBean.oficinas}"
+                         value="#{alumnosBackBean.alumnos}"
                          selection="#{oficinaBackBean.oficina}"
                          selectionMode="single"
                          reflow="true"
@@ -58,35 +58,35 @@
                         listener="#{oficinaBackBean.onOficinaSelected}"
                         oncomplete="PF('modalAlumno').show()"/>
 
-                <p:column headerText="ID" style="text-align: right" width="50px;" sortBy="#{curso.id}">
-                    <h:outputText value="#{curso.id}"/>
+                <p:column headerText="ID" style="text-align: right" width="50px;" sortBy="#{alumnos.id}">
+                    <h:outputText value="#{alumnos.id}"/>
                 </p:column>
 
 
                 <p:column headerText="Nombre"
                           width="300"
                           filterable="true"
-                          sortBy="#{curso.nombre}"
-                          filterBy="#{curso.nombre}" filterMatchMode="contains">
-                    <h:outputText value="#{curso.nombre}"/>
+                          sortBy="#{alumnos.nombres}"
+                          filterBy="#{alumnos.nombres}" filterMatchMode="contains">
+                    <h:outputText value="#{alumnos.nombres}"/>
                 </p:column>
 
-                <p:column headerText="ZONA" filterable="true" sortBy="#{curso.zona}"
-                          filterBy="#{curso.zona}" filterMatchMode="contains">
-                    <h:outputText value="#{curso.zona}"/>
+                <p:column headerText="Apellidos"
+                          width="300"
+                          filterable="true"
+                          sortBy="#{alumnos.apellidos}"
+                          filterBy="#{alumnos.apellidos}" filterMatchMode="contains">
+                    <h:outputText value="#{alumnos.apellidos}"/>
                 </p:column>
 
-                <p:column headerText="Responsable" filterable="true" sortBy="#{curso.sede}"
-                          filterBy="#{curso.sede}" filterMatchMode="contains">
-                    <h:outputText value="#{curso.sede}"/>
-                </p:column>
 
-                <p:column headerText="Activa" filterable="true" style="text-align: center"
-                          filterBy="#{curso.activo}" filterMatchMode="equals">
+                <p:column headerText="Activo"
+                          filterable="true" style="text-align: center"
+                          filterBy="#{curso.activo}"
+                          filterMatchMode="equals">
                     <f:facet name="filter">
                         <p:selectOneButton widgetVar="sobOficinaEstado"
                                            id="sobOficinaEstado"
-                                           onchange="console.log('entro al select'); PF('alumnos-list').filter()"
                                            styleClass="custom-filter" style="font-size: 10px;">
                             <f:converter converterId="javax.faces.Boolean"/>
                             <f:selectItem itemLabel="*" itemValue=""/>
@@ -96,6 +96,11 @@
                     </f:facet>
                     <h:outputText value="#{curso.activo ? 'Si' : 'No.'}"/>
                 </p:column>
+
+                <p:column headerText="-">
+                    <p:commandButton value="Estadisticas" actionListener="#{horariosBackBean.estadisticas()}"/>
+                </p:column>
+
 
             </p:dataTable>
         </h:form>

@@ -247,26 +247,44 @@
                                     </div>
                                 </div>
 
-                                <div class="p-col-12 p-md-6">
-                                    <div class="ui-inputgroup">
-                                        <span class="ui-inputgroup-addon"><i class="fa fa-credit-card"></i></span>
-                                        <span class="ui-inputgroup-addon"><i class="fa fa-cc-visa"></i></span>
-                                        <p:inputNumber id="txtDescuento"
-                                                       value="#{matriculaBackBean.matricula.descuento}"
-                                                       placeholder="Descuento"
-                                                       style="text-align: right;"
-                                                       decimalSeparator="."
-                                                       thousandSeparator=","
-                                                       minValue="0"
-                                                       maxValue="#{matriculaBackBean.matricula.curso.precio}"
-                                                       maxlength="6"/>
-                                        <span class="ui-inputgroup-addon">$</span>
-                                        <span class="ui-inputgroup-addon">.00</span>
+                                <div class="ui-fluid">
+                                    <div class="p-field p-grid">
+                                        <h:outputText value="Descuento" styleClass="p-col-12 p-md-2"/>
+                                                <div class="p-col-12 p-md-6">
+                                                    <div class="ui-inputgroup">
+                                                        <span class="ui-inputgroup-addon"><i class="fa fa-money"></i></span>
+                                                        <p:inputNumber id="txtDescuento"
+                                                                       value="#{matriculaBackBean.matricula.descuento}"
+                                                                       placeholder="Descuento"
+                                                                       style="text-align: right;"
+                                                                       decimalSeparator="."
+                                                                       thousandSeparator=","
+                                                                       minValue="0"
+                                                                       maxValue="#{matriculaBackBean.matricula.curso.precio}"
+                                                                       maxlength="6"/>
+                                                        <span class="ui-inputgroup-addon">$</span>
+                                                        <span class="ui-inputgroup-addon">.00</span>
+                                                    </div>
+                                                </div>
+                                </div>
+                                </div>
+
+                                <div class="ui-fluid">
+                                    <div class="p-field p-grid">
+                                        <h:outputText value="Total a pagar USD" styleClass="p-col-12 p-md-2"/>
+                                        <div class="p-col-12 p-md-10">
+                                            <h:outputText id="lblTotal"
+                                                          value="#{matriculaBackBean.matricula.curso.precio}">
+                                                <f:convertNumber type="number" maxFractionDigits="2"
+                                                                 pattern="#,#00.00"/>
+                                            </h:outputText>
+                                        </div>
                                     </div>
                                 </div>
 
-
-                                <div class="p-grid ui-fluid">
+                                <div class="ui-fluid">
+                                    <div class="p-field p-grid">
+                                        <h:outputText value="TOTAL" styleClass="p-col-12 p-md-2"/>
                                     <div class="p-col-12 p-md-6">
                                         <div class="ui-inputgroup">
                                             <span class="ui-inputgroup-addon"><i class="fa fa-credit-card"></i></span>
@@ -287,8 +305,7 @@
                                             <span class="ui-inputgroup-addon">.00</span>
                                         </div>
                                     </div>
-
-
+                                    </div>
                                 </div>
 
                             </div>
@@ -306,6 +323,7 @@
                 </div>
 
                 <div class="p-col-12 p-lg-6">
+                    <p:commandButton value="Ver Recibo" disabled="true" />
                     <p:commandButton value="Guardar"
                                      process="@this :form-matricula txtNombres  buttonbar txtMontopagado"
                                      icon="fa fa-save"

@@ -53,8 +53,8 @@
                         listener="#{matriculaListaBackBean.onOficinaSelected}"
                         oncomplete="PF('modalCurso').show()"/>
 
-                <p:column headerText="ID" style="text-align: right" width="50px;" sortBy="#{curso.id}">
-                    <h:outputText value="#{curso.id}"/>
+                <p:column headerText="ID" style="text-align: right;" width="50px;" sortBy="#{matricula.id}" sortable="true" >
+                    <h:outputText value="#{matricula.id}"/>
                 </p:column>
 
 
