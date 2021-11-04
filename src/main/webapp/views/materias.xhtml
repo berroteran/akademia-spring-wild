@@ -58,7 +58,7 @@
                 <p:ajax event="rowDblselect"
                         process="@this"
                         update="formModalCurso :formModalCurso:panel-nuevo-curso"
-                        listener="#{materiasBackBean.cursoSelected}"
+                        listener="#{materiasBackBean.materiaSeleccionada}"
                         oncomplete="PF('modalCurso').show()"/>
 
                 <p:column headerText="ID" style="text-align: right" width="50px;" sortBy="#{curso.id}">

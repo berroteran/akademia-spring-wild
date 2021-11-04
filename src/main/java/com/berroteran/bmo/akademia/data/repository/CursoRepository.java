@@ -15,6 +15,10 @@ public interface CursoRepository extends CrudRepository<Curso, Integer> {
     @Query("select c from Curso c join fetch c.sucursal join fetch c.horario join fetch c.materia where c.activo = true ")
     Iterable<Curso> findAllActivos();
 
+    @Query("select c from Curso c join fetch c.sucursal join fetch c.horario join fetch c.materia")
+    Iterable<Curso> findAllFetch();
+
+
     @Query("select c from Curso c join fetch c.materia join fetch c.horario where c.activo=true and c.sucursal = :sucursal")
     List<Curso> getActivosBySucursal(Oficina sucursal);
 }

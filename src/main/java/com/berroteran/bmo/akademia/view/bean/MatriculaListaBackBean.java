@@ -45,20 +45,20 @@ public class MatriculaListaBackBean extends BaseBackBean implements Serializable
         matriculas = matriculaServicio.findAll();
     }
 
-    public void onload(){
+    public void onload() {
 
     }
 
-    public void onOficinaSelected(){
-        
+    public void onOficinaSelected() {
+
     }
 
     public ActionListener crear() {
-        try{
+        try {
 
             oficina = new Oficina();
 
-        }catch (Exception e){
+        } catch (Exception e) {
             showErrorMessage("Registro de Oficinas", e.getMessage());
         }
         return null;
@@ -79,7 +79,7 @@ public class MatriculaListaBackBean extends BaseBackBean implements Serializable
     public void getOnOficinaSelected() {
     }
 
-    public void  cerrarModalOficina() {
+    public void cerrarModalOficina() {
     }
 
     public void setOficinas(List<Oficina> oficinas) {
@@ -92,6 +92,7 @@ public class MatriculaListaBackBean extends BaseBackBean implements Serializable
     public Matricula getMatricula() {
         return matricula;
     }
+
     public void setMatricula(Matricula matricula) {
         this.matricula = matricula;
     }
@@ -136,7 +137,7 @@ public class MatriculaListaBackBean extends BaseBackBean implements Serializable
         this.matriculas = matriculas;
     }
 
-    public Oficina getOficinaFromUser(){
+    public Oficina getOficinaFromUser() {
         return sessionBackBean.getOficina();
     }
 }

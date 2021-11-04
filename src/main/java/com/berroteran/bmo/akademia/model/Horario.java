@@ -29,7 +29,7 @@ public class Horario extends AbstractEntity {
     }
 
     public String getNombre() {
-        return nombre;
+        return nombre == null ? "" : nombre;
     }
     public void setNombre(String nombre) {
         this.nombre = nombre;

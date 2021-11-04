@@ -35,7 +35,7 @@ public class Curso extends AbstractEntity {
     private Integer cupos;
     private Integer disponibles;
 
-    private Boolean activo;
+    private Boolean activo = Boolean.TRUE;
 
 
 
@@ -122,6 +122,11 @@ public class Curso extends AbstractEntity {
     public String getNombre(){
         return materia.getNombre() + " - "  + horario.getNombre();
     }
+
+    public String getLabel(){
+        return materia.getNombre() + " - "  + horario.getNombre() + ", Cupos: " + this.getDisponibles() ;
+    }
+
 
     public Double getPrecio() {
         return precio == null ? 0d : precio;

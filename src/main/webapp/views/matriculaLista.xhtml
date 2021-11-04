@@ -44,7 +44,6 @@
                          sortField="#{matricula.id}"
                          paginator="true"
                          rows="15"
-                         lazy="true"
                          paginatorPosition="bottom">
 
                 <p:ajax event="rowDblselect"
@@ -53,39 +52,73 @@
                         listener="#{matriculaListaBackBean.onOficinaSelected}"
                         oncomplete="PF('modalCurso').show()"/>
 
-                <p:column headerText="ID" style="text-align: right;" width="50px;" sortBy="#{matricula.id}" sortable="true" >
+                <p:column headerText="ID"
+                          style="text-align: right;"
+                          width="50px;"
+                          sortBy="#{matricula.id}"
+                          sortable="true" >
                     <h:outputText value="#{matricula.id}"/>
                 </p:column>
 
 
                 <p:column headerText="Curso"
-                          width="300"
                           filterable="true"
                           sortBy="#{matricula.curso.nombre}"
-                          filterBy="#{matricula.curso.nombre}" filterMatchMode="contains">
+                          filterBy="#{matricula.curso.nombre}"
+                          filterMatchMode="contains">
                     <h:outputText value="#{matricula.curso.nombre}"/>
                 </p:column>
 
-                <p:column headerText="Alumno" filterable="true" sortBy="#{matricula.alumno.nombres}" filterBy="#{matricula.alumno.nombres}" filterMatchMode="contains">
+                <p:column headerText="Alumno"
+                          filterable="true"
+                          sortBy="#{matricula.alumno.nombres}"
+                          filterBy="#{matricula.alumno.nombres}"
+                          filterMatchMode="contains">
                     <h:outputText value="#{matricula.alumno.nombres}"/>
                 </p:column>
 
-                <p:column headerText="Monto pagado" filterable="true" sortBy="#{matricula.cantidadPagada}"
+                <p:column headerText="Monto pagado"
+                          filterable="true"
+                          width="100"
+                          sortBy="#{matricula.cantidadPagada}"
                           filterBy="#{matricula.cantidadPagada}"
                           style="text-align: right"
                           filterMatchMode="contains">
                     <h:outputText value="#{matricula.cantidadPagada}" style="text-align: right"/>
                 </p:column>
 
-                <p:column headerText="Pagado" filterable="true" style="text-align: center" filterBy="#{curso.activo}" filterMatchMode="equals">
-                    <f:facet name="filter">
-                    </f:facet>
+                <p:column headerText="Saldo"
+                          filterable="true"
+                          width="100"
+                          style="text-align: right"
+                          filterMatchMode="contains">
+                    <h:outputText value="0" style="text-align: right"/>
+                </p:column>
+
+
+                <p:column headerText="Pagado"
+                          filterable="true"
+                          width="100"
+                          style="text-align: center"
+                          filterBy="#{curso.activo}"
+                          filterMatchMode="equals">
                     <h:outputText value="#{curso.activo ? 'Si' : 'No.'}"/>
                 </p:column>
 
                 <p:column headerText="Fecha de Matricula"
                           filterable="true"
+                          width="100"
                           style="text-align: right"
+                          sortBy="#{matricula.fechaMatricula}"
+                          filterBy="#{matricula.fechaMatricula}"
+                          filterMatchMode="contains">
+                    <h:outputText value="#{matricula.fechaMatricula}" style="text-align: right"/>
+                </p:column>
+
+                <p:column headerText="Fecha de Inicio"
+                          filterable="true"
+                          style="text-align: right"
+                          width="100"
                           sortBy="#{matricula.fechaMatricula}"
                           filterBy="#{matricula.fechaMatricula}"
                           filterMatchMode="contains">

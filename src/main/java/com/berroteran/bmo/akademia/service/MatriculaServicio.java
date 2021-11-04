@@ -63,45 +63,38 @@ public class MatriculaServicio {
             LOGGER.log(Level.SEVERE, "La Sucursal esta nulo. ¿Está seguro que está bien escrito?");
             throw new BusinessException("La Sucursal esta nulo. Debe seleccionar una sucursal.");
         }
-        if (matricula.getCurso()  == null) {
+        if (matricula.getCurso() == null) {
             LOGGER.log(Level.SEVERE, "El curso está nulo. ¿Está seguro que está bien escrito?");
             throw new BusinessException("El curso está  nulo. ¿Está seguro que está bien escrito?");
         }
-        if (matricula.getFechaMatricula() == null )
-            throw new BusinessException("La fecha de Matricula no puede ser nulo");
+        if (matricula.getFechaMatricula() == null) throw new BusinessException("La fecha de Matricula no puede ser nulo");
 
-        if ( matricula.getAlumno() == null )
-            throw new BusinessException("El alumno es requerido para poder matricular.");
+        if (matricula.getAlumno() == null) throw new BusinessException("El alumno es requerido para poder matricular.");
 
-        if ( matricula.getCantidadPagada() == null )
-            throw new BusinessException("EL monto pagado es requerido para poder matricular.");
+        if (matricula.getCantidadPagada() == null) throw new BusinessException("EL monto pagado es requerido para poder matricular.");
 
-        if ( matricula.getCantidadPagada().doubleValue() < 0d )
-            throw new BusinessException("EL monto pagado no puede ser menor a 0.");
+        if (matricula.getCantidadPagada().doubleValue() < 0d) throw new BusinessException("EL monto pagado no puede ser menor a 0.");
 
-        if ( matricula.getCantidadPagada().doubleValue() > ( matricula.getCurso().getPrecio() -  matricula.getDescuento().doubleValue() ) )
-            throw new BusinessException("EL monto pagado no puede ser mayor al monto con descuento..");
+        if (matricula.getCantidadPagada().doubleValue() > (matricula.getCurso().getPrecio() - matricula.getDescuento().doubleValue())) throw new BusinessException("EL monto pagado no puede ser mayor al monto con descuento..");
 
-        if ( matricula.getCurso().getDisponibles() == 0 )
-            throw new BusinessException("No se puede guardar esta matricula, ya no tiene cupos.");
+        if (matricula.getCurso().getDisponibles() == 0) throw new BusinessException("No se puede guardar esta matricula, ya no tiene cupos.");
 
-        if ( matricula.getAlumno().getId() != null){
-            matricula.setAlumno( alumnoRepository.findById( matricula.getAlumno().getId() ).get() );
-            if ( matricula.getAlumno() == null ){
+        if (matricula.getAlumno().getId() != null) {
+            matricula.setAlumno(alumnoRepository.findById(matricula.getAlumno().getId()).get());
+            if (matricula.getAlumno() == null) {
                 throw new BusinessException("El alumno que desea matricular, no existe.");
             }
         }
 
-        Curso c =  cursoRepository.findById( matricula.getCurso().getId() ).get();
-        if ( c == null )
-            throw new BusinessException("El curso que intenta actualizar no existe.");
+        Curso c = cursoRepository.findById(matricula.getCurso().getId()).get();
+        if (c == null) throw new BusinessException("El curso que intenta actualizar no existe.");
 
-        c.setDisponibles( c.getDisponibles()-1);
-        cursoRepository.save( c );
+        c.setDisponibles(c.getDisponibles() - 1);
+        cursoRepository.save(c);
 
         matricula.setActivo(true);
 
-        return matriculaRepository.save( matricula );
+        return matriculaRepository.save(matricula);
     }
 
 
