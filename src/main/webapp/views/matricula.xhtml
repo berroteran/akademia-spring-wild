@@ -46,8 +46,8 @@
                                                   tabindex="1"
                                                   buttonTabindex="2"
                                                   required="true"
-                                                  requiredMessage="Debe seleccionar una Fecha de Compra"
-                                                  mindate="01/10/2021"
+                                                  requiredMessage="Debe seleccionar una Fecha para la matricula"
+                                                  mindate="10/10/2021"
                                                   maxdate="#{matriculaBackBean.obtenerFechaActual()}"
                                                   value="#{matriculaBackBean.matricula.fechaMatricula}"
                                                   showButtonBar="true"/>
@@ -155,25 +155,12 @@
 
                                 <div class="ui-fluid">
                                     <div class="p-field p-grid">
-                                        <p:outputLabel for="txtSucursal"
-                                                       rendered="#{matriculaBackBean.getOficinaFromUser() ne null}"
-                                                       styleClass="p-col-12 p-md-2" value="Sucursal"/>
-                                        <div class="p-col-12 p-md-10">
-                                            <h:outputText id="txtSucursal"
-                                                          rendered="#{matriculaBackBean.getOficinaFromUser() ne null}"/>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="ui-fluid">
-                                    <div class="p-field p-grid">
                                         <p:outputLabel for="cboSucursal" styleClass="p-col-12 p-md-2" value="Sucursal"/>
                                         <div class="p-col-12 p-md-10">
                                             <p:selectOneMenu id="cboSucursal"
                                                              widgetVar="cboSucursal"
                                                              required="true"
                                                              requiredMessage="La sucursal es requerida para matricular"
-                                                             rendered="#{matriculaBackBean.getOficinaFromUser() eq null}"
                                                              value="#{matriculaBackBean.matricula.sucursal}"
                                                              filter="true"
                                                              valueChangeListener="#{matriculaBackBean.actualizaCursos}"
@@ -216,7 +203,7 @@
                                                 <f:selectItem itemLabel="Selecciones curso" itemValue="#{null}"/>
                                                 <f:selectItems value="#{matriculaBackBean.cursos}"
                                                                var="cursoItem"
-                                                               itemLabel="#{cursoItem.nombre}"
+                                                               itemLabel="#{cursoItem.label}"
                                                                itemValue="#{cursoItem}"/>
                                             </p:selectOneMenu>
                                         </div>
@@ -335,7 +322,7 @@
                                      process="@this :form-matricula txtNombres  buttonbar txtMontopagado"
                                      icon="fa fa-save"
                                      actionListener="#{matriculaBackBean.saveMatricula}"
-                                     update=":form-matricula txtSucursal cboSucursal :global-message"
+                                     update=":form-matricula cboSucursal :global-message"
                                      style="margin: 0.1em"/>
                     <p:commandButton value="Ver Recibo" disabled="true" styleClass="info-btn"/>
 

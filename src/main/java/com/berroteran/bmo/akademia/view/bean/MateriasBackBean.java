@@ -89,6 +89,10 @@ public class MateriasBackBean extends BaseBackBean implements Serializable {
         return null;
     }
 
+    public void materiaSeleccionada(){
+
+    }
+
     public void cargarDatos(){
 
     }

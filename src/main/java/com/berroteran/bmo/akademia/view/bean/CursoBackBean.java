@@ -53,7 +53,8 @@ public class CursoBackBean extends BaseBackBean implements Serializable {
     @PostConstruct
     public void init() {
         oficinas = (List<Oficina>) oficinaService.findAll();
-        cursos =  cursoServicio.findAllActivos();
+        cursos =  cursoServicio.findAllwData();
+        //
         horarios = horariosServicio.findAll();
         materias = materiasServicio.findAll();
     }
@@ -69,6 +70,8 @@ public class CursoBackBean extends BaseBackBean implements Serializable {
     public ActionListener crear() {
         try{
             curso = new Curso();
+            curso.setActivo(true);
+
         }catch (Exception e){
             showErrorMessage("Registro de Oficinas", e.getMessage());
         }

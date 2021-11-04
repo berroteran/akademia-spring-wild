@@ -44,6 +44,7 @@ public class CursoServicio {
             LOGGER.log(Level.SEVERE, "La Oficina esta nulo. ¿Está seguro que está bien escrito?");
             throw new BusinessException("La Oficina esta nulo. ¿Está seguro que está bien escrito?");
         }
+
         cursoRepository.save(curso);
     }
 
@@ -53,6 +54,12 @@ public class CursoServicio {
     public Iterable<Curso> findAllActivos() {
         return cursoRepository.findAllActivos();
     }
+
+
+    public Iterable<Curso> findAllwData() {
+        return cursoRepository.findAllFetch();
+    }
+
 
     public List<Curso> findCursosActivosBySucursal(Oficina sucursal) {
         return cursoRepository.getActivosBySucursal(sucursal);
