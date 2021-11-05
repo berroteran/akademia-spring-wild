@@ -51,7 +51,7 @@
 
                 </f:facet>
 
-                <p:column headerText="id"
+                <p:column headerText="ID"
                           sortable="true"
                           style="text-align: right;"
                           sortBy="#{usuario.id}"
@@ -76,6 +76,11 @@
                 <p:column headerText="Activo">
                     <p:selectBooleanCheckbox value="#{usuario.activo}"/>
                 </p:column>
+
+                <p:column>
+                    <p:commandButton value="Estadisticas" actionListener="#{materiasBackBean.estadisticas()}"/>
+                </p:column>
+
 
             </p:dataTable>
         </h:form>

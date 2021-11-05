@@ -37,4 +37,8 @@ public class HorariosServicio {
         horarioRepository.save( horario );
 
     }
+
+    public Horario findById(Horario horario) {
+        return horarioRepository.findById(horario.getId()).get();
+    }
 }

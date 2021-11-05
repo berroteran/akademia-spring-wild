@@ -113,7 +113,10 @@ public class CursoBackBean extends BaseBackBean implements Serializable {
     }
 
     public void cursoSelected(){
-
+        if (curso != null) {
+            curso.setMateria(materiasServicio.findById(curso.getMateria()));
+            curso.setHorario(horariosServicio.findById(curso.getHorario()));
+        }
     }
 
     public void estadisticas(){
