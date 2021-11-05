@@ -42,7 +42,7 @@ public class MatriculaBackBean extends BaseBackBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        oficinas = (List<Oficina>) oficinaService.findAll();
+        oficinas = (List<Oficina>) oficinaService.getAllActiva();
         alumnosLista = (List<Cliente>) alumnoServicio.findAll();
         //
         matricula = new Matricula();

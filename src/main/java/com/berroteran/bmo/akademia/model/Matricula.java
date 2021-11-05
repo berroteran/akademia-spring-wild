@@ -36,7 +36,7 @@ public class Matricula extends AbstractEntity {
     @JoinColumn(nullable = false)
     private Curso curso;
 
-    private String comoSupo;
+    private String referencia;
 
     private boolean activo;
 
@@ -111,12 +111,12 @@ public class Matricula extends AbstractEntity {
         this.curso = curso;
     }
 
-    public String getComoSupo() {
-        return comoSupo;
+    public String getReferencia() {
+        return referencia;
     }
 
-    public void setComoSupo(String comoSupo) {
-        this.comoSupo = comoSupo;
+    public void setReferencia(String comoSupo) {
+        this.referencia = comoSupo;
     }
 
     public boolean isActivo() {
