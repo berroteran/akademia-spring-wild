@@ -38,6 +38,10 @@ public class Matricula extends AbstractEntity {
 
     private String referencia;
 
+
+    private Integer idpromocion;
+
+
     private boolean activo;
 
 
@@ -133,5 +137,13 @@ public class Matricula extends AbstractEntity {
 
     public void setSucursal(Oficina sucursal) {
         this.sucursal = sucursal;
+    }
+
+    public Integer getIdpromocion() {
+        return idpromocion;
+    }
+
+    public void setIdpromocion(Integer idpromocion) {
+        this.idpromocion = idpromocion;
     }
 }

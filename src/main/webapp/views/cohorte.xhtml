@@ -210,6 +210,13 @@
                         <p:outputLabel value="Fecha Fin:"/>
                         <p:datePicker id="dpFechaFin" widgetVar="dpFechaFin" pattern="dd/MMM/yyyy" value="#{cursoBackBean.curso.fechaFin}" />
 
+                        <p:outputLabel value="Valor:"/>
+                        <p:inputNumber id="txtValor"
+                                       widgetVar="txtValor"
+                                       style="text-align: right;"
+                                       value="#{cursoBackBean.curso.precio}" />
+
+
                         <p:outputLabel value="Cupos:"/>
                         <p:inputNumber id="txtCursos" widgetVar="txtCursos" style="text-align: right;" value="#{cursoBackBean.curso.cupos}" />
 

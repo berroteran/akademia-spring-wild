@@ -135,11 +135,11 @@
                                             </div>
                                         </div>
 
-                                        <p:outputLabel for="txtTelefono" value="Telefono" styleClass="p-col-12 p-md-2"/>
+                                        <p:outputLabel for="txtTelefono" value="Teléfono" styleClass="p-col-12 p-md-2"/>
                                         <div class="p-col-12 p-md-4">
                                             <div class="ui-inputgroup">
                                                 <span class="ui-inputgroup-addon"><i class="fa fa-phone"></i></span>
-                                                <p:inputText id="txtTelefono" required="false"/>
+                                                <p:inputText id="txtTelefono" required="false" style="text-align: right"/>
                                             </div>
                                         </div>
                                     </div>
@@ -233,6 +233,25 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="ui-fluid">
+                                    <div class="p-field p-grid">
+                                        <p:outputLabel for="cboPromocion" styleClass="p-col-12 p-md-2" value="Promoción"/>
+                                        <div class="p-col-12 p-md-10">
+                                            <p:selectOneMenu id="cboPromocion"
+                                                             widgetVar="cboPromocion"
+                                                             value="#{matriculaBackBean.matricula.idpromocion}"
+                                                             converter="selectOneMenuConverter"
+                                                             style="width: 100%;">
+                                                <f:selectItem itemLabel="Ninguna" itemValue="#{null}"/>
+                                                <f:selectItem itemLabel="Media Beca" itemValue="1"/>
+                                                <f:selectItem itemLabel="3 x 00" itemValue="2"/>
+                                                <f:selectItem itemLabel="Intermedio + Regalia" itemValue="3"/>
+                                            </p:selectOneMenu>
+                                        </div>
+                                    </div>
+                                </div>
+
 
                                 <div class="ui-fluid">
                                     <div class="p-field p-grid">
